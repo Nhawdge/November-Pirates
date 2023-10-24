@@ -1,13 +1,24 @@
 ﻿using Arch.Core;
+using Arch.Core.Extensions;
 using NovemberPirates.Components;
+using NovemberPirates.Utilities;
 
 namespace NovemberPirates.Entities.Archetypes
 {
     internal static class PlayerBuilder
     {
-        internal static Entity Create()
+        internal static Entity Create(World world)
         {
-            var player = NovemberPiratesEngine.Instance.ActiveScene.World.Create<Player>();
+            var player = world.Create<Player, Sprite>();
+
+            var playerComponent = new Player();
+            player.Set(playerComponent);
+
+            var playerSprite = new Sprite(TextureKey.HullLarge, "Assets/Art/hullLarge", 1f, true);
+            playerSprite.RotationOffset = -180f;
+
+            player.Set(playerSprite);
+
 
             return player;
         }
