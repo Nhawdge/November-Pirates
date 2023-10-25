@@ -1,6 +1,7 @@
 ﻿using NovemberPirates.Utilities;
 using Raylib_CsLo;
 using System.Numerics;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace NovemberPirates.Components
 {
@@ -19,11 +20,13 @@ namespace NovemberPirates.Components
 
         public bool CanRotate = true;
         public float ZIndex = 0f;
-        public float RotationAsRadians => (Rotation) * (float)(Math.PI / 180);
+        public float RotationAsRadians => Rotation * (float)(Math.PI / 180);
         public Vector2 Position;
         public Color Color;
 
         public TextureKey Key;
+
+        public CollisionType Collision;
 
         public float RenderRotation
         {
@@ -39,7 +42,7 @@ namespace NovemberPirates.Components
                     case OriginAlignment.Center:
                         return new Vector2(SpriteWidth / 2 * Scale, SpriteHeight / 2 * Scale);
                     case OriginAlignment.LeftCenter:
-                        return (new Vector2(0, SpriteHeight / 2 * Scale));
+                        return new Vector2(0, SpriteHeight / 2 * Scale);
                     case OriginAlignment.LeftBottom:
                         return new Vector2(0, SpriteHeight * Scale);
                     case OriginAlignment.LeftTop:
@@ -87,12 +90,24 @@ namespace NovemberPirates.Components
             SpriteWidth = Texture.width;
             SpriteHeight = Texture.height;
         }
+
+        public Render(Texture tilesprite, float scale = 1, bool isCentered = true)
+        {
+            Texture = tilesprite;
+            Key = TextureKey.Empty;
+            Position = Vector2.Zero;
+            Scale = scale;
+            Color = Raylib.WHITE;
+            OriginPos = isCentered ? OriginAlignment.Center : OriginAlignment.LeftTop;
+            SpriteWidth = Texture.width;
+            SpriteHeight = Texture.height;
+        }
     }
 
-    public enum MechPieces
+    public enum CollisionType
     {
         None,
-        Torso,
-        Legs
+        Slow,
+        Solid,
     }
 }

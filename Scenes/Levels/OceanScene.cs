@@ -1,5 +1,6 @@
-﻿using November_Pirates.Scenes.Levels.Systems;
-using NovemberPirates.Entities.Archetypes;
+﻿using NovemberPirates.Entities.Archetypes;
+using NovemberPirates.Scenes.Levels.Systems;
+using NovemberPirates.Utilities;
 
 namespace NovemberPirates.Scenes.Levels
 {
@@ -11,7 +12,10 @@ namespace NovemberPirates.Scenes.Levels
             Systems.Add(new BoatMovementSystem());
             Systems.Add(new CameraSystem());
 
-            PlayerBuilder.Create(this.World);
+            MapManager.Instance.LoadMap("Level_0", World);
+
+            PlayerBuilder.Create(World);
+
         }
     }
 }

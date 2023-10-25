@@ -13,6 +13,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <RootNamespace>NovemberPirates</RootNamespace>
+  </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="arch" Version="1.2.7" />

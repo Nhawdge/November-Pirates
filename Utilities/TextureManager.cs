@@ -15,6 +15,7 @@ namespace NovemberPirates.Utilities
         private void LoadTextures()
         {
             TextureStore.Add(TextureKey.HullLarge, Raylib.LoadTexture("Assets/Art/hullLarge.png"));
+            TextureStore.Add(TextureKey.MapTileset, Raylib.LoadTexture("Assets/Maps/tiles_sheet.png"));
         }
 
         internal Texture GetTexture(TextureKey key)
@@ -29,6 +30,8 @@ namespace NovemberPirates.Utilities
 
     internal enum TextureKey
     {
+        Empty,
         HullLarge,
+        MapTileset,
     }
 }

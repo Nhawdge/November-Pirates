@@ -1,8 +1,10 @@
 ﻿using Arch.Core;
+using Arch.Core.Extensions;
+using NovemberPirates;
 using NovemberPirates.Components;
 using NovemberPirates.Systems;
 
-namespace November_Pirates.Scenes.Levels.Systems
+namespace NovemberPirates.Scenes.Levels.Systems
 {
     internal class CameraSystem : GameSystem
     {
@@ -16,8 +18,8 @@ namespace November_Pirates.Scenes.Levels.Systems
 
             world.Query(in query, (entity) =>
             {
-                //NovemberPiratesEngine.Instance.Camera.target.X = entity.Get<Sprite>().Position.X;
-                //NovemberPiratesEngine.Instance.Camera.target.Y = entity.Get<Sprite>().Position.Y;
+                NovemberPiratesEngine.Instance.Camera.target.X = entity.Get<Sprite>().Position.X;
+                NovemberPiratesEngine.Instance.Camera.target.Y = entity.Get<Sprite>().Position.Y;
             });
         }
     }

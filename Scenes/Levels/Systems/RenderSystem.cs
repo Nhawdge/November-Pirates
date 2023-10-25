@@ -5,7 +5,7 @@ using NovemberPirates.Components;
 using NovemberPirates.Systems;
 using Raylib_CsLo;
 
-namespace November_Pirates.Scenes.Levels.Systems
+namespace NovemberPirates.Scenes.Levels.Systems
 {
     internal class RenderSystem : GameSystem
     {
@@ -33,15 +33,24 @@ namespace November_Pirates.Scenes.Levels.Systems
             //    }
             //}
 
+            var renders = new QueryDescription().WithAll<Render>();
+            world.Query(in renders, (entity) =>
+            {
+                var myRender = entity.Get<Render>();
+
+                Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);
+                //Raylib.DrawRectangleLines((int)myRender.Destination.X, (int)myRender.Destination.Y, (int)myRender.Destination.width, (int)myRender.Destination.height, Raylib.BLACK);
+                //Raylib.DrawCircle((int)myRender.Destination.X, (int)myRender.Destination.Y, 5, Raylib.GREEN);
+            });
+
             var sprites = new QueryDescription().WithAll<Sprite>();
 
-            world.Query(sprites, (entity) =>
+            world.Query(in sprites, (entity) =>
             {
                 var myRender = entity.Get<Sprite>();
                 Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);
                 //Raylib.DrawRectangleLines((int)myRender.Destination.X, (int)myRender.Destination.Y, (int)myRender.Destination.width, (int)myRender.Destination.height, Raylib.BLACK);
-                Raylib.DrawCircle((int)myRender.Destination.X, (int)myRender.Destination.Y, 5, Raylib.GREEN);
-
+                //Raylib.DrawCircle((int)myRender.Destination.X, (int)myRender.Destination.Y, 5, Raylib.GREEN);
             });
         }
     }

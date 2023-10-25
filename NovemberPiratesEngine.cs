@@ -1,5 +1,4 @@
-﻿using Arch.Core;
-using NovemberPirates.Scenes;
+﻿using NovemberPirates.Scenes;
 using NovemberPirates.Scenes.Menus.MainMenu;
 using Raylib_CsLo;
 
@@ -22,7 +21,8 @@ namespace NovemberPirates
 
             Camera = new Camera2D
             {
-                zoom = 1.0f
+                zoom = 1.0f,
+                offset = new System.Numerics.Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2),
             };
 
             ActiveScene = new MainMenuScene();

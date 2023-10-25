@@ -1,7 +1,6 @@
 ﻿using NovemberPirates.Utilities;
-using QuickType;
+using QuickType.Aseprite;
 using Raylib_CsLo;
-using System.Linq;
 using System.Numerics;
 using System.Text.Json;
 
@@ -15,6 +14,8 @@ namespace NovemberPirates.Components
         public int CurrentFrameIndex = 0;
         public AnimationSets CurrentAnimation;
 
+
+
         public Sprite(TextureKey key, string animationDataPath, float scale = 1, bool isCentered = true) : base(key, scale, isCentered)
         {
             if (animationDataPath == null)
@@ -23,7 +24,7 @@ namespace NovemberPirates.Components
             var data = File.ReadAllText(animationDataPath + ".json");
             var json = JsonSerializer.Deserialize<AsepriteData>(data);
 
-            Animations = json.Meta.FrameTags.ToDictionary(x => (string)x.Name,
+            Animations = json.Meta.FrameTags.ToDictionary(x => x.Name,
                 x => new AnimationSets(x.Name, (int)x.From, (int)x.To, Enum.Parse<Direction>(x.Direction),
                 json.Frames.Where(f => f.Filename.StartsWith(x.Name)).Select(z => new Frame(z.Frame.X, z.Frame.Y, z.Frame.W, z.Frame.H, z.Duration)).ToList()));
 
@@ -91,9 +92,9 @@ namespace NovemberPirates.Components
                 switch (OriginPos)
                 {
                     case OriginAlignment.Center:
-                        return new Vector2((frame.W / 2) * Scale, (frame.H / 2) * Scale);
+                        return new Vector2(frame.W / 2 * Scale, frame.H / 2 * Scale);
                     case OriginAlignment.LeftCenter:
-                        return (new Vector2(0, frame.Y + frame.H / 2 * Scale));
+                        return new Vector2(0, frame.Y + frame.H / 2 * Scale);
                     case OriginAlignment.LeftBottom:
                         return new Vector2(0, frame.Y + frame.H * Scale);
                     case OriginAlignment.LeftTop:
@@ -109,7 +110,7 @@ namespace NovemberPirates.Components
                 return;
             if (Animations.TryGetValue(animationName, out var animations))
             {
-                this.CurrentAnimation = animations;
+                CurrentAnimation = animations;
                 CurrentFrameIndex = 0;
             }
             //else

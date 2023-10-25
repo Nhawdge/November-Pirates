@@ -21,7 +21,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
 
             var dummyrect = new Rectangle(centerPoint.X - 200, centerPoint.Y - 150, 400, 400);
             RayGui.GuiDummyRec(dummyrect, "");
-            world.Query(in query, (Entity entity) =>
+            world.Query(in query, (entity) =>
             {
                 if (entity.Has<UiTitle>())
                 {

@@ -7,20 +7,17 @@ namespace NovemberPirates.Entities.Archetypes
 {
     internal static class PlayerBuilder
     {
-        internal static Entity Create(World world)
+        internal static void Create(World world)
         {
             var player = world.Create<Player, Sprite>();
 
             var playerComponent = new Player();
             player.Set(playerComponent);
 
-            var playerSprite = new Sprite(TextureKey.HullLarge, "Assets/Art/hullLarge", 1f, true);
+            var playerSprite = new Sprite(TextureKey.HullLarge, "Assets/Art/hullLarge", 1f, true) {  };
             playerSprite.RotationOffset = -180f;
 
             player.Set(playerSprite);
-
-
-            return player;
         }
     }
 }

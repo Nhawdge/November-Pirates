@@ -18,7 +18,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
             var button = World.Create<UiButton>();
             button.Set(new UiButton
             {
-                Text= "Start Game",
+                Text = "Start Game",
                 Action = () =>
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new OceanScene();

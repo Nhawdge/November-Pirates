@@ -10,7 +10,7 @@
 #pragma warning disable CS8601
 #pragma warning disable CS8603
 
-namespace QuickType
+namespace QuickType.Aseprite
 {
     using System;
     using System.Globalization;
@@ -119,12 +119,12 @@ namespace QuickType
 
     public partial class AsepriteData
     {
-        public static AsepriteData FromJson(string json) => JsonSerializer.Deserialize<AsepriteData>(json, QuickType.Converter.Settings);
+        public static AsepriteData FromJson(string json) => JsonSerializer.Deserialize<AsepriteData>(json, QuickType.Aseprite.Converter.Settings);
     }
 
     public static class Serialize
     {
-        public static string ToJson(this AsepriteData self) => JsonSerializer.Serialize(self, QuickType.Converter.Settings);
+        public static string ToJson(this AsepriteData self) => JsonSerializer.Serialize(self, QuickType.Aseprite.Converter.Settings);
     }
 
     internal static class Converter
