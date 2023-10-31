@@ -1,8 +1,8 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
-using NovemberPirates;
 using NovemberPirates.Components;
 using NovemberPirates.Systems;
+using NovemberPirates.Utilities;
 using Raylib_CsLo;
 
 namespace NovemberPirates.Scenes.Levels.Systems
@@ -17,6 +17,9 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
         internal override void Update(World world)
         {
+            var singletonEntity = world.QueryFirst<Singleton>();
+            var singleton = singletonEntity.Get<Singleton>();
+
             ////Raylib.DrawTextureEx(BackgroundTexture, Vector2.Zero, 0f, 3, Raylib.WHITE);
             //var mapEntity = Engine.Entities.FirstOrDefault(x => x.HasTypes(typeof(Map)));
             //if (mapEntity is not null)
@@ -38,7 +41,24 @@ namespace NovemberPirates.Scenes.Levels.Systems
             {
                 var myRender = entity.Get<Render>();
 
-                Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);
+                if (singleton.Debug != DebugLevel.High)
+                {
+                    Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);
+                }
+                if (singleton.Debug >= DebugLevel.Low)
+                {
+                    if (entity.Has<MapTile>())
+                    {
+                        var color = myRender.Collision switch
+                        {
+                            CollisionType.None => new Color(0, 0, 0, 0),
+                            CollisionType.Solid => Raylib.RED with { a = 128 },
+                            CollisionType.Slow => Raylib.PINK with { a = 128 },
+                            _ => Raylib.BLACK
+                        };
+                        Raylib.DrawRectangle((int)myRender.Destination.X, (int)myRender.Destination.Y, (int)myRender.Destination.width, (int)myRender.Destination.height, color);
+                    }
+                }
                 //Raylib.DrawRectangleLines((int)myRender.Destination.X, (int)myRender.Destination.Y, (int)myRender.Destination.width, (int)myRender.Destination.height, Raylib.BLACK);
                 //Raylib.DrawCircle((int)myRender.Destination.X, (int)myRender.Destination.Y, 5, Raylib.GREEN);
             });

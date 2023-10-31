@@ -8,11 +8,14 @@ namespace NovemberPirates.Components
         internal float Speed = 500f;
         internal float RotationSpeed = 100f;
         internal SailStatus Sail = SailStatus.Closed;
+
+        internal float RowingPower = 25f;
     }
 
- public enum SailStatus
+    public enum SailStatus
     {
         Closed,
+        Rowing,
         Half,
         Full,
     }

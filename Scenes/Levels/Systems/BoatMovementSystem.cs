@@ -2,8 +2,8 @@
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Systems;
+using NovemberPirates.Utilities;
 using Raylib_CsLo;
-using System.Diagnostics;
 using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
@@ -19,17 +19,9 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var sprites = new QueryDescription().WithAll<Player, Sprite>();
             var tiles = new QueryDescription().WithAll<MapTile, Render>();
 
-            var windQueryDescription = new QueryDescription().WithAll<Wind>();
-            Wind wind = null;
-            var windQuery = world.Query(in windQueryDescription);
-            foreach (var chunk in windQuery.GetChunkIterator())
-            {
-                foreach (var entity in chunk)
-                {
-                    wind = chunk.Get<Wind>(entity);
-                    break;
-                }
-            }
+            var singletonEntity = world.QueryFirst<Singleton>();
+            var singleton = singletonEntity.Get<Singleton>();
+            Wind wind = singletonEntity.Get<Wind>();
 
             world.Query(sprites, (entity) =>
             {
@@ -54,27 +46,50 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     sprite.Rotation += player.RotationSpeed * Raylib.GetFrameTime();
                 }
+                if (player.Sail == SailStatus.Rowing)
+                {
+                    movement = new Vector2(0, -1);
+                }
 
                 movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 
                 var boatAngle = (sprite.Rotation + 360) % 360;
                 var windAngle = (float)(((Math.Atan2(wind.WindDirection.Y, wind.WindDirection.X) * 180 / Math.PI) + 360 + 90) % 360);
                 var angleDiff = Math.Abs(boatAngle - windAngle);
+                var forceApplied = angleDiff / 90;
+                var calculatedDiff = Math.Abs((float)Math.Cos(angleDiff));
+                var dotp = Vector2.Dot(wind.WindDirection, movement);
 
-                //Console.WriteLine($"{boatAngle.ToString("0.0")} - Wind: {windAngle.ToString("0.0")} diff: {angleDiff.ToString("0.0")}");
+                singleton.DebugText += $"\nBoat Angle:{boatAngle.ToString("0.0")}\nWind Angle: {windAngle.ToString("0.0")}\nAngle Diff: {angleDiff.ToString("0.0")}\nForce: {forceApplied.ToString("0.0")}";
+
+                if (player.Sail >= SailStatus.Rowing)
+                {
+                    movement = movement * player.RowingPower * Raylib.GetFrameTime();
+                }
+
                 switch (player.Sail)
                 {
                     case SailStatus.Closed:
                         movement = new Vector2(0, 0);
                         break;
                     case SailStatus.Half:
-                        movement += wind.WindDirection * wind.WindStrength / angleDiff / 2 * Raylib.GetFrameTime();
+                        movement += wind.WindDirection * wind.WindStrength / forceApplied / 2 * Raylib.GetFrameTime();
                         break;
                     case SailStatus.Full:
-                        movement += wind.WindDirection * wind.WindStrength / angleDiff * Raylib.GetFrameTime();
+                        movement += wind.WindDirection * wind.WindStrength / forceApplied * Raylib.GetFrameTime();
                         break;
                 }
-                var newPosition = sprite.Position + movement * player.Speed * Raylib.GetFrameTime();
+                var adjustedPosition = sprite.Position
+                    with
+                {
+                    X = sprite.Position.X,
+                    Y = sprite.Position.Y,
+                };
+
+                if (singleton.Debug >= DebugLevel.Low)
+                    Raylib.DrawCircle((int)adjustedPosition.X, (int)adjustedPosition.Y, 50f, Raylib.ORANGE);
+
+                var newPosition = adjustedPosition + movement * player.Speed * Raylib.GetFrameTime();
 
                 var query = world.Query(in tiles);
 
@@ -85,7 +100,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     {
                         var tileSprite = chunk.Get<Render>(tile);
 
-                        if (Raylib.CheckCollisionPointRec(newPosition, tileSprite.Destination))
+                        if (Raylib.CheckCollisionCircleRec(newPosition, 50f, tileSprite.Destination))
                         {
                             if (collidingTile == null)
                             {

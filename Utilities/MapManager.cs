@@ -1,7 +1,6 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
-using QuickType;
 using QuickType.Map;
 using System.Numerics;
 
