@@ -29,14 +29,14 @@ namespace NovemberPirates.Scenes.Levels.Systems
             }
             if (singleton.Debug > DebugLevel.None)
             {
-                var bottomLeft = new Rectangle(10, Raylib.GetScreenHeight() - 210, 200, 200);
+                var bottomLeft = new Rectangle(10, Raylib.GetScreenHeight() - 410, 200, 400);
 
-                RayGui.GuiFade(0.5f);
+                RayGui.GuiFade(0.75f);
                 RayGui.GuiDummyRec(bottomLeft, "");
                 RayGui.GuiFade(1f);
 
                 RayGui.GuiSetStyle((int)GuiControl.LABEL, (int)GuiControlProperty.TEXT_ALIGNMENT, (int)GuiTextAlignment.TEXT_ALIGN_LEFT);
-                //RayGui.GuiSetStyle((int)GuiControl.LABEL, (int)GuiControlProperty.text, 10);
+                RayGui.GuiSetStyle((int)GuiControl.LABEL, (int)GuiDefaultProperty.TEXT_SIZE, 24);
 
                 RayGui.GuiLabel(bottomLeft, singleton.DebugText);
                 singleton.DebugText = "";

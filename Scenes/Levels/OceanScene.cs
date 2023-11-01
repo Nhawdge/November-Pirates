@@ -1,4 +1,5 @@
-﻿using Arch.Core.Extensions;
+﻿using Arch.Core;
+using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Scenes.Levels.Systems;
@@ -10,6 +11,9 @@ namespace NovemberPirates.Scenes.Levels
     {
         internal OceanScene()
         {
+            //var mapTilesArchetype = new ComponentType[] { typeof(MapTile), typeof(Render) };
+            //var entity = World.Create(mapTilesArchetype);
+
             Systems.Add(new RenderSystem());
             Systems.Add(new BoatMovementSystem());
             Systems.Add(new CameraSystem());

@@ -1,5 +1,6 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
+using Arch.Core.Utils;
 using NovemberPirates.Components;
 using QuickType.Map;
 using System.Numerics;
@@ -30,13 +31,14 @@ namespace NovemberPirates.Utilities
             {
                 throw new ArgumentException($"key: '{key}' not found in {mapName}.ldtk");
             }
-
+            var mapTileArchetype = new ComponentType[] { typeof(MapTile), typeof(Render) };
+            
             foreach (var layer in level.LayerInstances)
             {
                 //var tilesprite = Raylib_CsLo.Raylib.LoadTexture($"Assets/Maps/{layer.TilesetRelPath}");
                 foreach (var tile in layer.AutoLayerTiles)
                 {
-                    var mapTile = world.Create<Render, MapTile>();
+                    var mapTile = world.Create(mapTileArchetype);
 
                     var tileSprite = new Render(TextureKey.MapTileset)
                     {

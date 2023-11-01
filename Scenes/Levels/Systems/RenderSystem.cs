@@ -45,7 +45,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);
                 }
-                if (singleton.Debug >= DebugLevel.Low)
+                if (singleton.Debug >= DebugLevel.Medium)
                 {
                     if (entity.Has<MapTile>())
                     {

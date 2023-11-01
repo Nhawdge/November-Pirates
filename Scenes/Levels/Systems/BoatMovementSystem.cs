@@ -46,7 +46,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     sprite.Rotation += player.RotationSpeed * Raylib.GetFrameTime();
                 }
-                if (player.Sail == SailStatus.Rowing)
+                if (player.Sail >= SailStatus.Rowing)
                 {
                     movement = new Vector2(0, -1);
                 }
@@ -55,30 +55,45 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 var boatAngle = (sprite.Rotation + 360) % 360;
                 var windAngle = (float)(((Math.Atan2(wind.WindDirection.Y, wind.WindDirection.X) * 180 / Math.PI) + 360 + 90) % 360);
-                var angleDiff = Math.Abs(boatAngle - windAngle);
-                var forceApplied = angleDiff / 90;
-                var calculatedDiff = Math.Abs((float)Math.Cos(angleDiff));
-                var dotp = Vector2.Dot(wind.WindDirection, movement);
+                var angleDiff = Math.Abs((boatAngle + 360) - (windAngle + 360)) % 360;
 
-                singleton.DebugText += $"\nBoat Angle:{boatAngle.ToString("0.0")}\nWind Angle: {windAngle.ToString("0.0")}\nAngle Diff: {angleDiff.ToString("0.0")}\nForce: {forceApplied.ToString("0.0")}";
-
-                if (player.Sail >= SailStatus.Rowing)
+                var windInSail = angleDiff switch
                 {
-                    movement = movement * player.RowingPower * Raylib.GetFrameTime();
-                }
+                    < 15 => 1f,
+                    < 30 => 0.75f,
+                    < 45 => 0.5f,
+                    < 60 => 0.25f,
+                    < 75 => 0.1f,
+                    _ => 0f,
+                };
+                //singleton.DebugText += $"Boat Angle:{boatAngle.ToString("0.0")}\nWind Angle: {windAngle.ToString("0.0")}\nAngle Diff: {angleDiff.ToString("0.0")}\nWind In Sail: {windInSail.ToString("0.0")}";
+                var windStrength = wind.WindStrength * windInSail;
 
-                switch (player.Sail)
-                {
-                    case SailStatus.Closed:
-                        movement = new Vector2(0, 0);
-                        break;
-                    case SailStatus.Half:
-                        movement += wind.WindDirection * wind.WindStrength / forceApplied / 2 * Raylib.GetFrameTime();
-                        break;
-                    case SailStatus.Full:
-                        movement += wind.WindDirection * wind.WindStrength / forceApplied * Raylib.GetFrameTime();
-                        break;
-                }
+                singleton.DebugText += $"\nWind:{windStrength} ";
+                singleton.DebugText += $"\nRow: {player.RowingPower} ";
+
+                if (player.Sail == SailStatus.Closed)
+                    movement = new Vector2(0, 0);
+
+                //singleton.DebugText += $"\n2:{movement}";
+                if (player.Sail == SailStatus.Rowing)
+                    movement = movement * player.RowingPower;
+
+                //singleton.DebugText += $"\n3:{movement}";
+                if (player.Sail == SailStatus.Half)
+                    movement = movement * (windStrength + player.RowingPower) / 2;
+
+                //singleton.DebugText += $"\n4:{movement}";
+                if (player.Sail == SailStatus.Full)
+                    movement = movement * (windStrength + player.RowingPower);
+
+                singleton.DebugText += $"\n5:{movement}";
+
+                movement *= Raylib.GetFrameTime();
+
+                singleton.DebugText += $"\n6:{movement}";
+
+
                 var adjustedPosition = sprite.Position
                     with
                 {
@@ -86,10 +101,12 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     Y = sprite.Position.Y,
                 };
 
-                if (singleton.Debug >= DebugLevel.Low)
+                if (singleton.Debug >= DebugLevel.Medium)
                     Raylib.DrawCircle((int)adjustedPosition.X, (int)adjustedPosition.Y, 50f, Raylib.ORANGE);
 
-                var newPosition = adjustedPosition + movement * player.Speed * Raylib.GetFrameTime();
+                var newPosition = adjustedPosition + movement;
+
+                singleton.DebugText += $"\nMovement: {movement.ToString("0.0")}\n{movement.Length().ToString("0.0")} \nNew Position: {newPosition.ToString("0.0")}\n";
 
                 var query = world.Query(in tiles);
 
@@ -112,19 +129,17 @@ namespace NovemberPirates.Scenes.Levels.Systems
                             }
                         }
                     }
-                    //if (collidingTile != null)
-                    //break;
                 }
                 if (collidingTile != null)
                 {
                     if (collidingTile.Collision == CollisionType.Slow)
                     {
-                        sprite.Position += movement * (player.Speed / 2) * Raylib.GetFrameTime();
+                        sprite.Position += movement / 2/* * Raylib.GetFrameTime()*/;
                         //Console.WriteLine("I am on a slow tile");
                     }
                     else if (collidingTile.Collision == CollisionType.None)
                     {
-                        sprite.Position += movement * player.Speed * Raylib.GetFrameTime();
+                        sprite.Position += movement /* * Raylib.GetFrameTime()*/;
                         //Console.WriteLine("Smooth sailing");
                     }
                     else if (collidingTile.Collision == CollisionType.Solid)
