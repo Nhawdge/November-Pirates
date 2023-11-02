@@ -46,6 +46,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     y = BottomEdge;
                 }
+
                 NovemberPiratesEngine.Instance.Camera.target.X = x;
                 NovemberPiratesEngine.Instance.Camera.target.Y = y;
             });

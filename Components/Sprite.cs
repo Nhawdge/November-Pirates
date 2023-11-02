@@ -14,8 +14,6 @@ namespace NovemberPirates.Components
         public int CurrentFrameIndex = 0;
         public AnimationSets CurrentAnimation;
 
-
-
         public Sprite(TextureKey key, string animationDataPath, float scale = 1, bool isCentered = true) : base(key, scale, isCentered)
         {
             if (animationDataPath == null)
@@ -29,6 +27,11 @@ namespace NovemberPirates.Components
                 json.Frames.Where(f => f.Filename.StartsWith(x.Name)).Select(z => new Frame(z.Frame.X, z.Frame.Y, z.Frame.W, z.Frame.H, z.Duration)).ToList()));
 
             CurrentAnimation = Animations.First().Value;
+        }
+
+        public Sprite() : base()
+        {
+         
         }
 
         public override Rectangle Source

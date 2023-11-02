@@ -13,11 +13,6 @@ namespace NovemberPirates.Utilities
 
         private MapManager() { }
 
-        internal void LoadMap(string mapName)
-        {
-
-        }
-
         public MapDetails LoadMap(string key, World world)
         {
             var mapName = "Pirates";

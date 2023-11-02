@@ -1,7 +1,6 @@
 ﻿using NovemberPirates.Utilities;
 using Raylib_CsLo;
 using System.Numerics;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace NovemberPirates.Components
 {
@@ -101,6 +100,10 @@ namespace NovemberPirates.Components
             OriginPos = isCentered ? OriginAlignment.Center : OriginAlignment.LeftTop;
             SpriteWidth = Texture.width;
             SpriteHeight = Texture.height;
+        }
+
+        public Render()
+        {
         }
     }
 

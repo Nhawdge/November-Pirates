@@ -14,8 +14,9 @@ namespace NovemberPirates.Utilities
 
         private void LoadTextures()
         {
-            TextureStore.Add(TextureKey.HullLarge, Raylib.LoadTexture("Assets/Art/hullLarge.png"));
             TextureStore.Add(TextureKey.MapTileset, Raylib.LoadTexture("Assets/Maps/tiles_sheet.png"));
+            TextureStore.Add(TextureKey.HullLarge, Raylib.LoadTexture("Assets/Art/hullLarge.png"));
+            TextureStore.Add(TextureKey.MainFlag, Raylib.LoadTexture("Assets/Art/mainFlag.png"));
         }
 
         internal Texture GetTexture(TextureKey key)
@@ -33,5 +34,6 @@ namespace NovemberPirates.Utilities
         Empty,
         HullLarge,
         MapTileset,
+        MainFlag,
     }
 }

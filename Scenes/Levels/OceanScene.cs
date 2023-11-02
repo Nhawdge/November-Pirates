@@ -25,6 +25,8 @@ namespace NovemberPirates.Scenes.Levels
             MapEdge = mapDetails.MapEdge;
 
             PlayerBuilder.Create(World);
+
+
             var singleton = World.Create<Singleton, Wind>();
             singleton.Set(new Wind());
             singleton.Set(new Singleton());
