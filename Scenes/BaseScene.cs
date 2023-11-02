@@ -1,5 +1,6 @@
 ﻿using Arch.Core;
 using NovemberPirates.Systems;
+using System.Numerics;
 
 namespace NovemberPirates.Scenes
 {
@@ -8,5 +9,7 @@ namespace NovemberPirates.Scenes
         internal World World = World.Create();
 
         internal List<GameSystem> Systems = new();
+
+        public Vector2 MapEdge { get;  set; }
     }
 }

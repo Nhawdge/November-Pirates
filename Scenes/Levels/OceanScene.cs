@@ -21,7 +21,8 @@ namespace NovemberPirates.Scenes.Levels
             Systems.Add(new UiSystem());
             Systems.Add(new DebugSystem());
 
-            MapManager.Instance.LoadMap("Level_0", World);
+            var mapDetails = MapManager.Instance.LoadMap("Level_0", World);
+            MapEdge = mapDetails.MapEdge;
 
             PlayerBuilder.Create(World);
             var singleton = World.Create<Singleton, Wind>();

@@ -18,7 +18,7 @@ namespace NovemberPirates.Utilities
 
         }
 
-        public void LoadMap(string key, World world)
+        public MapDetails LoadMap(string key, World world)
         {
             var mapName = "Pirates";
             var mapData = new LdtkData();
@@ -31,11 +31,13 @@ namespace NovemberPirates.Utilities
             {
                 throw new ArgumentException($"key: '{key}' not found in {mapName}.ldtk");
             }
+            var details = new MapDetails();
+
+            details.MapEdge = new Vector2(level.PxWid, level.PxHei);
             var mapTileArchetype = new ComponentType[] { typeof(MapTile), typeof(Render) };
-            
+
             foreach (var layer in level.LayerInstances)
             {
-                //var tilesprite = Raylib_CsLo.Raylib.LoadTexture($"Assets/Maps/{layer.TilesetRelPath}");
                 foreach (var tile in layer.AutoLayerTiles)
                 {
                     var mapTile = world.Create(mapTileArchetype);
@@ -59,8 +61,16 @@ namespace NovemberPirates.Utilities
 
                     mapTile.Set(tileSprite);
                 }
-
             }
+            return details;
         }
     }
+
+    public class MapDetails
+    {
+        public Vector2 MapEdge;
+    }
+
+
+
 }

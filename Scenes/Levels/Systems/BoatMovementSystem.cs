@@ -81,7 +81,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 //singleton.DebugText += $"\n3:{movement}";
                 if (player.Sail == SailStatus.Half)
-                    movement = movement * (windStrength + player.RowingPower) / 2;
+                    movement = movement * ((windStrength / 2) + player.RowingPower);
 
                 //singleton.DebugText += $"\n4:{movement}";
                 if (player.Sail == SailStatus.Full)
