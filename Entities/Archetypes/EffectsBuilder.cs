@@ -14,6 +14,7 @@ namespace NovemberPirates.Entities.Archetypes
 
             var explosionSprite = new Sprite(TextureKey.Explosion, "Assets/Art/explosion", 1f, true);
             explosionSprite.Position = pos;
+            explosionSprite.Rotation = Random.Shared.Next(0, 360);
             explosionEntity.Set(explosionSprite);
 
             var explosion = new Effect();
