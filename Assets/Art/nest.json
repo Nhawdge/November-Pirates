@@ -13,7 +13,7 @@
   "app": "https://www.aseprite.org/",
   "version": "1.3-rc6-x64",
   "image": "nest.png",
-  "format": "I8",
+  "format": "RGBA8888",
   "size": { "w": 22, "h": 20 },
   "scale": "1",
   "frameTags": [
