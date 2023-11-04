@@ -1,6 +1,6 @@
 ﻿using Arch.Core;
 
-namespace NovemberPirates.Utilities
+namespace NovemberPirates.Extensions
 {
     internal static class ArchExtensions
     {

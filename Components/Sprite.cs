@@ -14,24 +14,25 @@ namespace NovemberPirates.Components
         public int CurrentFrameIndex = 0;
         public AnimationSets CurrentAnimation;
 
-        public Sprite(TextureKey key, string animationDataPath, float scale = 1, bool isCentered = true) : base(key, scale, isCentered)
+        public Sprite(TextureKey key, string animationDataPath = null, float scale = 1, bool isCentered = true) : base(key, scale, isCentered)
         {
-            if (animationDataPath == null)
-                return;
-            AnimationDataPath = animationDataPath;
-            var data = File.ReadAllText(animationDataPath + ".json");
-            var json = JsonSerializer.Deserialize<AsepriteData>(data);
+            if (animationDataPath != null)
+            {
+                AnimationDataPath = animationDataPath;
+                var data = File.ReadAllText(animationDataPath + ".json");
+                var json = JsonSerializer.Deserialize<AsepriteData>(data);
 
-            Animations = json.Meta.FrameTags.ToDictionary(x => x.Name,
-                x => new AnimationSets(x.Name, (int)x.From, (int)x.To, Enum.Parse<Direction>(x.Direction),
-                json.Frames.Where(f => f.Filename.StartsWith(x.Name)).Select(z => new Frame(z.Frame.X, z.Frame.Y, z.Frame.W, z.Frame.H, z.Duration)).ToList()));
+                Animations = json.Meta.FrameTags.ToDictionary(x => x.Name,
+                    x => new AnimationSets(x.Name, (int)x.From, (int)x.To, Enum.Parse<Direction>(x.Direction),
+                    json.Frames.Where(f => f.Filename.StartsWith(x.Name)).Select(z => new Frame(z.Frame.X, z.Frame.Y, z.Frame.W, z.Frame.H, z.Duration)).ToList()));
 
-            CurrentAnimation = Animations.First().Value;
+                CurrentAnimation = Animations.First().Value;
+            }
         }
 
         public Sprite() : base()
         {
-         
+
         }
 
         public override Rectangle Source
@@ -122,9 +123,31 @@ namespace NovemberPirates.Components
 
         public record AnimationSets(string Name, int From, int To, Direction direction, List<Frame> Frames);
         //{ "name": "WalkD", "from": 0, "to": 3, "direction": "forward" },
-        public record Frame(int X, int Y, int W, int H, float Duration)
+        public class Frame
         {
-            public Frame(long x, long y, long w, long h, long duration) : this((int)x, (int)y, (int)w, (int)h, (float)duration) { }
+            public int X;
+            public int Y;
+            public int W;
+            public int H;
+            public float Duration;
+
+            public Frame(long x, long y, long w, long h, float duration)
+            {
+                X = (int)x;
+                Y = (int)y;
+                W = (int)w;
+                H = (int)h;
+                Duration = (float)duration;
+            }
+
+            public Frame(Rectangle rect, float duration)
+            {
+                X = (int)rect.x;
+                Y = (int)rect.y;
+                W = (int)rect.width;
+                H = (int)rect.height;
+                Duration = duration;
+            }
         }
 
         public enum Direction

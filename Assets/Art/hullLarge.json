@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "100Hp-0",
+    "filename": "HullLarge1-0",
     "frame": { "x": 1, "y": 1, "w": 50, "h": 128 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 100
    },
    {
-    "filename": "75Hp-1",
+    "filename": "HullLarge2-1",
     "frame": { "x": 53, "y": 1, "w": 50, "h": 128 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 100
    },
    {
-    "filename": "30Hp-2",
+    "filename": "HullLarge3-2",
     "frame": { "x": 1, "y": 131, "w": 50, "h": 128 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 100
    },
    {
-    "filename": "0Hp-3",
+    "filename": "HullLarge4-3",
     "frame": { "x": 53, "y": 131, "w": 50, "h": 128 },
     "rotated": false,
     "trimmed": false,
@@ -44,10 +44,10 @@
   "size": { "w": 104, "h": 260 },
   "scale": "1",
   "frameTags": [
-   { "name": "100Hp", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
-   { "name": "75Hp", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
-   { "name": "30Hp", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" },
-   { "name": "0Hp", "from": 3, "to": 3, "direction": "forward", "color": "#000000ff" }
+   { "name": "HullLarge1", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "HullLarge2", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "HullLarge3", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" },
+   { "name": "HullLarge4", "from": 3, "to": 3, "direction": "forward", "color": "#000000ff" }
   ]
  }
 }

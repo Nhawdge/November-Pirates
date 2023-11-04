@@ -1,8 +1,8 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
+using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
-using NovemberPirates.Utilities;
 using Raylib_CsLo;
 
 namespace NovemberPirates.Scenes.Levels.Systems
@@ -34,7 +34,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     {
                         var color = myRender.Collision switch
                         {
-                            CollisionType.None => new Color(0, 0, 0, 0),
+                            CollisionType.None => new Color(0, 0, 0, 1),
                             CollisionType.Solid => Raylib.RED with { a = 128 },
                             CollisionType.Slow => Raylib.PINK with { a = 128 },
                             _ => Raylib.BLACK

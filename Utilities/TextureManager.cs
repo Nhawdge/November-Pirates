@@ -15,8 +15,13 @@ namespace NovemberPirates.Utilities
         private void LoadTextures()
         {
             TextureStore.Add(TextureKey.MapTileset, Raylib.LoadTexture("Assets/Maps/tiles_sheet.png"));
+
             TextureStore.Add(TextureKey.HullLarge, Raylib.LoadTexture("Assets/Art/hullLarge.png"));
             TextureStore.Add(TextureKey.MainFlag, Raylib.LoadTexture("Assets/Art/mainFlag.png"));
+            TextureStore.Add(TextureKey.Nest, Raylib.LoadTexture("Assets/Art/nest.png"));
+            TextureStore.Add(TextureKey.Pole, Raylib.LoadTexture("Assets/Art/pole.png"));
+            TextureStore.Add(TextureKey.SailLarge, Raylib.LoadTexture("Assets/Art/sailLarge1.png"));
+            TextureStore.Add(TextureKey.SailSmall, Raylib.LoadTexture("Assets/Art/sailSmall1.png"));
         }
 
         internal Texture GetTexture(TextureKey key)
@@ -35,5 +40,9 @@ namespace NovemberPirates.Utilities
         HullLarge,
         MapTileset,
         MainFlag,
+        Nest,
+        Pole,
+        SailLarge,
+        SailSmall,
     }
 }

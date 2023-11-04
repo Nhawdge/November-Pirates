@@ -1,0 +1,253 @@
+{ "frames": [
+   {
+    "filename": "White2-0",
+    "frame": { "x": 1, "y": 1, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Dead2-1",
+    "frame": { "x": 69, "y": 1, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Red2-2",
+    "frame": { "x": 137, "y": 1, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Green2-3",
+    "frame": { "x": 205, "y": 1, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Blue2-4",
+    "frame": { "x": 273, "y": 1, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Yello2-5",
+    "frame": { "x": 1, "y": 50, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "White1-6",
+    "frame": { "x": 69, "y": 50, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Dead1-7",
+    "frame": { "x": 137, "y": 50, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Red1-8",
+    "frame": { "x": 205, "y": 50, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Green1-9",
+    "frame": { "x": 273, "y": 50, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Blue1-10",
+    "frame": { "x": 1, "y": 99, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Yellow1-11",
+    "frame": { "x": 69, "y": 99, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "White4-12",
+    "frame": { "x": 137, "y": 99, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Dead4-13",
+    "frame": { "x": 205, "y": 99, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Red4-14",
+    "frame": { "x": 273, "y": 99, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Green4-15",
+    "frame": { "x": 1, "y": 148, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Blue4-16",
+    "frame": { "x": 69, "y": 148, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Yellow4-17",
+    "frame": { "x": 137, "y": 148, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "White3-18",
+    "frame": { "x": 205, "y": 148, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Dead3-19",
+    "frame": { "x": 273, "y": 148, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Red3-20",
+    "frame": { "x": 1, "y": 197, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Green3-21",
+    "frame": { "x": 69, "y": 197, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Blue3-22",
+    "frame": { "x": 137, "y": 197, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   },
+   {
+    "filename": "Yellow3-23",
+    "frame": { "x": 205, "y": 197, "w": 66, "h": 47 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 66, "h": 47 },
+    "sourceSize": { "w": 66, "h": 47 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3-rc6-x64",
+  "image": "sailLarge1.png",
+  "format": "RGBA8888",
+  "size": { "w": 340, "h": 245 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "White2", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "Dead2", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "Red2", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" },
+   { "name": "Green2", "from": 3, "to": 3, "direction": "forward", "color": "#000000ff" },
+   { "name": "Blue2", "from": 4, "to": 4, "direction": "forward", "color": "#000000ff" },
+   { "name": "Yello2", "from": 5, "to": 5, "direction": "forward", "color": "#000000ff" },
+   { "name": "White1", "from": 6, "to": 6, "direction": "forward", "color": "#000000ff" },
+   { "name": "Dead1", "from": 7, "to": 7, "direction": "forward", "color": "#000000ff" },
+   { "name": "Red1", "from": 8, "to": 8, "direction": "forward", "color": "#000000ff" },
+   { "name": "Green1", "from": 9, "to": 9, "direction": "forward", "color": "#000000ff" },
+   { "name": "Blue1", "from": 10, "to": 10, "direction": "forward", "color": "#000000ff" },
+   { "name": "Yellow1", "from": 11, "to": 11, "direction": "forward", "color": "#000000ff" },
+   { "name": "White4", "from": 12, "to": 12, "direction": "forward", "color": "#000000ff" },
+   { "name": "Dead4", "from": 13, "to": 13, "direction": "forward", "color": "#000000ff" },
+   { "name": "Red4", "from": 14, "to": 14, "direction": "forward", "color": "#000000ff" },
+   { "name": "Green4", "from": 15, "to": 15, "direction": "forward", "color": "#000000ff" },
+   { "name": "Blue4", "from": 16, "to": 16, "direction": "forward", "color": "#000000ff" },
+   { "name": "Yellow4", "from": 17, "to": 17, "direction": "forward", "color": "#000000ff" },
+   { "name": "White3", "from": 18, "to": 18, "direction": "forward", "color": "#000000ff" },
+   { "name": "Dead3", "from": 19, "to": 19, "direction": "forward", "color": "#000000ff" },
+   { "name": "Red3", "from": 20, "to": 20, "direction": "forward", "color": "#000000ff" },
+   { "name": "Green3", "from": 21, "to": 21, "direction": "forward", "color": "#000000ff" },
+   { "name": "Blue3", "from": 22, "to": 22, "direction": "forward", "color": "#000000ff" },
+   { "name": "Yellow3", "from": 23, "to": 23, "direction": "forward", "color": "#000000ff" }
+  ]
+ }
+}

@@ -1,6 +1,7 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
+using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities;
 using Raylib_CsLo;
@@ -29,14 +30,17 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 var player = entity.Get<Player>();
 
                 var movement = new Vector2(0, 0);
+                var boatChanged = false;
 
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_W))
                 {
                     player.Sail = (SailStatus)Math.Min(Enum.GetValues<SailStatus>().Length - 1, (int)player.Sail + 1);
+                    boatChanged = true;
                 }
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_S))
                 {
                     player.Sail = (SailStatus)Math.Max(0, (int)player.Sail - 1);
+                    boatChanged = true;
                 }
                 if (Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 {
@@ -50,6 +54,10 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     movement = new Vector2(0, -1);
                 }
+
+                if (boatChanged)
+                    sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Red, player.Sail, BoatCondition.Good))).Texture;
+
 
                 movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 
