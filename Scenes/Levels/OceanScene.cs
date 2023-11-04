@@ -21,11 +21,15 @@ namespace NovemberPirates.Scenes.Levels
             Systems.Add(new UiSystem());
             Systems.Add(new DebugSystem());
             Systems.Add(new CannonBallSystem());
+            Systems.Add(new EnemyControlSystem());
+            Systems.Add(new EffectsSystem());
 
             var mapDetails = MapManager.Instance.LoadMap("Level_0", World);
             MapEdge = mapDetails.MapEdge;
 
             PlayerBuilder.Create(World);
+
+            EnemyBuilder.CreateEnemyShip(World);
 
 
             var singleton = World.Create<Singleton, Wind>();

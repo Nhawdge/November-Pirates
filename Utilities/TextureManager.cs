@@ -25,6 +25,7 @@ namespace NovemberPirates.Utilities
             TextureStore.Add(TextureKey.Cannon, Raylib.LoadTexture("Assets/Art/cannon.png"));
             TextureStore.Add(TextureKey.CannonLoose, Raylib.LoadTexture("Assets/Art/cannonLoose.png"));
             TextureStore.Add(TextureKey.Cannonball, Raylib.LoadTexture("Assets/Art/cannonBall.png"));
+            TextureStore.Add(TextureKey.Explosion, Raylib.LoadTexture("Assets/Art/explosion.png"));
         }
 
         internal Texture GetTexture(TextureKey key)
@@ -50,5 +51,6 @@ namespace NovemberPirates.Utilities
         Cannon,
         CannonLoose,
         Cannonball,
+        Explosion,
     }
 }

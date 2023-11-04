@@ -45,7 +45,7 @@
     "duration": 100
    },
    {
-    "filename": "Yello2-5",
+    "filename": "Yellow2-5",
     "frame": { "x": 1, "y": 50, "w": 66, "h": 47 },
     "rotated": false,
     "trimmed": false,
@@ -229,7 +229,7 @@
    { "name": "Red2", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" },
    { "name": "Green2", "from": 3, "to": 3, "direction": "forward", "color": "#000000ff" },
    { "name": "Blue2", "from": 4, "to": 4, "direction": "forward", "color": "#000000ff" },
-   { "name": "Yello2", "from": 5, "to": 5, "direction": "forward", "color": "#000000ff" },
+   { "name": "Yellow2", "from": 5, "to": 5, "direction": "forward", "color": "#000000ff" },
    { "name": "White1", "from": 6, "to": 6, "direction": "forward", "color": "#000000ff" },
    { "name": "Dead1", "from": 7, "to": 7, "direction": "forward", "color": "#000000ff" },
    { "name": "Red1", "from": 8, "to": 8, "direction": "forward", "color": "#000000ff" },

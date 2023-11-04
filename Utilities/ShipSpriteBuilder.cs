@@ -16,7 +16,7 @@ namespace NovemberPirates.Utilities
                 BoatType.HullLarge => new Sprite(TextureKey.HullLarge, "Assets/Art/hullLarge") { Position = shipSize / 2 },
                 _ => throw new NotImplementedException($"Hull type: '{options.Hull}' does not exist "),
             };
-            baseHullSprite.Play("HullLarge1");
+            baseHullSprite.Play($"HullLarge{(int)options.Condition}");
 
             //Cannons
             var cannons = new List<Sprite>();
@@ -58,12 +58,12 @@ namespace NovemberPirates.Utilities
                 Rotation = 180,
             });
 
-
+              
             // Main sail
             var mainSailSprite = options.Hull switch
             {
                 BoatType.HullLarge => new Sprite(TextureKey.SailLarge, "Assets/Art/sailLarge1"),
-                _ => throw new NotImplementedException($"Hull type: '{options.Hull}' does not exist "),
+                _ => throw new NotImplementedException($"Hull type: '{options.Hull}' does not exist "), 
             };
             mainSailSprite.Play($"{options.Color}{(int)options.Condition}");
             mainSailSprite.Position = new Vector2(shipSize.X / 2, 45);
@@ -99,7 +99,7 @@ namespace NovemberPirates.Utilities
             nestSprite.Draw();
             flagSprite.Draw();
             poleSprite.Draw();
-            if (options.Sails >= SailStatus.Half)
+            if (options.Sails >= SailStatus.Half && options.Condition < BoatCondition.Broken)
                 frontSailSprite.Draw();
 
             Raylib.EndTextureMode();
@@ -126,7 +126,10 @@ namespace NovemberPirates.Utilities
         }
 
     }
-    internal record BoatOptions(BoatType Hull, BoatColor Color, SailStatus Sails, BoatCondition Condition = BoatCondition.Good);
+    internal record BoatOptions(BoatType Hull, BoatColor Color, SailStatus Sails, BoatCondition Condition = BoatCondition.Good)
+    {
+        internal BoatOptions(Ship ship) : this(ship.BoatType, ship.BoatColor, ship.Sail, ship.BoatCondition) { }
+    };
 
 
     internal enum BoatType

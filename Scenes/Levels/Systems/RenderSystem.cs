@@ -19,7 +19,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var singletonEntity = world.QueryFirst<Singleton>();
             var singleton = singletonEntity.Get<Singleton>();
 
-            var renders = new QueryDescription().WithAll<Render>();
+            var renders = new QueryDescription().WithAll<Render>().WithNone<Effect>();
             world.Query(in renders, (entity) =>
             {
                 var myRender = entity.Get<Render>();
@@ -44,13 +44,21 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 }
             });
 
-            var sprites = new QueryDescription().WithAll<Sprite>().WithNone<MapTile>();
+            var sprites = new QueryDescription().WithAll<Sprite>().WithNone<MapTile, Effect>();
 
             world.Query(in sprites, (entity) =>
             {
                 var myRender = entity.Get<Sprite>();
-                Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);
+                myRender.Draw();
             });
+
+            var effectSprites = new QueryDescription().WithAll<Sprite, Effect>().WithNone<MapTile>();
+            world.Query(in effectSprites, (entity) =>
+            {
+                var myRender = entity.Get<Sprite>();
+                myRender.Draw();
+            });
+
         }
     }
 }
