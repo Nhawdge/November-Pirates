@@ -73,7 +73,7 @@ namespace NovemberPirates.Utilities
                     {
                         "idle", new AnimationSets("idle", 0,0, Direction.forward, new List<Frame>
                         {
-                            new Frame(0,0,66,128, 100f)
+                            new Frame(0,0, 66, 128, 100f)
                         })
                     }
                 },
