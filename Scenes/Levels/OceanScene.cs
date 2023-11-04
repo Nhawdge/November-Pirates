@@ -15,11 +15,12 @@ namespace NovemberPirates.Scenes.Levels
             //var entity = World.Create(mapTilesArchetype);
 
             Systems.Add(new RenderSystem());
-            Systems.Add(new BoatMovementSystem());
+            Systems.Add(new ShipControlSystem());
             Systems.Add(new CameraSystem());
             Systems.Add(new WindSystem());
             Systems.Add(new UiSystem());
             Systems.Add(new DebugSystem());
+            Systems.Add(new CannonBallSystem());
 
             var mapDetails = MapManager.Instance.LoadMap("Level_0", World);
             MapEdge = mapDetails.MapEdge;

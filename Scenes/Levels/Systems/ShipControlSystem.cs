@@ -1,6 +1,7 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
+using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities;
@@ -9,9 +10,9 @@ using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
 {
-    internal class BoatMovementSystem : GameSystem
+    internal class ShipControlSystem : GameSystem
     {
-        public BoatMovementSystem()
+        public ShipControlSystem()
         {
         }
 
@@ -58,7 +59,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (boatChanged)
                     sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Red, player.Sail, BoatCondition.Good))).Texture;
 
-
                 movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 
                 var boatAngle = (sprite.Rotation + 360) % 360;
@@ -83,24 +83,16 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (player.Sail == SailStatus.Closed)
                     movement = new Vector2(0, 0);
 
-                //singleton.DebugText += $"\n2:{movement}";
                 if (player.Sail == SailStatus.Rowing)
                     movement = movement * player.RowingPower;
 
-                //singleton.DebugText += $"\n3:{movement}";
                 if (player.Sail == SailStatus.Half)
                     movement = movement * ((windStrength / 2) + player.RowingPower);
 
-                //singleton.DebugText += $"\n4:{movement}";
                 if (player.Sail == SailStatus.Full)
                     movement = movement * (windStrength + player.RowingPower);
 
-                singleton.DebugText += $"\n5:{movement}";
-
                 movement *= Raylib.GetFrameTime();
-
-                singleton.DebugText += $"\n6:{movement}";
-
 
                 var adjustedPosition = sprite.Position
                     with
@@ -155,6 +147,18 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         //Console.WriteLine($"Collision {collidingTile.Collision}");
                     }
                 }
+
+                if (Raylib.IsKeyPressed(KeyboardKey.KEY_Q) || Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT))
+                {
+                    // fire cannon Port
+                    CannonballBuilder.Create(world, sprite.Position, sprite.RenderRotation + 180);
+                }
+                if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) || Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT))
+                {
+                    // fire cannon Starboard
+                    CannonballBuilder.Create(world, sprite.Position, sprite.RenderRotation);
+                }
+
             });
         }
     }

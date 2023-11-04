@@ -22,6 +22,9 @@ namespace NovemberPirates.Utilities
             TextureStore.Add(TextureKey.Pole, Raylib.LoadTexture("Assets/Art/pole.png"));
             TextureStore.Add(TextureKey.SailLarge, Raylib.LoadTexture("Assets/Art/sailLarge1.png"));
             TextureStore.Add(TextureKey.SailSmall, Raylib.LoadTexture("Assets/Art/sailSmall1.png"));
+            TextureStore.Add(TextureKey.Cannon, Raylib.LoadTexture("Assets/Art/cannon.png"));
+            TextureStore.Add(TextureKey.CannonLoose, Raylib.LoadTexture("Assets/Art/cannonLoose.png"));
+            TextureStore.Add(TextureKey.Cannonball, Raylib.LoadTexture("Assets/Art/cannonBall.png"));
         }
 
         internal Texture GetTexture(TextureKey key)
@@ -44,5 +47,8 @@ namespace NovemberPirates.Utilities
         Pole,
         SailLarge,
         SailSmall,
+        Cannon,
+        CannonLoose,
+        Cannonball,
     }
 }

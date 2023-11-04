@@ -19,6 +19,44 @@ namespace NovemberPirates.Utilities
             baseHullSprite.Play("HullLarge1");
 
             //Cannons
+            var cannons = new List<Sprite>();
+
+            var cannonHeight = 38;
+            var verticalOffset = 20;
+            cannons.Add(new Sprite(TextureKey.CannonLoose, "Assets/Art/cannonLoose")
+            {
+                Position = new Vector2(shipSize.X / 2 + verticalOffset, cannonHeight),
+            });
+
+            cannons.Add(new Sprite(TextureKey.CannonLoose, "Assets/Art/cannonLoose")
+            {
+                Position = new Vector2(shipSize.X / 2 - verticalOffset, cannonHeight),
+                Rotation = 180,
+            });
+
+            cannonHeight += 18;
+            cannons.Add(new Sprite(TextureKey.CannonLoose, "Assets/Art/cannonLoose")
+            {
+                Position = new Vector2(shipSize.X / 2 + verticalOffset, cannonHeight),
+            });
+
+            cannons.Add(new Sprite(TextureKey.CannonLoose, "Assets/Art/cannonLoose")
+            {
+                Position = new Vector2(shipSize.X / 2 - verticalOffset, cannonHeight),
+                Rotation = 180,
+            });
+
+            cannonHeight += 19;
+            cannons.Add(new Sprite(TextureKey.CannonLoose, "Assets/Art/cannonLoose")
+            {
+                Position = new Vector2(shipSize.X / 2 + verticalOffset, cannonHeight),
+            });
+
+            cannons.Add(new Sprite(TextureKey.CannonLoose, "Assets/Art/cannonLoose")
+            {
+                Position = new Vector2(shipSize.X / 2 - verticalOffset, cannonHeight),
+                Rotation = 180,
+            });
 
 
             // Main sail
@@ -55,6 +93,7 @@ namespace NovemberPirates.Utilities
             Raylib.ClearBackground(new Color(0, 0, 0, 0));
 
             baseHullSprite.Draw();
+            cannons.ForEach(x => x.Draw());
             if (options.Sails >= SailStatus.Full)
                 mainSailSprite.Draw();
             nestSprite.Draw();
