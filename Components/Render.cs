@@ -19,7 +19,7 @@ namespace NovemberPirates.Components
 
         public bool CanRotate = true;
         public float ZIndex = 0f;
-        public float RotationAsRadians => Rotation * (float)(Math.PI / 180);
+        public float RotationAsRadians => RenderRotation * (float)(Math.PI / 180);
         public Vector2 Position;
         public Color Color;
 

@@ -57,7 +57,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 }
 
                 if (boatChanged)
-                    sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Red, player.Sail, BoatCondition.Good))).Texture;
+                    sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Red, player.Sail, player.BoatCondition))).Texture;
 
                 movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 
@@ -82,7 +82,15 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 if (player.Sail == SailStatus.Closed)
                     movement = new Vector2(0, 0);
-
+                else
+                {
+                    var inRadians = (float)((sprite.RenderRotation + 45) * (Math.PI / 180));
+                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(50, 0), inRadians));
+                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(0, 50), inRadians));
+                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(40, 0), inRadians));
+                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(0, 40), inRadians));
+                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(0, 0), inRadians));
+                }
                 if (player.Sail == SailStatus.Rowing)
                     movement = movement * player.RowingPower;
 
@@ -100,6 +108,8 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     X = sprite.Position.X,
                     Y = sprite.Position.Y,
                 };
+
+
 
                 if (singleton.Debug >= DebugLevel.Medium)
                     Raylib.DrawCircle((int)adjustedPosition.X, (int)adjustedPosition.Y, 50f, Raylib.ORANGE);

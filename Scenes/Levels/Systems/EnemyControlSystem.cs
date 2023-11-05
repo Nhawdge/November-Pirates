@@ -1,7 +1,9 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
+using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Systems;
+using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
 {
@@ -15,6 +17,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
             {
                 var sprite = entity.Get<Sprite>();
                 var ship = entity.Get<Ship>();
+                var shouldMakeNewFire = Random.Shared.Next(0, 100) < 5;
+
+                if (ship.BoatCondition == Utilities.BoatCondition.Broken && shouldMakeNewFire)
+                {
+                    
+                    EffectsBuilder.CreateFire(world, sprite.Position + new Vector2(Random.Shared.Next(-30, 30), Random.Shared.Next(-50, 30)));
+                }
             });
 
             world.Query(enemyQuery);

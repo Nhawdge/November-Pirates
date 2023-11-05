@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using NovemberPirates.Utilities;
+using System.Numerics;
 
 namespace NovemberPirates.Components
 {
@@ -10,6 +11,8 @@ namespace NovemberPirates.Components
         internal SailStatus Sail = SailStatus.Closed;
 
         internal float RowingPower = 100f;
+
+        public BoatCondition BoatCondition = BoatCondition.Good;
     }
 
     public enum SailStatus

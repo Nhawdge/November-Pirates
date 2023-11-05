@@ -44,6 +44,14 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 }
             });
 
+
+            var effectSprites = new QueryDescription().WithAll<Sprite, Effect, LayerWater>().WithNone<MapTile>();
+            world.Query(in effectSprites, (entity) =>
+            {
+                var myRender = entity.Get<Sprite>();
+                myRender.Draw();
+            });
+
             var sprites = new QueryDescription().WithAll<Sprite>().WithNone<MapTile, Effect>();
 
             world.Query(in sprites, (entity) =>
@@ -52,13 +60,12 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 myRender.Draw();
             });
 
-            var effectSprites = new QueryDescription().WithAll<Sprite, Effect>().WithNone<MapTile>();
+            effectSprites = new QueryDescription().WithAll<Sprite, Effect, LayerAir>().WithNone<MapTile>();
             world.Query(in effectSprites, (entity) =>
             {
                 var myRender = entity.Get<Sprite>();
                 myRender.Draw();
             });
-
         }
     }
 }

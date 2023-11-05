@@ -17,6 +17,8 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 var effect = effectEntity.Get<Effect>();
                 var sprite = effectEntity.Get<Sprite>();
 
+                sprite.Position += effect.Motion * Raylib.GetFrameTime();
+
                 effect.Elapsed += Raylib.GetFrameTime();
                 if (effect.Elapsed > effect.Duration)
                 {

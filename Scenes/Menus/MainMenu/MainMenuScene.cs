@@ -22,8 +22,14 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Action = () =>
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new OceanScene();
-                }
+                },
+                Order = 1
             });
+
+            var instructions = World.Create<UiTitle>();
+            instructions.Set(new UiTitle { Text = @"WASD to move Q/E or Arrow keys to shoot", Order = 2 });
+            var instructions2 = World.Create<UiTitle>();
+            instructions2.Set(new UiTitle { Text = @"F2 for the debugger I'm proud of", Order = 3 });
         }
     }
 }
