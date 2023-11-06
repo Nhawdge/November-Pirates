@@ -5,7 +5,7 @@ using NovemberPirates.Systems;
 using Raylib_CsLo;
 using System.Numerics;
 
-namespace NovemberPirates.Scenes.Menus.MainMenu
+namespace NovemberPirates.Scenes.Menus.Systems
 {
     internal class MainMenuSystem : GameSystem
     {
@@ -28,7 +28,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                     var titleComponent = entity.Get<UiTitle>();
 
                     var text = titleComponent.Text;
-                    var rect = new Rectangle(centerPoint.X - 100, 200 + (50 * titleComponent.Order), 200, 100);
+                    var rect = new Rectangle(centerPoint.X - 100, 200 + 50 * titleComponent.Order, 200, 100);
                     //RayGui.GuiTextBox(text, centerPoint.X - 200, centerPoint.Y - 200, 24, Raylib.ORANGE);
 
                     RayGui.GuiSetStyle((int)GuiControl.LABEL, (int)GuiControlProperty.TEXT_ALIGNMENT, 1);
@@ -44,7 +44,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 if (entity.Has<UiButton>())
                 {
                     var button = entity.Get<UiButton>();
-                    var rect = dummyrect with { x = dummyrect.x + 100, y = dummyrect.y + (50 * button.Order), width = 200, height = 60 };
+                    var rect = dummyrect with { x = dummyrect.x + 100, y = dummyrect.y + 50 * button.Order, width = 200, height = 60 };
 
                     if (RayGui.GuiButton(rect, button.Text))
                     {

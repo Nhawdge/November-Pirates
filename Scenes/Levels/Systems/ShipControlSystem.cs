@@ -85,11 +85,11 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 else
                 {
                     var inRadians = (float)((sprite.RenderRotation + 45) * (Math.PI / 180));
-                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(50, 0), inRadians));
-                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(0, 50), inRadians));
-                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(40, 0), inRadians));
-                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(0, 40), inRadians));
-                    EffectsBuilder.CreateTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(0, 0), inRadians));
+                    EffectsBuilder.CreateWaterTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(50, 0), inRadians));
+                    EffectsBuilder.CreateWaterTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(0, 50), inRadians));
+                    EffectsBuilder.CreateWaterTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(40, 0), inRadians));
+                    EffectsBuilder.CreateWaterTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(0, 40), inRadians));
+                    EffectsBuilder.CreateWaterTrail(world, sprite.Position, RayMath.Vector2Rotate(new Vector2(20, 20), inRadians));
                 }
                 if (player.Sail == SailStatus.Rowing)
                     movement = movement * player.RowingPower;

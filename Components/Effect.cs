@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace NovemberPirates.Components
 {
@@ -8,5 +9,13 @@ namespace NovemberPirates.Components
         internal float Elapsed;
 
         public Vector2 Motion = Vector2.Zero;
+
+        public bool Fadeout = false;
+
+        public bool CreateTrail = false;
+
+        public bool Wiggle = false;
+
+        public float FadeStart = 1f;
     }
 }

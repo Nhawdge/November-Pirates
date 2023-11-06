@@ -15,7 +15,6 @@ namespace NovemberPirates
 
         public void StartGame()
         {
-
             Raylib.InitWindow(1280, 720, "November Pirates");
             Raylib.SetTargetFPS(60);
 

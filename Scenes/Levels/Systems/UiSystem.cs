@@ -19,8 +19,15 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var player = playerEntity.Get<Player>();
 
             var topleft = new Rectangle(10, 10, 50, 50);
+            var singletonEntity = world.QueryFirst<Singleton>();
+            var singleton = singletonEntity.Get<Singleton>();
 
-            RayGui.GuiLabel(topleft, Enum.GetName<SailStatus>(player.Sail));
+            if (singleton.Debug > DebugLevel.None)
+            {
+                RayGui.GuiLabel(topleft, Enum.GetName<SailStatus>(player.Sail));
+                Raylib.DrawText(Raylib.GetFrameTime().ToString(), 10, 70, 20, Raylib.RED);
+                Raylib.DrawFPS(10, 90);
+            }
         }
     }
 }

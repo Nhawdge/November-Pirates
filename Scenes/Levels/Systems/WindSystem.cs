@@ -1,31 +1,34 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
+using NovemberPirates.Entities.Archetypes;
+using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
 using Raylib_CsLo;
+using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
 {
     internal class WindSystem : GameSystem
     {
-        internal override void Update(World world)
-        {
-
-        }
+        internal override void Update(World world) { }
 
         internal override void UpdateNoCamera(World world)
         {
-            var query = new QueryDescription().WithAll<Wind, Singleton>();
+            var singletonEntity = world.QueryFirst<Singleton>();
+            var singleton = singletonEntity.Get<Singleton>();
 
-            world.Query(in query, (entity) =>
+            var wind = singletonEntity.Get<Wind>();
+            wind.LastWindChange += Raylib.GetFrameTime();
+            if (wind.LastWindChange > 500)
             {
-                var wind = entity.Get<Wind>();
-                var singleton = entity.Get<Singleton>();
+                wind.LastWindChange = 0;
+                wind.WindDirection = RayMath.Vector2Rotate(wind.WindDirection, Random.Shared.Next(0, 10));
+                wind.WindStrength = Random.Shared.Next(200, 400);
+                EffectsBuilder.CreateWindEffect(world);
+            }
 
-                wind.WindDirection = RayMath.Vector2Rotate(wind.WindDirection, 0.1f * Raylib.GetFrameTime());
-
-                Raylib.DrawLine(50, 50, (int)(50 + wind.WindDirection.X * 30), (int)(50 + wind.WindDirection.Y * 30), Raylib.ORANGE);
-            });
+            Raylib.DrawLine(50, 50, (int)(50 + wind.WindDirection.X * 30), (int)(50 + wind.WindDirection.Y * 30), Raylib.ORANGE);
         }
     }
 }

@@ -21,12 +21,9 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 if (ship.BoatCondition == Utilities.BoatCondition.Broken && shouldMakeNewFire)
                 {
-                    
                     EffectsBuilder.CreateFire(world, sprite.Position + new Vector2(Random.Shared.Next(-30, 30), Random.Shared.Next(-50, 30)));
                 }
             });
-
-            world.Query(enemyQuery);
         }
     }
 }

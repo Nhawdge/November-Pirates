@@ -41,6 +41,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 RayGui.GuiLabel(bottomLeft, singleton.DebugText);
                 singleton.DebugText = "";
             }
+
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_F3))
+            {
+                var wind = singletonEntity.Get<Wind>();
+
+                wind.LastWindChange = 10000;
+            }
         }
     }
 }
