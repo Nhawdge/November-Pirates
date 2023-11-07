@@ -12,7 +12,7 @@ namespace NovemberPirates.Entities.Archetypes
     {
         internal static void CreateExplosion(World world, Vector2 pos)
         {
-            var explosionEntity = world.Create<Sprite, Effect>();
+            var explosionEntity = world.Create<Sprite, Effect, LayerAir>();
 
             var explosionSprite = new Sprite(TextureKey.Explosion, "Assets/Art/explosion", 1f, true);
             explosionSprite.Position = pos;
@@ -22,24 +22,22 @@ namespace NovemberPirates.Entities.Archetypes
             var explosion = new Effect();
             explosion.Duration = 0.3f;
             explosionEntity.Set(explosion);
-
         }
 
         internal static void CreateFire(World world, Vector2 pos)
         {
             var effectEntity = world.Create<Sprite, Effect, LayerAir>();
-
             var effectSprite = new Sprite(TextureKey.Fire, "Assets/Art/fire1", 1f, true);
 
             var fireSize = Random.Shared.Next(1, 3);
             effectSprite.Play($"Fire{fireSize}");
             effectSprite.Position = pos;
-            //effectSprite.Rotation = Random.Shared.Next(0, 360);
+            
             effectEntity.Set(effectSprite);
 
             var effect = new Effect();
-            effect.CreateTrail = true;
-
+            // todo stretch goal - make smoke 
+            // effect.CreateTrail = false;
             effect.Duration = 1.5f;
             effectEntity.Set(effect);
         }
@@ -72,7 +70,7 @@ namespace NovemberPirates.Entities.Archetypes
 
             var effect = new Effect();
             effect.Fadeout = true;
-            effect.FadeStart = 1f;
+            effect.FadeStart = 0.5f;
 
             effect.Duration = 1f;
             effectEntity.Set(effect);
@@ -105,6 +103,8 @@ namespace NovemberPirates.Entities.Archetypes
             effectEntity.Set(new LayerAir());
         }
 
+        #region Large Effects
+
         internal static void CreateWindEffect(World world)
         {
             var singletonEntity = world.QueryFirst<Singleton>();
@@ -122,7 +122,8 @@ namespace NovemberPirates.Entities.Archetypes
                 }, NovemberPiratesEngine.Instance.Camera);
                 CreateAirTrail(world, centerPos, wind.WindDirection * 100, true);
             }
-
         }
+
+        #endregion
     }
 }
