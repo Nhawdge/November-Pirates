@@ -18,17 +18,22 @@ namespace NovemberPirates.Scenes.Levels.Systems
             {
                 var effect = effectEntity.Get<Effect>();
                 var sprite = effectEntity.Get<Sprite>();
+                if (effect.TruePosition == Vector2.Zero)
+                {
+                    effect.TruePosition = sprite.Position;
+                }
+                effect.TruePosition += effect.Motion * Raylib.GetFrameTime();
 
                 if (effect.Wiggle)
                 {
-                    // TODO Figure this math out
-                    var angle = Math.Atan2(effect.Motion.Y, effect.Motion.X);
-                    var offset = new Vector2();
-                    var elapsed = effect.Elapsed;
-                    offset.Y = Math.Abs((float)Math.Abs(Math.Sin(elapsed)));
-                    var rotatedOffset = RayMath.Vector2Rotate(offset, (float)angle);
+                    var truePosition = effect.TruePosition;
+                    var direction = (float)Math.Atan2(effect.Motion.Y, effect.Motion.X);
 
-                    sprite.Position += (effect.Motion + rotatedOffset) * Raylib.GetFrameTime();
+                    var offset = new Vector2((float)Math.Sin(effect.Elapsed) * 100, 0);
+                    var rotatedOffset = RayMath.Vector2Rotate(offset, direction);
+
+                    sprite.Position = truePosition + rotatedOffset;
+
                 }
                 else
                 {

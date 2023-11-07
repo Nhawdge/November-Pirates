@@ -9,6 +9,7 @@ namespace NovemberPirates.Components
         internal float Elapsed;
 
         public Vector2 Motion = Vector2.Zero;
+        public Vector2 TruePosition = Vector2.Zero;
 
         public bool Fadeout = false;
 
