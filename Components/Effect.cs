@@ -16,6 +16,7 @@ namespace NovemberPirates.Components
         public bool CreateTrail = false;
 
         public bool Wiggle = false;
+        public float WiggleTimerOffset = 0f;
 
         public float FadeStart = 1f;
     }

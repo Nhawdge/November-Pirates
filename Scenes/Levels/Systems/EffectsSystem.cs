@@ -29,7 +29,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     var truePosition = effect.TruePosition;
                     var direction = (float)Math.Atan2(effect.Motion.Y, effect.Motion.X);
 
-                    var offset = new Vector2((float)Math.Sin(effect.Elapsed) * 100, 0);
+                    var offset = new Vector2(0, (float)Math.Sin(effect.Elapsed + effect.WiggleTimerOffset) * 50);
                     var rotatedOffset = RayMath.Vector2Rotate(offset, direction);
 
                     sprite.Position = truePosition + rotatedOffset;

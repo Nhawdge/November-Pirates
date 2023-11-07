@@ -76,6 +76,10 @@ namespace NovemberPirates.Entities.Archetypes
             effect.FadeStart = 0.4f;
             effect.CreateTrail = createTrail;
             effect.Duration = (createTrail ? 5f : 1f) * 3;
+            if (createTrail)
+            {
+                effect.WiggleTimerOffset = (float)Random.Shared.Next(0,2) ;
+            }
             effect.Motion = motion;
             effectEntity.Set(effect);
 
