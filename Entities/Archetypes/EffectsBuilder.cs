@@ -61,6 +61,25 @@ namespace NovemberPirates.Entities.Archetypes
             effectEntity.Set(effect);
         }
 
+        internal static void CreateCannonTrail(World world, Vector2 pos)
+        {
+            var effectEntity = world.Create<Sprite, Effect, LayerAir>();
+
+            var effectSprite = new Sprite(TextureKey.WhitePixel, "Assets/Art/whitepixel", 1f, true);
+            effectSprite.Position = pos;
+            effectSprite.Color = new Color(255, 255, 255, 96);
+            effectEntity.Set(effectSprite);
+
+            var effect = new Effect();
+            effect.Fadeout = true;
+            effect.FadeStart = 1f;
+
+            effect.Duration = 1f;
+            effectEntity.Set(effect);
+
+            effectEntity.Set(new LayerAir());
+        }
+
         internal static void CreateAirTrail(World world, Vector2 pos, Vector2 motion, bool createTrail)
         {
             var effectEntity = world.Create<Sprite, Effect, LayerAir>();
@@ -78,7 +97,7 @@ namespace NovemberPirates.Entities.Archetypes
             effect.Duration = (createTrail ? 5f : 1f) * 3;
             if (createTrail)
             {
-                effect.WiggleTimerOffset = (float)Random.Shared.Next(0,2) ;
+                effect.WiggleTimerOffset = (float)Random.Shared.Next(0, 2);
             }
             effect.Motion = motion;
             effectEntity.Set(effect);

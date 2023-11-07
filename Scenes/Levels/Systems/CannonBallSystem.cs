@@ -5,7 +5,6 @@ using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities;
 using Raylib_CsLo;
-using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
 {
@@ -24,8 +23,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 var start = sprite.Position;
                 sprite.Position += cannonball.Motion * Raylib.GetFrameTime();
+                cannonball.Elapsed += Raylib.GetFrameTime();
+                if (cannonball.Elapsed > cannonball.Duration)
+                {
+                    world.Destroy(entity);
+                }
 
-                EffectsBuilder.CreateAirTrail(world, sprite.Position, Vector2.Zero, false);
+                EffectsBuilder.CreateCannonTrail(world, sprite.Position);
 
                 var end = sprite.Position;
 
