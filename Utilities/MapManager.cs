@@ -2,6 +2,8 @@
 using Arch.Core.Extensions;
 using Arch.Core.Utils;
 using NovemberPirates.Components;
+using NovemberPirates.Entities.Archetypes;
+using NovemberPirates.Extensions;
 using QuickType.Map;
 using System.Numerics;
 
@@ -55,6 +57,19 @@ namespace NovemberPirates.Utilities
                     }
 
                     mapTile.Set(tileSprite);
+                }
+                foreach (var entity in layer.EntityInstances)
+                {
+                    Console.WriteLine($"entity: {entity.Identifier}");
+                    if (entity.Identifier == Identifier.SpawnPoint)
+                    {
+                        EnemyBuilder.CreateSpawnPoint(world, entity.Px.ToVector2(), Team.Red);
+                    }
+                    if (entity.Identifier == Identifier.PatrolPoint)
+                    {
+                        var order = (int)(entity.FieldInstances.FirstOrDefault(x => x.Identifier == "Order").Value);
+                        EnemyBuilder.CreatePatrolPoint(world, entity.Px.ToVector2(), Team.Red, order);
+                    }
                 }
             }
             return details;

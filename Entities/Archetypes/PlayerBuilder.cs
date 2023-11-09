@@ -16,7 +16,7 @@ namespace NovemberPirates.Entities.Archetypes
             player.Set(playerComponent);
 
             //var playerSprite = new Sprite(TextureKey.HullLarge, "Assets/Art/hullLarge", 1f, true);
-            var playerSprite = ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Red, SailStatus.Closed));
+            var playerSprite = ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Dead, SailStatus.Closed));
 
             playerSprite.Position = new System.Numerics.Vector2(3000, 3000);
             //playerSprite.RotationOffset = -180f;

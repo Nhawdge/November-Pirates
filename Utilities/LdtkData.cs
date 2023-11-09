@@ -67,10 +67,10 @@ namespace QuickType.Map
         public long DefaultGridSize { get; set; }
 
         [JsonPropertyName("defaultEntityWidth")]
-        public object DefaultEntityWidth { get; set; }
+        public long DefaultEntityWidth { get; set; }
 
         [JsonPropertyName("defaultEntityHeight")]
-        public object DefaultEntityHeight { get; set; }
+        public long DefaultEntityHeight { get; set; }
 
         [JsonPropertyName("bgColor")]
         public string BgColor { get; set; }
@@ -139,7 +139,7 @@ namespace QuickType.Map
         public Layer[] Layers { get; set; }
 
         [JsonPropertyName("entities")]
-        public object[] Entities { get; set; }
+        public Entity[] Entities { get; set; }
 
         [JsonPropertyName("tilesets")]
         public Tileset[] Tilesets { get; set; }
@@ -152,6 +152,207 @@ namespace QuickType.Map
 
         [JsonPropertyName("levelFields")]
         public object[] LevelFields { get; set; }
+    }
+
+    public partial class Entity
+    {
+        [JsonPropertyName("identifier")]
+        public Identifier Identifier { get; set; }
+
+        [JsonPropertyName("uid")]
+        public long Uid { get; set; }
+
+        [JsonPropertyName("tags")]
+        public object[] Tags { get; set; }
+
+        [JsonPropertyName("exportToToc")]
+        public bool ExportToToc { get; set; }
+
+        [JsonPropertyName("doc")]
+        public object Doc { get; set; }
+
+        [JsonPropertyName("width")]
+        public long Width { get; set; }
+
+        [JsonPropertyName("height")]
+        public long Height { get; set; }
+
+        [JsonPropertyName("resizableX")]
+        public bool ResizableX { get; set; }
+
+        [JsonPropertyName("resizableY")]
+        public bool ResizableY { get; set; }
+
+        [JsonPropertyName("minWidth")]
+        public object MinWidth { get; set; }
+
+        [JsonPropertyName("maxWidth")]
+        public object MaxWidth { get; set; }
+
+        [JsonPropertyName("minHeight")]
+        public object MinHeight { get; set; }
+
+        [JsonPropertyName("maxHeight")]
+        public object MaxHeight { get; set; }
+
+        [JsonPropertyName("keepAspectRatio")]
+        public bool KeepAspectRatio { get; set; }
+
+        [JsonPropertyName("tileOpacity")]
+        public long TileOpacity { get; set; }
+
+        [JsonPropertyName("fillOpacity")]
+        public long FillOpacity { get; set; }
+
+        [JsonPropertyName("lineOpacity")]
+        public long LineOpacity { get; set; }
+
+        [JsonPropertyName("hollow")]
+        public bool Hollow { get; set; }
+
+        [JsonPropertyName("color")]
+        public Color Color { get; set; }
+
+        [JsonPropertyName("renderMode")]
+        public string RenderMode { get; set; }
+
+        [JsonPropertyName("showName")]
+        public bool ShowName { get; set; }
+
+        [JsonPropertyName("tilesetId")]
+        public object TilesetId { get; set; }
+
+        [JsonPropertyName("tileRenderMode")]
+        public string TileRenderMode { get; set; }
+
+        [JsonPropertyName("tileRect")]
+        public object TileRect { get; set; }
+
+        [JsonPropertyName("uiTileRect")]
+        public object UiTileRect { get; set; }
+
+        [JsonPropertyName("nineSliceBorders")]
+        public object[] NineSliceBorders { get; set; }
+
+        [JsonPropertyName("maxCount")]
+        public long MaxCount { get; set; }
+
+        [JsonPropertyName("limitScope")]
+        public string LimitScope { get; set; }
+
+        [JsonPropertyName("limitBehavior")]
+        public string LimitBehavior { get; set; }
+
+        [JsonPropertyName("pivotX")]
+        public long PivotX { get; set; }
+
+        [JsonPropertyName("pivotY")]
+        public long PivotY { get; set; }
+
+        [JsonPropertyName("fieldDefs")]
+        public FieldDef[] FieldDefs { get; set; }
+    }
+
+    public partial class FieldDef
+    {
+        [JsonPropertyName("identifier")]
+        public string Identifier { get; set; }
+
+        [JsonPropertyName("doc")]
+        public object Doc { get; set; }
+
+        [JsonPropertyName("__type")]
+        public string Type { get; set; }
+
+        [JsonPropertyName("uid")]
+        public long Uid { get; set; }
+
+        [JsonPropertyName("type")]
+        public string FieldDefType { get; set; }
+
+        [JsonPropertyName("isArray")]
+        public bool IsArray { get; set; }
+
+        [JsonPropertyName("canBeNull")]
+        public bool CanBeNull { get; set; }
+
+        [JsonPropertyName("arrayMinLength")]
+        public object ArrayMinLength { get; set; }
+
+        [JsonPropertyName("arrayMaxLength")]
+        public object ArrayMaxLength { get; set; }
+
+        [JsonPropertyName("editorDisplayMode")]
+        public string EditorDisplayMode { get; set; }
+
+        [JsonPropertyName("editorDisplayScale")]
+        public long EditorDisplayScale { get; set; }
+
+        [JsonPropertyName("editorDisplayPos")]
+        public string EditorDisplayPos { get; set; }
+
+        [JsonPropertyName("editorLinkStyle")]
+        public string EditorLinkStyle { get; set; }
+
+        [JsonPropertyName("editorDisplayColor")]
+        public object EditorDisplayColor { get; set; }
+
+        [JsonPropertyName("editorAlwaysShow")]
+        public bool EditorAlwaysShow { get; set; }
+
+        [JsonPropertyName("editorShowInWorld")]
+        public bool EditorShowInWorld { get; set; }
+
+        [JsonPropertyName("editorCutLongValues")]
+        public bool EditorCutLongValues { get; set; }
+
+        [JsonPropertyName("editorTextSuffix")]
+        public object EditorTextSuffix { get; set; }
+
+        [JsonPropertyName("editorTextPrefix")]
+        public object EditorTextPrefix { get; set; }
+
+        [JsonPropertyName("useForSmartColor")]
+        public bool UseForSmartColor { get; set; }
+
+        [JsonPropertyName("min")]
+        public object Min { get; set; }
+
+        [JsonPropertyName("max")]
+        public object Max { get; set; }
+
+        [JsonPropertyName("regex")]
+        public object Regex { get; set; }
+
+        [JsonPropertyName("acceptFileTypes")]
+        public object AcceptFileTypes { get; set; }
+
+        [JsonPropertyName("defaultOverride")]
+        public object DefaultOverride { get; set; }
+
+        [JsonPropertyName("textLanguageMode")]
+        public object TextLanguageMode { get; set; }
+
+        [JsonPropertyName("symmetricalRef")]
+        public bool SymmetricalRef { get; set; }
+
+        [JsonPropertyName("autoChainRef")]
+        public bool AutoChainRef { get; set; }
+
+        [JsonPropertyName("allowOutOfLevelRef")]
+        public bool AllowOutOfLevelRef { get; set; }
+
+        [JsonPropertyName("allowedRefs")]
+        public string AllowedRefs { get; set; }
+
+        [JsonPropertyName("allowedRefsEntityUid")]
+        public object AllowedRefsEntityUid { get; set; }
+
+        [JsonPropertyName("allowedRefTags")]
+        public object[] AllowedRefTags { get; set; }
+
+        [JsonPropertyName("tilesetUid")]
+        public object TilesetUid { get; set; }
     }
 
     public partial class Layer
@@ -187,7 +388,7 @@ namespace QuickType.Map
         public long DisplayOpacity { get; set; }
 
         [JsonPropertyName("inactiveOpacity")]
-        public long InactiveOpacity { get; set; }
+        public double InactiveOpacity { get; set; }
 
         [JsonPropertyName("hideInList")]
         public bool HideInList { get; set; }
@@ -235,7 +436,7 @@ namespace QuickType.Map
         public object AutoSourceLayerDefUid { get; set; }
 
         [JsonPropertyName("tilesetDefUid")]
-        public long TilesetDefUid { get; set; }
+        public long? TilesetDefUid { get; set; }
 
         [JsonPropertyName("tilePivotX")]
         public long TilePivotX { get; set; }
@@ -559,7 +760,7 @@ namespace QuickType.Map
         public long PxTotalOffsetY { get; set; }
 
         [JsonPropertyName("__tilesetDefUid")]
-        public long TilesetDefUid { get; set; }
+        public long? TilesetDefUid { get; set; }
 
         [JsonPropertyName("__tilesetRelPath")]
         public string TilesetRelPath { get; set; }
@@ -589,7 +790,7 @@ namespace QuickType.Map
         public long[] IntGridCsv { get; set; }
 
         [JsonPropertyName("autoLayerTiles")]
-        public Tile[] AutoLayerTiles { get; set; }
+        public AutoLayerTile[] AutoLayerTiles { get; set; }
 
         [JsonPropertyName("seed")]
         public long Seed { get; set; }
@@ -598,13 +799,13 @@ namespace QuickType.Map
         public object OverrideTilesetUid { get; set; }
 
         [JsonPropertyName("gridTiles")]
-        public Tile[] GridTiles { get; set; }
+        public object[] GridTiles { get; set; }
 
         [JsonPropertyName("entityInstances")]
-        public object[] EntityInstances { get; set; }
+        public EntityInstance[] EntityInstances { get; set; }
     }
 
-    public partial class Tile
+    public partial class AutoLayerTile
     {
         [JsonPropertyName("px")]
         public long[] Px { get; set; }
@@ -624,6 +825,85 @@ namespace QuickType.Map
         [JsonPropertyName("a")]
         public long A { get; set; }
     }
+
+    public partial class EntityInstance
+    {
+        [JsonPropertyName("__identifier")]
+        public Identifier Identifier { get; set; }
+
+        [JsonPropertyName("__grid")]
+        public long[] Grid { get; set; }
+
+        [JsonPropertyName("__pivot")]
+        public long[] Pivot { get; set; }
+
+        [JsonPropertyName("__tags")]
+        public object[] Tags { get; set; }
+
+        [JsonPropertyName("__tile")]
+        public object Tile { get; set; }
+
+        [JsonPropertyName("__smartColor")]
+        public Color SmartColor { get; set; }
+
+        [JsonPropertyName("__worldX")]
+        public long WorldX { get; set; }
+
+        [JsonPropertyName("__worldY")]
+        public long WorldY { get; set; }
+
+        [JsonPropertyName("iid")]
+        public Guid Iid { get; set; }
+
+        [JsonPropertyName("width")]
+        public long Width { get; set; }
+
+        [JsonPropertyName("height")]
+        public long Height { get; set; }
+
+        [JsonPropertyName("defUid")]
+        public long DefUid { get; set; }
+
+        [JsonPropertyName("px")]
+        public long[] Px { get; set; }
+
+        [JsonPropertyName("fieldInstances")]
+        public FieldInstance[] FieldInstances { get; set; }
+    }
+
+    public partial class FieldInstance
+    {
+        [JsonPropertyName("__identifier")]
+        public string Identifier { get; set; }
+
+        [JsonPropertyName("__type")]
+        public string Type { get; set; }
+
+        [JsonPropertyName("__value")]
+        public long Value { get; set; }
+
+        [JsonPropertyName("__tile")]
+        public object Tile { get; set; }
+
+        [JsonPropertyName("defUid")]
+        public long DefUid { get; set; }
+
+        [JsonPropertyName("realEditorValues")]
+        public RealEditorValue[] RealEditorValues { get; set; }
+    }
+
+    public partial class RealEditorValue
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [JsonPropertyName("params")]
+        public long[] Params { get; set; }
+    }
+
+    public enum Color { Be4A2F, D77643 };
+
+    public enum Identifier { PatrolPoint, SpawnPoint };
 
     public enum ImageExportMode { None };
 
@@ -645,6 +925,8 @@ namespace QuickType.Map
         {
             Converters =
             {
+                ColorConverter.Singleton,
+                IdentifierConverter.Singleton,
                 ImageExportModeConverter.Singleton,
                 TileModeConverter.Singleton,
                 new DateOnlyConverter(),
@@ -652,6 +934,74 @@ namespace QuickType.Map
                 IsoDateTimeOffsetConverter.Singleton
             },
         };
+    }
+
+    internal class ColorConverter : JsonConverter<Color>
+    {
+        public override bool CanConvert(Type t) => t == typeof(Color);
+
+        public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var value = reader.GetString();
+            switch (value)
+            {
+                case "#BE4A2F":
+                    return Color.Be4A2F;
+                case "#D77643":
+                    return Color.D77643;
+            }
+            throw new Exception("Cannot unmarshal type Color");
+        }
+
+        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
+        {
+            switch (value)
+            {
+                case Color.Be4A2F:
+                    JsonSerializer.Serialize(writer, "#BE4A2F", options);
+                    return;
+                case Color.D77643:
+                    JsonSerializer.Serialize(writer, "#D77643", options);
+                    return;
+            }
+            throw new Exception("Cannot marshal type Color");
+        }
+
+        public static readonly ColorConverter Singleton = new ColorConverter();
+    }
+
+    internal class IdentifierConverter : JsonConverter<Identifier>
+    {
+        public override bool CanConvert(Type t) => t == typeof(Identifier);
+
+        public override Identifier Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var value = reader.GetString();
+            switch (value)
+            {
+                case "Patrol_Point":
+                    return Identifier.PatrolPoint;
+                case "Spawn_Point":
+                    return Identifier.SpawnPoint;
+            }
+            throw new Exception("Cannot unmarshal type Identifier");
+        }
+
+        public override void Write(Utf8JsonWriter writer, Identifier value, JsonSerializerOptions options)
+        {
+            switch (value)
+            {
+                case Identifier.PatrolPoint:
+                    JsonSerializer.Serialize(writer, "Patrol_Point", options);
+                    return;
+                case Identifier.SpawnPoint:
+                    JsonSerializer.Serialize(writer, "Spawn_Point", options);
+                    return;
+            }
+            throw new Exception("Cannot marshal type Identifier");
+        }
+
+        public static readonly IdentifierConverter Singleton = new IdentifierConverter();
     }
 
     internal class ImageExportModeConverter : JsonConverter<ImageExportMode>

@@ -57,7 +57,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 }
 
                 if (boatChanged)
-                    sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Red, player.Sail, player.BoatCondition))).Texture;
+                    sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Dead , player.Sail, player.BoatCondition))).Texture;
 
                 movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 

@@ -33,6 +33,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 var end = sprite.Position;
 
+                var destroyed = false;
                 world.Query(in allShips, (shipEntity) =>
                 {
                     var shipSprite = shipEntity.Get<Sprite>();
@@ -40,9 +41,8 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     if (Raylib.CheckCollisionPointLine(shipSprite.Position, start, end, 50))
                     {
                         ship.Health -= 5;
-                        world.Destroy(entity);
                         EffectsBuilder.CreateExplosion(world, end);
-
+                        destroyed = true;
                         ship.BoatCondition = ship.Health switch
                         {
                             < 0 => BoatCondition.Empty,
@@ -54,9 +54,10 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         ship.Sail = SailStatus.Full;
 
                         shipSprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
-
                     }
                 });
+                if (destroyed)
+                    world.Destroy(entity);
             });
         }
     }

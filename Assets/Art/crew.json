@@ -1,0 +1,73 @@
+{ "frames": [
+   {
+    "filename": "Crew1-0",
+    "frame": { "x": 1, "y": 1, "w": 22, "h": 22 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 22 },
+    "sourceSize": { "w": 22, "h": 22 },
+    "duration": 100
+   },
+   {
+    "filename": "Crew2-1",
+    "frame": { "x": 25, "y": 1, "w": 22, "h": 22 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 22 },
+    "sourceSize": { "w": 22, "h": 22 },
+    "duration": 100
+   },
+   {
+    "filename": "Crew3-2",
+    "frame": { "x": 49, "y": 1, "w": 22, "h": 22 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 22 },
+    "sourceSize": { "w": 22, "h": 22 },
+    "duration": 100
+   },
+   {
+    "filename": "Crew4-3",
+    "frame": { "x": 1, "y": 25, "w": 22, "h": 22 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 22 },
+    "sourceSize": { "w": 22, "h": 22 },
+    "duration": 100
+   },
+   {
+    "filename": "Crew5-4",
+    "frame": { "x": 25, "y": 25, "w": 22, "h": 22 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 22 },
+    "sourceSize": { "w": 22, "h": 22 },
+    "duration": 100
+   },
+   {
+    "filename": "Crew6-5",
+    "frame": { "x": 49, "y": 25, "w": 22, "h": 22 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 22 },
+    "sourceSize": { "w": 22, "h": 22 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3-rc6-x64",
+  "image": "crew.png",
+  "format": "RGBA8888",
+  "size": { "w": 72, "h": 48 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Crew1", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "Crew2", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "Crew3", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" },
+   { "name": "Crew4", "from": 3, "to": 3, "direction": "forward", "color": "#000000ff" },
+   { "name": "Crew5", "from": 4, "to": 4, "direction": "forward", "color": "#000000ff" },
+   { "name": "Crew6", "from": 5, "to": 5, "direction": "forward", "color": "#000000ff" }
+  ]
+ }
+}

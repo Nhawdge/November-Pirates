@@ -1,4 +1,5 @@
 ﻿using NovemberPirates.Utilities;
+using System.Numerics;
 
 namespace NovemberPirates.Components
 {
@@ -8,8 +9,13 @@ namespace NovemberPirates.Components
 
         public int Health = 100;
 
-        public BoatColor BoatColor { get; internal set; }
-        public BoatType BoatType { get; internal set; }
-        public SailStatus Sail { get; internal set; }
+        public BoatColor BoatColor;
+        public BoatType BoatType;
+        public SailStatus Sail;
+        public Team Team;
+
+        public int Crew;
+        internal int NextPatrolPoint;
+        internal Vector2 Target;
     }
 }
