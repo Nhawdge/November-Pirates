@@ -4,7 +4,11 @@ using NovemberPirates.Components;
 using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
+using NovemberPirates.Utilities.Maps;
+using QuickType.Map;
 using Raylib_CsLo;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
@@ -14,6 +18,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
         internal override void Update(World world)
         {
             var singletonEntity = world.QueryFirst<Singleton>();
+            var singleton = singletonEntity.Get<Singleton>();
             var wind = singletonEntity.Get<Wind>();
 
             var enemyQuery = new QueryDescription().WithAll<Sprite, Ship>();
@@ -62,6 +67,96 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         nextPoint = point.Position;
                     }
                 });
+
+                var direction = nextPoint - sprite.Position;
+                sprite.Rotation = (float)Math.Atan2(direction.Y, direction.X) + MathF.PI / 2;
+
+                if (ship.Route.Count == 0)
+                {
+                    ship.Route = new List<Vector2>();
+
+                    var shipTile = singleton.Map.GetTileFromPosition(sprite.Position);
+
+                    MapPath pathToTarget = null;
+                    var targetTile = singleton.Map.GetTileFromPosition(nextPoint);
+
+                    var last = new MapPath(
+                        shipTile.Coordinates,
+                        shipTile.Coordinates.DistanceTo(nextPoint),
+                        shipTile.Coordinates.DistanceTo(shipTile.Coordinates),
+                        shipTile.MovementCost);
+
+                    var openTiles = new List<MapPath>();
+                    var closedTiles = new List<MapPath>();
+
+                    var neighbors = singleton.Map.GetTileNeighborsForTile(shipTile).Select(neighbor =>
+                        new MapPath(
+                            neighbor.Coordinates,
+                            neighbor.Coordinates.DistanceTo(nextPoint),
+                            neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
+                            neighbor.MovementCost,
+                            last)
+                        );
+                    openTiles.AddRange(neighbors);
+
+                    while (pathToTarget is null)
+                    {
+                        var openTile = openTiles.OrderBy(tile => tile.TotalCost).ThenBy(tile => tile.DistanceTo).First();
+                        if (openTile.Coords == targetTile.Coordinates)
+                        {
+                            pathToTarget = openTile;
+                            break;
+                        }
+                        neighbors = singleton.Map.GetTileNeighborsForCoords(openTile.Coords)
+                        .Select(neighbor =>
+                            new MapPath(
+                                neighbor.Coordinates,
+                                neighbor.Coordinates.DistanceTo(targetTile.Coordinates),
+                                neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
+                                neighbor.MovementCost,
+                                last)
+                            ).Where(path => !closedTiles.Contains(path));
+
+                        openTiles.AddRange(neighbors);
+                        openTiles.Remove(openTile);
+                        closedTiles.Add(openTile);
+                        Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
+                    }
+
+                    while (pathToTarget.Parent is not null)
+                    {
+                        ship.Route.Insert(0, pathToTarget.Coords.ToPixels());
+                        pathToTarget = pathToTarget.Parent;
+                    }
+                }
+
+                var sailTarget = ship.Route.First();
+                if (sprite.Position.DistanceTo(sailTarget) < 20)
+                {
+                    ship.Route.RemoveAt(0);
+                    sailTarget = ship.Route.First();
+                }
+
+                Raylib.DrawLine((int)sailTarget.X, (int)sailTarget.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
+
+                sprite.Rotation = (float)Math.Atan2(sailTarget.Y - sprite.Position.Y, sailTarget.X - sprite.Position.X);
+
+                ship.Sail = SailStatus.Full;
+                var movement = new Vector2(15, 0);
+                movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
+
+                if (ship.Sail == SailStatus.Rowing)
+                    movement = movement * ship.RowingPower;
+
+                //if (ship.Sail == SailStatus.Half)
+                //    movement = movement * ((windStrength / 2) + player.RowingPower);
+
+                //if (ship.Sail == SailStatus.Full)
+                //    movement = movement * (windStrength + player.RowingPower);
+
+                movement *= Raylib.GetFrameTime();
+                sprite.Position += movement;
+
 
             });
         }

@@ -17,5 +17,7 @@ namespace NovemberPirates.Components
         public int Crew;
         internal int NextPatrolPoint;
         internal Vector2 Target;
+        internal List<Vector2> Route = new();
+        internal float RowingPower = 100f;
     }
 }

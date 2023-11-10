@@ -57,7 +57,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 }
 
                 if (boatChanged)
-                    sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Dead , player.Sail, player.BoatCondition))).Texture;
+                    sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Dead, player.Sail, player.BoatCondition))).Texture;
 
                 movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 
@@ -158,17 +158,20 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     }
                 }
 
-                if (Raylib.IsKeyPressed(KeyboardKey.KEY_Q) || Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT))
+                if (Raylib.IsKeyPressed(KeyboardKey.KEY_Q) || Raylib.IsKeyDown(KeyboardKey.KEY_LEFT))
                 {
                     // fire cannon Port
                     CannonballBuilder.Create(world, sprite.Position, sprite.RenderRotation + 180);
+                    var sound = world.Create<AudioEvent>();
+                    sound.Set(new AudioEvent() { Position = sprite.Position,Key = AudioKey.CannonFire } );
                 }
-                if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) || Raylib.IsKeyPressed(KeyboardKey.KEY_RIGHT))
+                if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) || Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
                 {
                     // fire cannon Starboard
                     CannonballBuilder.Create(world, sprite.Position, sprite.RenderRotation);
+                    var sound = world.Create<AudioEvent>();
+                    sound.Set(new AudioEvent() { Position = sprite.Position, Key = AudioKey.CannonFire });
                 }
-
             });
         }
     }

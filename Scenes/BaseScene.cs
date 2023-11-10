@@ -10,6 +10,7 @@ namespace NovemberPirates.Scenes
 
         internal List<GameSystem> Systems = new();
 
-        public Vector2 MapEdge { get;  set; }
+        public Vector2 MapEdge;
+        public int TileSize;
     }
 }

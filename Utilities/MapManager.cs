@@ -37,15 +37,17 @@ namespace NovemberPirates.Utilities
             {
                 foreach (var tile in layer.AutoLayerTiles)
                 {
-                    var mapTile = world.Create(mapTileArchetype);
+                    details.TileSize = (int)layer.GridSize;
+                    var mapTileEntity = world.Create(mapTileArchetype);
 
                     var tileSprite = new Render(TextureKey.MapTileset)
                     {
-                        SpriteHeight = (int)layer.GridSize,
+                        Position = tile.Px.ToVector2(),
                         SpriteWidth = (int)layer.GridSize,
-                        Position = new Vector2(tile.Px.First(), tile.Px.Last()),
-                        Column = (int)(tile.Src.First() / layer.GridSize),
+                        SpriteHeight = (int)layer.GridSize,
                         Row = (int)(tile.Src.Last() / layer.GridSize),
+                        Column = (int)(tile.Src.First() / layer.GridSize),
+                        OriginPos = Render.OriginAlignment.LeftTop,
                     };
                     if (layer.Identifier == "Shallow_water")
                     {
@@ -56,7 +58,19 @@ namespace NovemberPirates.Utilities
                         tileSprite.Collision = CollisionType.Solid;
                     }
 
-                    mapTile.Set(tileSprite);
+                    mapTileEntity.Set(tileSprite);
+
+                    var mapTile = new MapTile();
+
+                    mapTile.Coordinates = tile.Px.ToVector2() / layer.GridSize;
+                    mapTile.MovementCost = tileSprite.Collision switch
+                    {
+                        CollisionType.Solid => 9999,
+                        CollisionType.Slow => 2,
+                        _ => 1,
+                    };
+
+                    mapTileEntity.Set(mapTile);
                 }
                 foreach (var entity in layer.EntityInstances)
                 {
@@ -79,8 +93,6 @@ namespace NovemberPirates.Utilities
     public class MapDetails
     {
         public Vector2 MapEdge;
+        internal int TileSize;
     }
-
-
-
 }

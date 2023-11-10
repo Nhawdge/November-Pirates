@@ -25,9 +25,12 @@ namespace NovemberPirates.Scenes.Levels
             Systems.Add(new EffectsSystem());
             Systems.Add(new SpawningSystem());
             Systems.Add(new PickupSystem());
+            Systems.Add(new AudioSystem());
+            Systems.Add(new NavigationSystem());
 
             var mapDetails = MapManager.Instance.LoadMap("Level_0", World);
             MapEdge = mapDetails.MapEdge;
+            TileSize = mapDetails.TileSize;
 
             PlayerBuilder.Create(World);
 
