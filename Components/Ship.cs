@@ -13,7 +13,7 @@ namespace NovemberPirates.Components
         internal SailStatus Sail = SailStatus.Closed;
 
         internal int Crew = 10;
-        internal int NextPatrolPoint;
+        internal int NextPatrolPoint = 1;
         internal Vector2 Target;
         internal List<Vector2> Route = new();
         internal float RowingPower = 100f;

@@ -46,27 +46,23 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     world.Destroy(entity);
                 }
 
-                ship.NextPatrolPoint = 1;
                 ship.Target = Vector2.Zero;
 
                 var nextPoint = Vector2.Zero;
-                world.Query(in patrolQuery, (patrolEntity) =>
+
+                var maxPatrolPoint = 0;
+                if (nextPoint == Vector2.Zero)
                 {
-                    var point = patrolEntity.Get<PatrolPoint>();
-
-                    var pointPixel = point.Position.ToPixels();
-                    var distance = (sprite.Position - point.Position).Length();
-                    var distanceRegular = sprite.Position.DistanceTo(point.Position);
-                    if (point.Order == ship.NextPatrolPoint && distance < 50)
+                    world.Query(in patrolQuery, (patrolEntity) =>
                     {
-                        ship.NextPatrolPoint += 1;
-                    }
-
-                    if (point.Order == ship.NextPatrolPoint)
-                    {
-                        nextPoint = point.Position;
-                    }
-                });
+                        var point = patrolEntity.Get<PatrolPoint>();
+                        maxPatrolPoint = Math.Max(maxPatrolPoint, point.Order);
+                        if (point.Order == ship.NextPatrolPoint)
+                        {
+                            nextPoint = point.Position;
+                        }
+                    });
+                }
 
                 if (ship.Route.Count == 0)
                 {
@@ -117,7 +113,8 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         openTiles.AddRange(neighbors);
                         openTiles.Remove(openTile);
                         closedTiles.Add(openTile);
-                        Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
+
+                        //Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
                     }
 
                     while (pathToTarget.Parent is not null)
@@ -131,9 +128,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (sprite.Position.DistanceTo(sailTarget) < 20)
                 {
                     ship.Route.RemoveAt(0);
+                    ship.NextPatrolPoint += 1;
+                    if (ship.NextPatrolPoint > maxPatrolPoint)
+                        ship.NextPatrolPoint = 1;
                 }
 
-                Raylib.DrawLine((int)sailTarget.X, (int)sailTarget.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
+                if (singleton.Debug >= DebugLevel.Low)
+                    Raylib.DrawLine((int)sailTarget.X, (int)sailTarget.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
 
                 var targetDirection = Vector2.Normalize(sprite.Position - sailTarget);
 
@@ -141,20 +142,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 sprite.Rotation = (float)rotationInDegrees;
 
                 ship.Sail = SailStatus.Full;
-                //var movement = new Vector2(15, 0);
-                //movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 
-                //if (ship.Sail == SailStatus.Rowing)
-                //    movement = movement * ship.RowingPower;
-
-                ////if (ship.Sail == SailStatus.Half)
-                ////    movement = movement * ((windStrength / 2) + player.RowingPower);
-
-                ////if (ship.Sail == SailStatus.Full)
-                ////    movement = movement * (windStrength + player.RowingPower);
-
-                //movement *= Raylib.GetFrameTime();
-                //sprite.Position += movement;
             });
         }
     }

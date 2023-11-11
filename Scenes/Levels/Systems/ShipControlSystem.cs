@@ -40,7 +40,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 
-                var boatAngle = (sprite.Rotation + 360) % 360;
+                var boatAngle = (sprite.RenderRotation + 360) % 360;
                 var windAngle = (float)(((Math.Atan2(wind.WindDirection.Y, wind.WindDirection.X) * 180 / Math.PI) + 360 + 90) % 360);
                 var angleDiff = Math.Abs((boatAngle + 360) - (windAngle + 360)) % 360;
 
