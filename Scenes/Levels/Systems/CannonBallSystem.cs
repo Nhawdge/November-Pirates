@@ -26,6 +26,8 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 cannonball.Elapsed += Raylib.GetFrameTime();
                 if (cannonball.Elapsed > cannonball.Duration)
                 {
+                    var sound = world.Create<AudioEvent>();
+                    sound.Set(new AudioEvent() { Key = AudioKey.CannonHitWater, Position = sprite.Position });
                     world.Destroy(entity);
                 }
 

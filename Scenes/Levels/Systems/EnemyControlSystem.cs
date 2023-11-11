@@ -4,6 +4,7 @@ using NovemberPirates.Components;
 using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
+using NovemberPirates.Utilities;
 using NovemberPirates.Utilities.Maps;
 using Raylib_CsLo;
 using System.Numerics;
@@ -27,17 +28,19 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 var ship = entity.Get<Ship>();
                 var shouldMakeNewFire = Random.Shared.Next(0, 100) < 5;
 
-                if (ship.BoatCondition == Utilities.BoatCondition.Broken && shouldMakeNewFire)
+                if (ship.BoatCondition == BoatCondition.Broken && shouldMakeNewFire)
                 {
                     EffectsBuilder.CreateFire(world, sprite.Position + new Vector2(Random.Shared.Next(-30, 30), Random.Shared.Next(-50, 30)));
                     if (ship.Crew > 0 && Random.Shared.Next(0, 100) < 5)
                     {
                         ship.Crew -= 1;
                         ship.HullHealth += 1;
+                        var sound = world.Create<AudioEvent>();
+                        sound.Set(new AudioEvent() { Key = AudioKey.CrewHitWater });
                         PickupBuilder.CreateCrewMember(world, sprite.Position);
                     }
                 }
-                if (ship.BoatCondition == Utilities.BoatCondition.Empty)
+                if (ship.BoatCondition == BoatCondition.Empty)
                 {
                     sprite.Position += wind.WindDirection * Raylib.GetFrameTime() * wind.WindStrength * .1f;
                 }

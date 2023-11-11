@@ -7,5 +7,7 @@ namespace NovemberPirates.Components
     {
         internal AudioKey Key;
         internal Vector2 Position;
+        internal bool Replay = false;
+        internal bool AllowMultiple = true;
     }
 }

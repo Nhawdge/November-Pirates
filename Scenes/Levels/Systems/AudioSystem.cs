@@ -5,6 +5,7 @@ using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities;
 using Raylib_CsLo;
+using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
 {
@@ -18,8 +19,33 @@ namespace NovemberPirates.Scenes.Levels.Systems
             world.Query(in audioQuery, (entity) =>
             {
                 var audioEvent = entity.Get<AudioEvent>();
-                Raylib.PlaySound(AudioManager.Instance.GetSound(audioEvent.Key));
-                world.Destroy(entity);
+                var sound = AudioManager.Instance.GetSound(audioEvent.Key);
+
+                var playerEntity = world.QueryFirst<Player>();
+                var playerSprite = playerEntity.Get<Sprite>();
+
+                var distance = Vector2.Distance(playerSprite.Position, audioEvent.Position);
+                var maxDistance = 1280f; // TODO Get dynamically later
+                if (distance < maxDistance || audioEvent.Position == Vector2.Zero)
+                {
+                    var volume = 1 - (distance / maxDistance);
+                    var range = maxDistance * 2;
+                    var pan = ((audioEvent.Position.X - playerSprite.Position.X) + maxDistance) / range;
+
+                    if (audioEvent.Key == AudioKey.CannonHitWater)
+                    {
+                        Console.WriteLine($"Distance: {distance}\tvol: {volume}\tpan: {pan}");
+                    }
+                    Raylib.SetSoundPan(sound, pan);
+
+                    Raylib.SetSoundVolume(sound, volume);
+
+                    if (audioEvent.AllowMultiple || !Raylib.IsSoundPlaying(sound))
+                        Raylib.PlaySound(sound);
+                }
+
+                if (!audioEvent.Replay)
+                    world.Destroy(entity);
 
             });
 
