@@ -5,10 +5,7 @@ using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities.Maps;
-using QuickType.Map;
 using Raylib_CsLo;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
@@ -21,7 +18,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var singleton = singletonEntity.Get<Singleton>();
             var wind = singletonEntity.Get<Wind>();
 
-            var enemyQuery = new QueryDescription().WithAll<Sprite, Ship>();
+            var enemyQuery = new QueryDescription().WithAll<Sprite, Ship, Npc>();
             var patrolQuery = new QueryDescription().WithAll<PatrolPoint>();
 
             world.Query(in enemyQuery, (entity) =>
@@ -36,7 +33,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     if (ship.Crew > 0 && Random.Shared.Next(0, 100) < 5)
                     {
                         ship.Crew -= 1;
-                        ship.Health += 1;
+                        ship.HullHealth += 1;
                         PickupBuilder.CreateCrewMember(world, sprite.Position);
                     }
                 }
@@ -44,7 +41,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     sprite.Position += wind.WindDirection * Raylib.GetFrameTime() * wind.WindStrength * .1f;
                 }
-                if (ship.Health <= -100)
+                if (ship.HullHealth <= -100)
                 {
                     world.Destroy(entity);
                 }
@@ -57,7 +54,10 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     var point = patrolEntity.Get<PatrolPoint>();
 
-                    if (point.Order == ship.NextPatrolPoint && (sprite.Position - point.Position).Length() < 10)
+                    var pointPixel = point.Position.ToPixels();
+                    var distance = (sprite.Position - point.Position).Length();
+                    var distanceRegular = sprite.Position.DistanceTo(point.Position);
+                    if (point.Order == ship.NextPatrolPoint && distance < 50)
                     {
                         ship.NextPatrolPoint += 1;
                     }
@@ -67,9 +67,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         nextPoint = point.Position;
                     }
                 });
-
-                var direction = nextPoint - sprite.Position;
-                sprite.Rotation = (float)Math.Atan2(direction.Y, direction.X) + MathF.PI / 2;
 
                 if (ship.Route.Count == 0)
                 {
@@ -134,30 +131,30 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (sprite.Position.DistanceTo(sailTarget) < 20)
                 {
                     ship.Route.RemoveAt(0);
-                    sailTarget = ship.Route.First();
                 }
 
                 Raylib.DrawLine((int)sailTarget.X, (int)sailTarget.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
 
-                sprite.Rotation = (float)Math.Atan2(sailTarget.Y - sprite.Position.Y, sailTarget.X - sprite.Position.X);
+                var targetDirection = Vector2.Normalize(sprite.Position - sailTarget);
+
+                var rotationInDegrees = Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI);
+                sprite.Rotation = (float)rotationInDegrees;
 
                 ship.Sail = SailStatus.Full;
-                var movement = new Vector2(15, 0);
-                movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
+                //var movement = new Vector2(15, 0);
+                //movement = RayMath.Vector2Rotate(movement, sprite.RotationAsRadians);
 
-                if (ship.Sail == SailStatus.Rowing)
-                    movement = movement * ship.RowingPower;
+                //if (ship.Sail == SailStatus.Rowing)
+                //    movement = movement * ship.RowingPower;
 
-                //if (ship.Sail == SailStatus.Half)
-                //    movement = movement * ((windStrength / 2) + player.RowingPower);
+                ////if (ship.Sail == SailStatus.Half)
+                ////    movement = movement * ((windStrength / 2) + player.RowingPower);
 
-                //if (ship.Sail == SailStatus.Full)
-                //    movement = movement * (windStrength + player.RowingPower);
+                ////if (ship.Sail == SailStatus.Full)
+                ////    movement = movement * (windStrength + player.RowingPower);
 
-                movement *= Raylib.GetFrameTime();
-                sprite.Position += movement;
-
-
+                //movement *= Raylib.GetFrameTime();
+                //sprite.Position += movement;
             });
         }
     }

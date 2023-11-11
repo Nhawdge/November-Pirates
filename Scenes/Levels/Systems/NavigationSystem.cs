@@ -15,26 +15,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var singletonEntity = world.QueryFirst<Singleton>();
             var singleton = singletonEntity.Get<Singleton>();
 
-            if (singleton.Map is null)
-            {
-                var map = new Map();
-
-                var tilesQuery = new QueryDescription().WithAll<MapTile>();
-
-                world.Query(in tilesQuery, (entity) =>
-                {
-                    var maptile = entity.Get<MapTile>();
-                    var tile = map.Tiles.FirstOrDefault(x => x.Coordinates == maptile.Coordinates);
-
-                    if (tile is null)
-                    {
-                        tile = new MapTile { Coordinates = maptile.Coordinates };
-                        map.Tiles.Add(tile);
-                    }
-                    tile.MovementCost = Math.Max(tile.MovementCost, maptile.MovementCost);
-                });
-                singleton.Map = map;
-            }
             if (singleton.Debug >= DebugLevel.Medium)
                 foreach (var tile in singleton.Map.Tiles)
                 {

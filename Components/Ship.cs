@@ -7,17 +7,19 @@ namespace NovemberPirates.Components
     {
         public BoatCondition BoatCondition = BoatCondition.Good;
 
-        public int Health = 100;
-
         public BoatColor BoatColor;
         public BoatType BoatType;
-        public SailStatus Sail;
         public Team Team;
+        internal SailStatus Sail = SailStatus.Closed;
 
-        public int Crew;
+        internal int Crew = 10;
         internal int NextPatrolPoint;
         internal Vector2 Target;
         internal List<Vector2> Route = new();
         internal float RowingPower = 100f;
+        internal float RotationSpeed = 100f;
+
+        internal float MaxSpeed = 500f;
+        internal float HullHealth = 100f;
     }
 }

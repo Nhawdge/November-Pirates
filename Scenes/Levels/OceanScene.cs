@@ -4,6 +4,7 @@ using NovemberPirates.Components;
 using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Scenes.Levels.Systems;
 using NovemberPirates.Utilities;
+using NovemberPirates.Utilities.Maps;
 
 namespace NovemberPirates.Scenes.Levels
 {
@@ -27,6 +28,7 @@ namespace NovemberPirates.Scenes.Levels
             Systems.Add(new PickupSystem());
             Systems.Add(new AudioSystem());
             Systems.Add(new NavigationSystem());
+            Systems.Add(new PlayerControlSystem());
 
             var mapDetails = MapManager.Instance.LoadMap("Level_0", World);
             MapEdge = mapDetails.MapEdge;
@@ -34,12 +36,11 @@ namespace NovemberPirates.Scenes.Levels
 
             PlayerBuilder.Create(World);
 
-            //EnemyBuilder.CreateEnemyShip(World, );
-
-
             var singleton = World.Create<Singleton, Wind>();
             singleton.Set(new Wind());
             singleton.Set(new Singleton());
+
+            NavigationUtilities.BuildMap(World);
         }
     }
 }

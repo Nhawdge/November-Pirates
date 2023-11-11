@@ -38,12 +38,16 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     var shipSprite = shipEntity.Get<Sprite>();
                     var ship = shipEntity.Get<Ship>();
+
+                    if (cannonball.FiredBy == ship.Team)
+                        return;
+
                     if (Raylib.CheckCollisionPointLine(shipSprite.Position, start, end, 50))
                     {
-                        ship.Health -= 5;
+                        ship.HullHealth -= 5;
                         EffectsBuilder.CreateExplosion(world, end);
                         destroyed = true;
-                        ship.BoatCondition = ship.Health switch
+                        ship.BoatCondition = ship.HullHealth switch
                         {
                             < 0 => BoatCondition.Empty,
                             < 25 => BoatCondition.Broken,
