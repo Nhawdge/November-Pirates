@@ -11,7 +11,7 @@
 	"iid": "29d82450-6280-11ee-8d21-034767e7df7b",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 431,
+	"nextUid": 432,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -2292,6 +2292,40 @@
 			"pivotX": 0,
 			"pivotY": 0,
 			"fieldDefs": []
+		},
+		{
+			"identifier": "Player_Spawn",
+			"uid": 431,
+			"tags": [],
+			"exportToToc": false,
+			"doc": null,
+			"width": 16,
+			"height": 16,
+			"resizableX": false,
+			"resizableY": false,
+			"minWidth": null,
+			"maxWidth": null,
+			"minHeight": null,
+			"maxHeight": null,
+			"keepAspectRatio": false,
+			"tileOpacity": 1,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#EAD4AA",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileRenderMode": "FitInside",
+			"tileRect": null,
+			"uiTileRect": null,
+			"nineSliceBorders": [],
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0,
+			"pivotY": 0,
+			"fieldDefs": []
 		}
 	], "tilesets": [
 		{
@@ -2521,6 +2555,22 @@
 							"height": 16,
 							"defUid": 428,
 							"px": [2656,2880],
+							"fieldInstances": []
+						},
+						{
+							"__identifier": "Player_Spawn",
+							"__grid": [173,187],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#EAD4AA",
+							"__worldX": 2768,
+							"__worldY": 2992,
+							"iid": "8c93b7e0-6280-11ee-ace6-fd28afc711fa",
+							"width": 16,
+							"height": 16,
+							"defUid": 431,
+							"px": [2768,2992],
 							"fieldInstances": []
 						}
 					]
