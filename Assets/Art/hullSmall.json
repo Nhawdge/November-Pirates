@@ -1,0 +1,53 @@
+{ "frames": [
+   {
+    "filename": "SmallHull1-0",
+    "frame": { "x": 1, "y": 1, "w": 40, "h": 108 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 108 },
+    "sourceSize": { "w": 40, "h": 108 },
+    "duration": 100
+   },
+   {
+    "filename": "SmallHull2-1",
+    "frame": { "x": 43, "y": 1, "w": 40, "h": 108 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 108 },
+    "sourceSize": { "w": 40, "h": 108 },
+    "duration": 100
+   },
+   {
+    "filename": "SmallHull3-2",
+    "frame": { "x": 1, "y": 111, "w": 40, "h": 108 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 108 },
+    "sourceSize": { "w": 40, "h": 108 },
+    "duration": 100
+   },
+   {
+    "filename": "SmallHull4-3",
+    "frame": { "x": 43, "y": 111, "w": 40, "h": 108 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 108 },
+    "sourceSize": { "w": 40, "h": 108 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3-rc6-x64",
+  "image": "hullSmall.png",
+  "format": "RGBA8888",
+  "size": { "w": 84, "h": 220 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "SmallHull1", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "SmallHull2", "from": 1, "to": 1, "direction": "forward", "color": "#000000ff" },
+   { "name": "SmallHull3", "from": 2, "to": 2, "direction": "forward", "color": "#000000ff" },
+   { "name": "SmallHull4", "from": 3, "to": 3, "direction": "forward", "color": "#000000ff" }
+  ]
+ }
+}

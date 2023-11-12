@@ -43,24 +43,73 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 sprite.Rotation += playerShip.RotationSpeed * Raylib.GetFrameTime();
             }
 
-            if (boatChanged)
-                sprite.Texture = (ShipSpriteBuilder.GenerateBoat(new BoatOptions(BoatType.HullLarge, BoatColor.Dead, playerShip.Sail, playerShip.BoatCondition))).Texture;
+
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_Q) || Raylib.IsKeyDown(KeyboardKey.KEY_LEFT))
             {
                 // fire cannon Port
-                CannonballBuilder.Create(world, sprite.Position, sprite.RenderRotation + 180, Team.Player);
-                var sound = world.Create<AudioEvent>();
-                sound.Set(new AudioEvent() { Position = sprite.Position, Key = AudioKey.CannonFire });
+                var nextCannon = playerShip.Cannons.FirstOrDefault(x => x.ReloadElapsed >= x.ReloadTime && x.Placement == BoatSide.Port);
+
+                if (nextCannon is not null)
+                {
+                    nextCannon.ReloadElapsed = 0f;
+                    var cannonPos = sprite.Position + RayMath.Vector2Rotate(nextCannon.Position, sprite.RotationAsRadians);
+                    Raylib.DrawCircleV(cannonPos, 10, Raylib.RED);
+
+                    CannonballBuilder.Create(world, cannonPos, sprite.RenderRotation + 180, Team.Player);
+
+                    var sound = world.Create<AudioEvent>();
+                    sound.Set(new AudioEvent() { Position = cannonPos, Key = AudioKey.CannonFire });
+                }
             }
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_E) || Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT))
             {
                 // fire cannon Starboard
-                CannonballBuilder.Create(world, sprite.Position, sprite.RenderRotation, Team.Player);
-                var sound = world.Create<AudioEvent>();
-                sound.Set(new AudioEvent() { Position = sprite.Position, Key = AudioKey.CannonFire });
+
+                var nextCannon = playerShip.Cannons.FirstOrDefault(x => x.ReloadElapsed >= x.ReloadTime && x.Placement == BoatSide.Starboard);
+
+                if (nextCannon is not null)
+                {
+                    nextCannon.ReloadElapsed = 0f;
+                    var cannonPos = sprite.Position + RayMath.Vector2Rotate(nextCannon.Position, sprite.RotationAsRadians);
+                    //Raylib.DrawCircleV(cannonPos, 10, Raylib.RED);
+
+                    CannonballBuilder.Create(world, cannonPos, sprite.RenderRotation, Team.Player);
+
+                    var sound = world.Create<AudioEvent>();
+                    sound.Set(new AudioEvent() { Position = cannonPos, Key = AudioKey.CannonFire });
+                }
+
+
+                //CannonballBuilder.Create(world, sprite.Position, sprite.RenderRotation, Team.Player);
+                //var sound = world.Create<AudioEvent>();
+                //sound.Set(new AudioEvent() { Position = sprite.Position, Key = AudioKey.CannonFire });
             }
 
+            if (singleton.Debug > DebugLevel.None)
+            {
+                if (Raylib.IsKeyPressed(KeyboardKey.KEY_PAGE_UP))
+                {
+                    playerShip.BoatType = (BoatType)Math.Min(Enum.GetValues<BoatType>().Length - 1, (int)playerShip.BoatType + 1);
+                    boatChanged = true;
+
+                }
+                if (Raylib.IsKeyPressed(KeyboardKey.KEY_PAGE_DOWN))
+                {
+                    playerShip.BoatType = (BoatType)Math.Max(0, (int)playerShip.BoatType - 1);
+                    boatChanged = true;
+
+                }
+            }
+            if (boatChanged)
+            {
+                var newboat = ShipSpriteBuilder.GenerateBoat(new BoatOptions(playerShip));
+                newboat.Position = sprite.Position;
+                newboat.Rotation = sprite.Rotation;
+                playerEntity.Set(newboat);
+
+                //sprite.Texture = newboat.Texture;
+            }
         }
     }
 }

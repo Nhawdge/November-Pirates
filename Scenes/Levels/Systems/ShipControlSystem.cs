@@ -135,6 +135,11 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         //Console.WriteLine($"Collision {collidingTile.Collision}");
                     }
                 }
+
+                ship.Cannons.ForEach(cannon =>
+                {
+                    cannon.ReloadElapsed = Math.Min(cannon.ReloadTime, cannon.ReloadElapsed + Raylib.GetFrameTime());
+                });
             });
         }
     }

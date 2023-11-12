@@ -901,9 +901,9 @@ namespace QuickType.Map
         public long[] Params { get; set; }
     }
 
-    public enum Color { Be4A2F, D77643 };
+    public enum Color { Be4A2F, D77643, Ead4Aa };
 
-    public enum Identifier { PatrolPoint, SpawnPoint };
+    public enum Identifier { PatrolPoint, PlayerSpawn, SpawnPoint };
 
     public enum ImageExportMode { None };
 
@@ -949,6 +949,8 @@ namespace QuickType.Map
                     return Color.Be4A2F;
                 case "#D77643":
                     return Color.D77643;
+                case "#EAD4AA":
+                    return Color.Ead4Aa;
             }
             throw new Exception("Cannot unmarshal type Color");
         }
@@ -962,6 +964,9 @@ namespace QuickType.Map
                     return;
                 case Color.D77643:
                     JsonSerializer.Serialize(writer, "#D77643", options);
+                    return;
+                case Color.Ead4Aa:
+                    JsonSerializer.Serialize(writer, "#EAD4AA", options);
                     return;
             }
             throw new Exception("Cannot marshal type Color");
@@ -981,6 +986,8 @@ namespace QuickType.Map
             {
                 case "Patrol_Point":
                     return Identifier.PatrolPoint;
+                case "Player_Spawn":
+                    return Identifier.PlayerSpawn;
                 case "Spawn_Point":
                     return Identifier.SpawnPoint;
             }
@@ -993,6 +1000,9 @@ namespace QuickType.Map
             {
                 case Identifier.PatrolPoint:
                     JsonSerializer.Serialize(writer, "Patrol_Point", options);
+                    return;
+                case Identifier.PlayerSpawn:
+                    JsonSerializer.Serialize(writer, "Player_Spawn", options);
                     return;
                 case Identifier.SpawnPoint:
                     JsonSerializer.Serialize(writer, "Spawn_Point", options);

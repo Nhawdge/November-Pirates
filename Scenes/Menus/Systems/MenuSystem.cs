@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace NovemberPirates.Scenes.Menus.Systems
 {
-    internal class MainMenuSystem : GameSystem
+    internal class MenuSystem : GameSystem
     {
         internal override void Update(World world) { }
 

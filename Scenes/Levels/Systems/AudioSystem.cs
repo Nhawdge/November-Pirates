@@ -26,20 +26,21 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 var distance = Vector2.Distance(playerSprite.Position, audioEvent.Position);
                 var maxDistance = 1280f; // TODO Get dynamically later
-                if (distance < maxDistance || audioEvent.Position == Vector2.Zero)
+                if (distance < maxDistance)
                 {
                     var volume = 1 - (distance / maxDistance);
                     var range = maxDistance * 2;
                     var pan = ((audioEvent.Position.X - playerSprite.Position.X) + maxDistance) / range;
 
-                    if (audioEvent.Key == AudioKey.CannonHitWater)
-                    {
-                        Console.WriteLine($"Distance: {distance}\tvol: {volume}\tpan: {pan}");
-                    }
                     Raylib.SetSoundPan(sound, pan);
 
                     Raylib.SetSoundVolume(sound, volume);
 
+                    if (audioEvent.AllowMultiple || !Raylib.IsSoundPlaying(sound))
+                        Raylib.PlaySound(sound);
+                }
+                else if (audioEvent.Position == Vector2.Zero)
+                {
                     if (audioEvent.AllowMultiple || !Raylib.IsSoundPlaying(sound))
                         Raylib.PlaySound(sound);
                 }

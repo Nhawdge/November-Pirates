@@ -84,6 +84,10 @@ namespace NovemberPirates.Utilities
                         var order = (int)(entity.FieldInstances.FirstOrDefault(x => x.Identifier == "Order").Value);
                         EnemyBuilder.CreatePatrolPoint(world, entity.Px.ToVector2(), Team.Red, order);
                     }
+                    if (entity.Identifier == Identifier.PlayerSpawn)
+                    {
+                        // TODO - Create player spawn
+                    }
                 }
             }
             return details;
