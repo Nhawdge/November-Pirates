@@ -5,6 +5,7 @@ using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities;
+using NovemberPirates.Utilities.Data;
 using NovemberPirates.Utilities.Maps;
 using Raylib_CsLo;
 using System.Numerics;
@@ -43,6 +44,12 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (ship.BoatCondition == BoatCondition.Empty)
                 {
                     sprite.Position += wind.WindDirection * Raylib.GetFrameTime() * wind.WindStrength * .1f;
+                }
+                if (ship.HullHealth < 0)
+                {
+                    ship.Crew = 0;
+                    var percent = (100 + ship.HullHealth) / 100;
+                    sprite.Color.a = (byte)(255 * percent);
                 }
                 if (ship.HullHealth <= -100)
                 {
@@ -139,20 +146,44 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (singleton.Debug >= DebugLevel.Low)
                     Raylib.DrawLine((int)sailTarget.X, (int)sailTarget.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
 
-                var targetDirection = Vector2.Normalize(sprite.Position - sailTarget);
-
-                var rotationInDegrees = Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI);
-                if (sprite.Rotation > rotationInDegrees)
+                if (ship.CanDo(ShipAbilities.Steering))
                 {
-                    var rotationNeeded = (float)Math.Min(sprite.Rotation - rotationInDegrees, ship.RotationSpeed * Raylib.GetFrameTime());
-                    sprite.Rotation -= rotationNeeded;
+                    var targetDirection = Vector2.Normalize(sprite.Position - sailTarget);
+
+                    var rotationInDegrees = Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI);
+                    if (sprite.Rotation > rotationInDegrees)
+                    {
+                        var rotationNeeded = (float)Math.Min(sprite.Rotation - rotationInDegrees, ship.RotationSpeed * Raylib.GetFrameTime());
+                        sprite.Rotation -= rotationNeeded;
+                    }
+                    else
+                    {
+                        var rotationNeeded = (float)Math.Min(rotationInDegrees - sprite.Rotation, ship.RotationSpeed * Raylib.GetFrameTime());
+                        sprite.Rotation += ship.RotationSpeed * Raylib.GetFrameTime();
+                    }
+                }
+
+                if (ship.CanDo(ShipAbilities.FullSail))
+                {
+                    ship.Sail = SailStatus.Full;
+                    sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
+                }
+                else if (ship.CanDo(ShipAbilities.HalfSail))
+                {
+                    ship.Sail = SailStatus.Half;
+                    sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
+                }
+                else if (ship.CanDo(ShipAbilities.Rowing))
+                {
+                    ship.Sail = SailStatus.Rowing;
+                    sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
                 }
                 else
                 {
-                    var rotationNeeded = (float)Math.Min(rotationInDegrees - sprite.Rotation, ship.RotationSpeed * Raylib.GetFrameTime());
-                    sprite.Rotation += ship.RotationSpeed * Raylib.GetFrameTime();
+                    ship.Sail = SailStatus.Closed;
+                    sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
                 }
-                ship.Sail = SailStatus.Full;
+                Console.WriteLine($"{new BoatOptions(ship).ToString()} {ship.Crew} {ship.HullHealth} ");
             });
         }
     }

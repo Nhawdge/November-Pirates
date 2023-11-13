@@ -7,7 +7,7 @@ namespace NovemberPirates.Utilities
     {
         internal static TextureManager Instance { get; } = new();
         internal Dictionary<TextureKey, Texture> TextureStore { get; set; } = new();
-        internal Dictionary<string, Sprite> SpriteCache { get; set; } = new();
+        internal Dictionary<string, Texture> TextureCache { get; set; } = new();
 
         private TextureManager()
         {
@@ -43,10 +43,10 @@ namespace NovemberPirates.Utilities
             }
             return TextureStore[key];
         }
-        internal Sprite GetCachedSprite(string key)
+        internal Texture? GetCachedTexture(string key)
         {
-            if (SpriteCache.TryGetValue(key, out Sprite sprite))
-                return sprite;
+            if (TextureCache.TryGetValue(key, out var texture))
+                return texture;
             return null;
         }
     }

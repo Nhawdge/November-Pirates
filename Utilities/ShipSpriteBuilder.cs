@@ -10,18 +10,34 @@ namespace NovemberPirates.Utilities
     {
         internal static Sprite GenerateBoat(BoatOptions options)
         {
-
-            var inCache = TextureManager.Instance.GetCachedSprite(options.ToKey());
-            if (inCache is not null)
-            {
-                return inCache;
-            }
             var spriteHeight = options.Hull switch
             {
                 BoatType.HullLarge => 128,
                 _ => 108,
             };
             var shipSize = new Vector2(66, spriteHeight);
+            var inCache = TextureManager.Instance.GetCachedTexture(options.ToKey());
+            if (inCache.HasValue)
+            {
+                var cachedSprite = new Sprite()
+                {
+                    Texture = inCache.Value,
+                    Animations = new Dictionary<string, AnimationSets>()
+                    {
+                        {
+                            "idle", new AnimationSets("idle", 0,0, Direction.forward, new List<Frame>
+                            {
+                                new Frame(0, 0, (int)shipSize.X, (int)shipSize.Y, 100f)
+                            })
+                        }
+                    },
+                    Column = 0,
+                    Row = 0,
+                    Color = Raylib.WHITE,
+                };
+                cachedSprite.Play("idle");
+                return cachedSprite;
+            }
 
             var baseHullSprite = options.Hull switch
             {
@@ -118,7 +134,9 @@ namespace NovemberPirates.Utilities
             };
             sprite.Play("idle");
 
-            TextureManager.Instance.SpriteCache.Add(options.ToKey(), sprite);
+            //Raylib.ExportImage(Raylib.LoadImageFromTexture(sprite.Texture), options.ToKey() + ".png");
+
+            //TextureManager.Instance.TextureCache.Add(options.ToKey(), renderTexture.texture);
 
             return sprite;
         }

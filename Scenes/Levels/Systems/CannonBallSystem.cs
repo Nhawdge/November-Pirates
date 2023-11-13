@@ -51,7 +51,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                             < 75 => BoatCondition.Good,
                             _ => BoatCondition.Good
                         };
-                        ship.Sail = SailStatus.Full;
 
                         shipSprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
                     }
