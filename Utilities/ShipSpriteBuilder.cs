@@ -10,6 +10,12 @@ namespace NovemberPirates.Utilities
     {
         internal static Sprite GenerateBoat(BoatOptions options)
         {
+
+            var inCache = TextureManager.Instance.GetCachedSprite(options.ToKey());
+            if (inCache is not null)
+            {
+                return inCache;
+            }
             var spriteHeight = options.Hull switch
             {
                 BoatType.HullLarge => 128,
@@ -112,6 +118,8 @@ namespace NovemberPirates.Utilities
             };
             sprite.Play("idle");
 
+            TextureManager.Instance.SpriteCache.Add(options.ToKey(), sprite);
+
             return sprite;
         }
 
@@ -119,8 +127,12 @@ namespace NovemberPirates.Utilities
     internal record BoatOptions(BoatType Hull, BoatColor Color, SailStatus Sails, List<Cannon> Cannons, BoatCondition Condition = BoatCondition.Good)
     {
         internal BoatOptions(Ship ship) : this(ship.BoatType, ship.BoatColor, ship.Sail, ship.Cannons, ship.BoatCondition) { }
-    };
 
+        internal string ToKey()
+        {
+            return $"{Hull}-{Color}-{Sails}-{Condition}";
+        }
+    }
 
     internal enum BoatType
     {

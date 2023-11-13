@@ -1,4 +1,5 @@
-﻿using Raylib_CsLo;
+﻿using NovemberPirates.Components;
+using Raylib_CsLo;
 
 namespace NovemberPirates.Utilities
 {
@@ -6,6 +7,7 @@ namespace NovemberPirates.Utilities
     {
         internal static TextureManager Instance { get; } = new();
         internal Dictionary<TextureKey, Texture> TextureStore { get; set; } = new();
+        internal Dictionary<string, Sprite> SpriteCache { get; set; } = new();
 
         private TextureManager()
         {
@@ -40,6 +42,12 @@ namespace NovemberPirates.Utilities
                 LoadTextures();
             }
             return TextureStore[key];
+        }
+        internal Sprite GetCachedSprite(string key)
+        {
+            if (SpriteCache.TryGetValue(key, out Sprite sprite))
+                return sprite;
+            return null;
         }
     }
 
