@@ -33,6 +33,27 @@ namespace NovemberPirates.Utilities
             {
                 Raylib.LoadSound("Assets/Audio/sfx_Wind.ogg")
             });
+            AudioStore.Add(AudioKey.CollectWood, new[] {
+                Raylib.LoadSound("Assets/Audio/sfx_CollectWood_01.ogg"),
+                Raylib.LoadSound("Assets/Audio/sfx_CollectWood_02.ogg"),
+                Raylib.LoadSound("Assets/Audio/sfx_CollectWood_03.ogg"),
+            });
+            AudioStore.Add(AudioKey.SailOpen, new[]
+            {
+                Raylib.LoadSound("Assets/Audio/sfx_SailOpen_01.ogg"),
+                Raylib.LoadSound("Assets/Audio/sfx_SailOpen_02.ogg"),
+                Raylib.LoadSound("Assets/Audio/sfx_SailOpen_03.ogg"),
+            });
+            AudioStore.Add(AudioKey.SailClose, new[]
+            {
+                Raylib.LoadSound("Assets/Audio/sfx_SailClose_01.ogg"),
+                Raylib.LoadSound("Assets/Audio/sfx_SailClose_02.ogg"),
+                Raylib.LoadSound("Assets/Audio/sfx_SailClose_03.ogg"),
+            });
+            AudioStore.Add(AudioKey.WindInSail, new[]
+            {
+                Raylib.LoadSound("Assets/Audio/sfx_WindinSail.ogg"),
+            });
         }
         internal Sound GetSound(AudioKey key)
         {
@@ -51,5 +72,9 @@ namespace NovemberPirates.Utilities
         Wind,
         CannonHitWater,
         CrewHitWater,
+        CollectWood,
+        SailClose,
+        SailOpen,
+        WindInSail,
     }
 }

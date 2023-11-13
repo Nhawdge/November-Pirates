@@ -79,11 +79,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     var sound = world.Create<AudioEvent>();
                     sound.Set(new AudioEvent() { Position = cannonPos, Key = AudioKey.CannonFire });
                 }
-
-
-                //CannonballBuilder.Create(world, sprite.Position, sprite.RenderRotation, Team.Player);
-                //var sound = world.Create<AudioEvent>();
-                //sound.Set(new AudioEvent() { Position = sprite.Position, Key = AudioKey.CannonFire });
             }
 
             if (singleton.Debug > DebugLevel.None)

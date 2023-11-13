@@ -15,14 +15,14 @@ namespace NovemberPirates.Entities.Archetypes
 
             var cannonball = new Cannonball();
             var rotationInRadians = rotation * (float)(Math.PI / 180);
-            cannonball.Motion = RayMath.Vector2Rotate(new Vector2(1000, 0), rotationInRadians);
+            var spread = Random.Shared.Next(-50, 50);
+            cannonball.Motion = RayMath.Vector2Rotate(new Vector2(1000, spread), rotationInRadians);
             cannonball.FiredBy = team;
             cannonballEntity.Set(cannonball);
 
             var cannonballSprite = new Sprite(TextureKey.Cannonball, "Assets/Art/cannonball", 1f, true);
             cannonballSprite.Position = pos;
             cannonballEntity.Set(cannonballSprite);
-
         }
     }
 }

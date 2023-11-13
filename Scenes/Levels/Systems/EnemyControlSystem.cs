@@ -142,10 +142,17 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 var targetDirection = Vector2.Normalize(sprite.Position - sailTarget);
 
                 var rotationInDegrees = Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI);
-                sprite.Rotation = (float)rotationInDegrees;
-
+                if (sprite.Rotation > rotationInDegrees)
+                {
+                    var rotationNeeded = (float)Math.Min(sprite.Rotation - rotationInDegrees, ship.RotationSpeed * Raylib.GetFrameTime());
+                    sprite.Rotation -= rotationNeeded;
+                }
+                else
+                {
+                    var rotationNeeded = (float)Math.Min(rotationInDegrees - sprite.Rotation, ship.RotationSpeed * Raylib.GetFrameTime());
+                    sprite.Rotation += ship.RotationSpeed * Raylib.GetFrameTime();
+                }
                 ship.Sail = SailStatus.Full;
-
             });
         }
     }
