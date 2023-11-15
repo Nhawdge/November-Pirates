@@ -1,7 +1,10 @@
 ﻿using Arch.Core.Extensions;
+using NovemberPirates.Components;
 using NovemberPirates.Scenes.Levels;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
+using NovemberPirates.Utilities;
+using System.Numerics;
 
 namespace NovemberPirates.Scenes.Menus.MainMenu
 {
@@ -11,41 +14,69 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
         {
             Systems.Add(new MenuSystem());
 
-            var title = World.Create<UiTitle>();
+            //var title = World.Create<UiTitle>();
+            //var uiTitle = new UiTitle() { Text = "November Pirates" };
+            //title.Set(uiTitle);
 
-            var uiTitle = new UiTitle() { Text = "November Pirates" };
-            title.Set(uiTitle);
-
-            var button = World.Create<UiButton>();
-            button.Set(new UiButton
+            World.Create(new SpriteButton
             {
-                Text = "Start Game",
+                Text = "Start",
                 Action = () =>
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new OceanScene();
                 },
-                Order = 1
+                Order = 1,
+                TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
+                {
+                    Position = new Vector2(750, 150),
+                    OriginPos = Render.OriginAlignment.LeftTop
+                },
+                ButtonSprite = new Sprite(TextureKey.Button, "Assets/Art/Button")
+                {
+                    Position = new Vector2(750, 150),
+                    OriginPos = Render.OriginAlignment.LeftTop
+                }
             });
 
 
-            World.Create(new UiButton
+            World.Create(new SpriteButton
             {
-                Text = "How to Play",
+                Text = "HowToPlay",
                 Action = () =>
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new HowToPlayScene();
                 },
-                Order = 2
+                Order = 2,
+                TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
+                {
+                    Position = new Vector2(750, 300),
+                    OriginPos = Render.OriginAlignment.LeftTop,
+                },
+                ButtonSprite = new Sprite(TextureKey.Button, "Assets/Art/Button")
+                {
+                    Position = new Vector2(750, 300),
+                    OriginPos = Render.OriginAlignment.LeftTop
+                }
             });
 
-            World.Create(new UiButton
+            World.Create(new SpriteButton
             {
                 Text = "Credits",
                 Action = () =>
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new CreditsScene();
                 },
-                Order = 3
+                Order = 3,
+                TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
+                {
+                    Position = new Vector2(750, 450),
+                    OriginPos = Render.OriginAlignment.LeftTop
+                },
+                ButtonSprite = new Sprite(TextureKey.Button, "Assets/Art/Button")
+                {
+                    Position = new Vector2(750, 450),
+                    OriginPos = Render.OriginAlignment.LeftTop
+                }
             });
 
 
@@ -55,7 +86,6 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Action = () =>
                 {
                     Environment.Exit(0);
-                    //NovemberPiratesEngine.Instance.ActiveScene = new HowToPlayScene();
                 },
                 Order = 5
             });

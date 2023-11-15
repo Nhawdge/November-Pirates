@@ -1,7 +1,10 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
+using NovemberPirates.Components;
+using NovemberPirates.Extensions;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Systems;
+using NovemberPirates.Utilities;
 using Raylib_CsLo;
 using System.Numerics;
 
@@ -14,13 +17,13 @@ namespace NovemberPirates.Scenes.Menus.Systems
 
         internal override void UpdateNoCamera(World world)
         {
-            //RayGui.GuiLoadStyle("Assets/lavanda.rgs");
-            var query = new QueryDescription().WithAny<UiTitle, UiButton>();
+            Raylib.DrawTexture(TextureManager.Instance.GetTexture(TextureKey.MainMenuBackground), 0, 0, Raylib.WHITE);
+            var query = new QueryDescription().WithAny<UiTitle, UiButton, SpriteButton>();
 
             var centerPoint = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
 
             var dummyrect = new Rectangle(centerPoint.X - 200, centerPoint.Y - 150, 400, 400);
-            RayGui.GuiDummyRec(dummyrect, "");
+            //RayGui.GuiDummyRec(dummyrect, "");
             var index = 0;
 
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 48);
@@ -56,6 +59,32 @@ namespace NovemberPirates.Scenes.Menus.Systems
                     {
                         button.Action();
                     }
+                }
+                if (entity.Has<SpriteButton>())
+                {
+                    var button = entity.Get<SpriteButton>();
+
+                    //var rect = dummyrect with { x = dummyrect.x + 100, y = dummyrect.y + (60 * button.Order), width = 200, height = 50 };
+                    //Raylib.DrawTexture(sprite, rect.x, rect.y, Raylib.WHITE);
+
+                    button.ButtonSprite.Play("Normal");
+                    button.TextSprite.Play(button.Text);
+                    if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), button.ButtonSprite.Destination))
+                    {
+                        button.ButtonSprite.Play("Hover");
+                        button.TextSprite.Play($"{button.Text}Hover");
+                        if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT))
+                        {
+                            button.Action();
+                        }
+                    }
+                    button.ButtonSprite.Draw();
+                    button.TextSprite.Draw();
+
+                    //if (RayGui.GuiButton(rect, button.Text))
+                    //{
+                    //    button.Action();
+                    //}
                 }
 
             });

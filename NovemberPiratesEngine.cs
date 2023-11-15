@@ -18,6 +18,7 @@ namespace NovemberPirates
             Raylib.InitWindow(1280, 720, "November Pirates");
             Raylib.SetTargetFPS(60);
             Raylib.InitAudioDevice();
+            Raylib.SetExitKey(0);
             Camera = new Camera2D
             {
                 zoom = 1.0f,

@@ -19,7 +19,6 @@ namespace NovemberPirates.Scenes.Levels
             Systems.Add(new ShipControlSystem());
             Systems.Add(new CameraSystem());
             Systems.Add(new WindSystem());
-            Systems.Add(new UiSystem());
             Systems.Add(new DebugSystem());
             Systems.Add(new CannonBallSystem());
             Systems.Add(new EnemyControlSystem());
@@ -29,6 +28,7 @@ namespace NovemberPirates.Scenes.Levels
             Systems.Add(new AudioSystem());
             Systems.Add(new NavigationSystem());
             Systems.Add(new PlayerControlSystem());
+            Systems.Add(new UiSystem());
 
             var mapDetails = MapManager.Instance.LoadMap("Level_0", World);
             MapEdge = mapDetails.MapEdge;

@@ -18,15 +18,15 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
             var instructions3 = World.Create<UiTitle>();
             instructions3.Set(new UiTitle { Text = @"F2 for the debugger I'm proud of", Order = 3 });
 
-            var backButton = new UiButton
+            World.Create(new UiButton
             {
                 Text = "Back",
                 Action = () =>
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new MainMenuScene();
                 },
-                Order = 6
-            };
+                Order = 5
+            });
         }
 
     }
