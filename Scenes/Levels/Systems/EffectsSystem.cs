@@ -33,7 +33,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     var rotatedOffset = RayMath.Vector2Rotate(offset, direction);
 
                     sprite.Position = truePosition + rotatedOffset;
-
                 }
                 else
                 {

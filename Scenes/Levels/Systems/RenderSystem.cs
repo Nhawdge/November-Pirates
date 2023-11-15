@@ -44,7 +44,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 }
             });
 
-
             var effectSprites = new QueryDescription().WithAll<Sprite, Effect, LayerWater>().WithNone<MapTile>();
             world.Query(in effectSprites, (entity) =>
             {

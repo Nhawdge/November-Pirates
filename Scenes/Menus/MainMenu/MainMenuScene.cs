@@ -1,5 +1,4 @@
-﻿using Arch.Core.Extensions;
-using NovemberPirates.Components;
+﻿using NovemberPirates.Components;
 using NovemberPirates.Scenes.Levels;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
@@ -37,7 +36,6 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                     OriginPos = Render.OriginAlignment.LeftTop
                 }
             });
-
 
             World.Create(new SpriteButton
             {
@@ -79,7 +77,6 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 }
             });
 
-
             World.Create(new UiButton
             {
                 Text = "Exit",
@@ -89,9 +86,6 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 },
                 Order = 5
             });
-
-
-
         }
     }
 }

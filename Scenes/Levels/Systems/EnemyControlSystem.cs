@@ -50,6 +50,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     ship.Crew = 0;
                     var percent = (100 + ship.HullHealth) / 100;
                     sprite.Color.a = (byte)(255 * percent);
+                    ship.HullHealth -= Raylib.GetFrameTime();
                 }
                 if (ship.HullHealth <= -100)
                 {

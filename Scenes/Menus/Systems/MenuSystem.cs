@@ -1,6 +1,5 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
-using NovemberPirates.Components;
 using NovemberPirates.Extensions;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Systems;
@@ -12,7 +11,6 @@ namespace NovemberPirates.Scenes.Menus.Systems
 {
     internal class MenuSystem : GameSystem
     {
-
         internal override void Update(World world) { }
 
         internal override void UpdateNoCamera(World world)
@@ -22,7 +20,7 @@ namespace NovemberPirates.Scenes.Menus.Systems
 
             var centerPoint = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
 
-            var dummyrect = new Rectangle(centerPoint.X - 200, centerPoint.Y - 150, 400, 400);
+            var dummyrect = new Rectangle(centerPoint.X - 200, centerPoint.Y - 300, 400, 500);
             //RayGui.GuiDummyRec(dummyrect, "");
             var index = 0;
 
@@ -38,11 +36,7 @@ namespace NovemberPirates.Scenes.Menus.Systems
                     var titleComponent = entity.Get<UiTitle>();
 
                     var text = titleComponent.Text;
-                    var rect = new Rectangle(centerPoint.X - 100, 200 + 50 * titleComponent.Order, 200, 100);
-                    //RayGui.GuiTextBox(text, centerPoint.X - 200, centerPoint.Y - 200, 24, Raylib.ORANGE);
-
-
-                    // TODO fix font size
+                    var rect = new Rectangle(centerPoint.X - 100, 0 + 50 * titleComponent.Order, 200, 100);
 
                     RayGui.GuiLabel(rect, text);
                 }
@@ -64,9 +58,6 @@ namespace NovemberPirates.Scenes.Menus.Systems
                 {
                     var button = entity.Get<SpriteButton>();
 
-                    //var rect = dummyrect with { x = dummyrect.x + 100, y = dummyrect.y + (60 * button.Order), width = 200, height = 50 };
-                    //Raylib.DrawTexture(sprite, rect.x, rect.y, Raylib.WHITE);
-
                     button.ButtonSprite.Play("Normal");
                     button.TextSprite.Play(button.Text);
                     if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), button.ButtonSprite.Destination))
@@ -80,13 +71,7 @@ namespace NovemberPirates.Scenes.Menus.Systems
                     }
                     button.ButtonSprite.Draw();
                     button.TextSprite.Draw();
-
-                    //if (RayGui.GuiButton(rect, button.Text))
-                    //{
-                    //    button.Action();
-                    //}
                 }
-
             });
         }
     }
