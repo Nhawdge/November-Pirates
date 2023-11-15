@@ -23,5 +23,21 @@ namespace NovemberPirates.Entities.Archetypes
             entity.Set(crewMember);
             entity.Set(sprite);
         }
+
+        internal static void CreateWood(World world, Vector2 position)
+        {
+            var entity = world.Create<Wood, Sprite>();
+            var wood = new Wood();
+            var spread = 100;
+            wood.Target = position + new Vector2(Random.Shared.Next(-spread, spread), Random.Shared.Next(-spread, spread));
+            wood.Duration = 25f;
+            wood.Speed = 10f;
+
+            var sprite = new Sprite(TextureKey.Wood, "Assets/Art/wood", 1f, true);
+            sprite.Position = position;
+
+            entity.Set(wood);
+            entity.Set(sprite);
+        }
     }
 }

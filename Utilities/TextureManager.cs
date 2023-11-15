@@ -33,6 +33,7 @@ namespace NovemberPirates.Utilities
             TextureStore.Add(TextureKey.Fire, Raylib.LoadTexture("Assets/Art/fire1.png"));
             TextureStore.Add(TextureKey.WhitePixel, Raylib.LoadTexture("Assets/Art/whitepixel.png"));
             TextureStore.Add(TextureKey.Crew, Raylib.LoadTexture("Assets/Art/crew.png"));
+            TextureStore.Add(TextureKey.Wood, Raylib.LoadTexture("Assets/Art/wood.png"));
         }
 
         internal Texture GetTexture(TextureKey key)
@@ -70,5 +71,6 @@ namespace NovemberPirates.Utilities
         Crew,
         HullSmall,
         HullMedium,
+        Wood,
     }
 }

@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace NovemberPirates.Scenes
 {
-    internal class BaseScene
+    internal abstract class BaseScene
     {
         internal World World = World.Create();
 

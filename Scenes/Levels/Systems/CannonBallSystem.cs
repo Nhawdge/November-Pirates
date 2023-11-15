@@ -42,6 +42,11 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     {
                         ship.HullHealth -= 5;
                         EffectsBuilder.CreateExplosion(world, end);
+                        world.Create(new AudioEvent
+                        {
+                            Key = AudioKey.CannonHitShip,
+                            Position = sprite.Position
+                        });
                         destroyed = true;
                         ship.BoatCondition = ship.HullHealth switch
                         {
@@ -51,22 +56,22 @@ namespace NovemberPirates.Scenes.Levels.Systems
                             < 75 => BoatCondition.Good,
                             _ => BoatCondition.Good
                         };
+                        var shouldSpawnWood = Random.Shared.Next(0, 100) < 30;
+                        if (shouldSpawnWood)
+                        {
+                            PickupBuilder.CreateWood(world, sprite.Position);
+                        }
 
                         shipSprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
                     }
                 });
                 if (destroyed)
                     world.Destroy(entity);
-                else
+                else if (cannonball.Elapsed > cannonball.Duration)
                 {
-                    if (cannonball.Elapsed > cannonball.Duration)
-                    {
-                        var sound = world.Create<AudioEvent>();
-                        sound.Set(new AudioEvent() { Key = AudioKey.CannonHitWater, Position = sprite.Position });
-                        world.Destroy(entity);
-                    }
+                    world.Create(new AudioEvent() { Key = AudioKey.CannonHitWater, Position = sprite.Position });
+                    world.Destroy(entity);
                 }
-
             });
         }
     }

@@ -37,7 +37,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         ship.Crew -= 1;
                         ship.HullHealth += 1;
                         var sound = world.Create<AudioEvent>();
-                        sound.Set(new AudioEvent() { Key = AudioKey.CrewHitWater });
+                        sound.Set(new AudioEvent() { Key = AudioKey.CrewHitWater, Position = sprite.Position });
                         PickupBuilder.CreateCrewMember(world, sprite.Position);
                     }
                 }
@@ -183,7 +183,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     ship.Sail = SailStatus.Closed;
                     sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
                 }
-                Console.WriteLine($"{new BoatOptions(ship).ToString()} {ship.Crew} {ship.HullHealth} ");
+                //Console.WriteLine($"{new BoatOptions(ship).ToString()} {ship.Crew} {ship.HullHealth} ");
             });
         }
     }

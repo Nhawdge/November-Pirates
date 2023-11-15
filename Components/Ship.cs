@@ -23,6 +23,7 @@ namespace NovemberPirates.Components
 
         internal float MaxSpeed = 500f;
         internal float HullHealth = 100f;
+        internal float WindInSail;
 
         // 1 - steering only, drifts in the wind.
         // 2 - Steering and rowing

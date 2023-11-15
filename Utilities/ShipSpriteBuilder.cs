@@ -134,9 +134,7 @@ namespace NovemberPirates.Utilities
             };
             sprite.Play("idle");
 
-            //Raylib.ExportImage(Raylib.LoadImageFromTexture(sprite.Texture), options.ToKey() + ".png");
-
-            //TextureManager.Instance.TextureCache.Add(options.ToKey(), renderTexture.texture);
+            TextureManager.Instance.TextureCache.Add(options.ToKey(), renderTexture.texture);
 
             return sprite;
         }

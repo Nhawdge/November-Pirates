@@ -27,7 +27,39 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Order = 1
             });
 
-            
+
+            World.Create(new UiButton
+            {
+                Text = "How to Play",
+                Action = () =>
+                {
+                    NovemberPiratesEngine.Instance.ActiveScene = new HowToPlayScene();
+                },
+                Order = 2
+            });
+
+            World.Create(new UiButton
+            {
+                Text = "Credits",
+                Action = () =>
+                {
+                    NovemberPiratesEngine.Instance.ActiveScene = new CreditsScene();
+                },
+                Order = 3
+            });
+
+
+            World.Create(new UiButton
+            {
+                Text = "Exit",
+                Action = () =>
+                {
+                    Environment.Exit(0);
+                    //NovemberPiratesEngine.Instance.ActiveScene = new HowToPlayScene();
+                },
+                Order = 5
+            });
+
 
 
         }

@@ -26,12 +26,22 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_W))
             {
+                var priorSail = playerShip.Sail;
                 playerShip.Sail = (SailStatus)Math.Min(Enum.GetValues<SailStatus>().Length - 1, (int)playerShip.Sail + 1);
+
+                if (priorSail != playerShip.Sail && playerShip.Sail >= SailStatus.Half)
+                    world.Create<AudioEvent>().Set(new AudioEvent() { Key = AudioKey.SailOpen, Position = sprite.Position });
+
                 boatChanged = true;
             }
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_S))
             {
+                var priorSail = playerShip.Sail;
                 playerShip.Sail = (SailStatus)Math.Max(0, (int)playerShip.Sail - 1);
+
+                if (priorSail != playerShip.Sail && playerShip.Sail >= SailStatus.Rowing)
+                    world.Create<AudioEvent>().Set(new AudioEvent() { Key = AudioKey.SailClose, Position = sprite.Position });
+
                 boatChanged = true;
             }
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A))

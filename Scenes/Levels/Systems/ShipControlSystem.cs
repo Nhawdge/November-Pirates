@@ -53,6 +53,11 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     < 75 => 0.1f,
                     _ => 0f,
                 };
+
+                if (windInSail == 1f && windInSail != ship.WindInSail && ship.Sail >= SailStatus.Half)
+                    world.Create(new AudioEvent() { Key = AudioKey.WindInSail, Position = sprite.Position });
+
+                ship.WindInSail = windInSail;
                 //singleton.DebugText += $"Boat Angle:{boatAngle.ToString("0.0")}\nWind Angle: {windAngle.ToString("0.0")}\nAngle Diff: {angleDiff.ToString("0.0")}\nWind In Sail: {windInSail.ToString("0.0")}";
                 var windStrength = wind.WindStrength * windInSail;
 
