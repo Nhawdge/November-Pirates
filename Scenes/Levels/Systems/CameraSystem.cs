@@ -3,6 +3,7 @@ using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Systems;
 using Raylib_CsLo;
+using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
 {
@@ -11,6 +12,8 @@ namespace NovemberPirates.Scenes.Levels.Systems
         public CameraSystem()
         {
         }
+
+        private float CameraSpeed = 3f;
 
         internal override void Update(World world)
         {
@@ -23,16 +26,16 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
             world.Query(in query, (entity) =>
             {
-                var targetPos = entity.Get<Sprite>().Position;
-
-                var xdiff = 0; 
+                var shipSprite = entity.Get<Sprite>();
+                var targetPos = shipSprite.Position + RayMath.Vector2Rotate(new Vector2(0, -100), shipSprite.RotationAsRadians);
+                var xdiff = 0;
                 var ydiff = 0;
 
                 var x = targetPos.X - xdiff;
                 if (x < LeftEdge)
                 {
                     x = LeftEdge;
-                } 
+                }
                 else if (x > RightEdge)
                 {
                     x = RightEdge;
@@ -46,9 +49,12 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     y = BottomEdge;
                 }
+                var direction = new Vector2(x, y) - NovemberPiratesEngine.Instance.Camera.target;
+                var currentPos = NovemberPiratesEngine.Instance.Camera.target;
+                var futurePos = currentPos + (direction * CameraSpeed * Raylib.GetFrameTime());
 
-                NovemberPiratesEngine.Instance.Camera.target.X = x;
-                NovemberPiratesEngine.Instance.Camera.target.Y = y;
+                NovemberPiratesEngine.Instance.Camera.target.X = futurePos.X;
+                NovemberPiratesEngine.Instance.Camera.target.Y = futurePos.Y;
             });
         }
     }
