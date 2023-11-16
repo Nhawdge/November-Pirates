@@ -1,5 +1,6 @@
 ﻿using NovemberPirates.Scenes;
 using NovemberPirates.Scenes.Menus.MainMenu;
+using NovemberPirates.Utilities.Data;
 using Raylib_CsLo;
 
 namespace NovemberPirates
@@ -26,6 +27,8 @@ namespace NovemberPirates
             };
 
             ActiveScene = new MainMenuScene();
+
+            var data = ShipData.Instance;
 
             while (!Raylib.WindowShouldClose())
             {
