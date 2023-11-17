@@ -4,6 +4,13 @@ on:
   push:
     tags:
       - "v*.*.*"
+
+env:
+  BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+  CHANNEL: windows
+  ITCH_GAME: november-pirates
+  ITCH_USER: nhawdge
+  PACKAGE: 'November-Pirates-win-${{ github.ref_name }}*'
       
 jobs:
   build:
@@ -25,8 +32,11 @@ jobs:
       with:
         files: bin/Release/net7.0/win-x64/publish/
         dest:  'November-Pirates-win-${{ github.ref_name }}.zip'
+        
     - name: GH Release
       uses: softprops/action-gh-release@v0.1.14
       with:
         files: 'November-Pirates-win-${{ github.ref_name }}*'
+    - uses: manleydev/butler-publish-itchio-action@master
+ 
     
