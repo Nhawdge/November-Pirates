@@ -75,18 +75,27 @@ namespace NovemberPirates.Utilities
                 foreach (var entity in layer.EntityInstances)
                 {
                     Console.WriteLine($"entity: {entity.Identifier}");
-                    if (entity.Identifier == Identifier.SpawnPoint)
+                    if (entity.Identifier == "Spawn_Point")
                     {
                         EnemyBuilder.CreateSpawnPoint(world, entity.Px.ToVector2(), Team.Red);
                     }
-                    if (entity.Identifier == Identifier.PatrolPoint)
+                    if (entity.Identifier == "Patrol_Point")
                     {
                         var order = (int)(entity.FieldInstances.FirstOrDefault(x => x.Identifier == "Order").Value);
                         EnemyBuilder.CreatePatrolPoint(world, entity.Px.ToVector2(), Team.Red, order);
                     }
-                    if (entity.Identifier == Identifier.PlayerSpawn)
+                    if (entity.Identifier == "Player_Spawn")
                     {
                         // TODO - Create player spawn
+                    }
+                    if (entity.Identifier == "Port")
+                    {
+                        world.Create(new Port()
+                        {
+                            Position = entity.Px.ToVector2(),
+                            Team = Team.Yellow,
+                            Currency = 1
+                        });
                     }
                 }
             }

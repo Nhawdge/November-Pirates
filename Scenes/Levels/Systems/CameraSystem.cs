@@ -27,7 +27,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
             world.Query(in query, (entity) =>
             {
                 var shipSprite = entity.Get<Sprite>();
-                var targetPos = shipSprite.Position + RayMath.Vector2Rotate(new Vector2(0, -100), shipSprite.RotationAsRadians);
+                var targetPos = shipSprite.Position + RayMath.Vector2Rotate(new Vector2(0, -200), shipSprite.RotationAsRadians);
                 var xdiff = 0;
                 var ydiff = 0;
 

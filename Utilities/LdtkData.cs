@@ -145,7 +145,7 @@ namespace QuickType.Map
         public Tileset[] Tilesets { get; set; }
 
         [JsonPropertyName("enums")]
-        public object[] Enums { get; set; }
+        public Enum[] Enums { get; set; }
 
         [JsonPropertyName("externalEnums")]
         public object[] ExternalEnums { get; set; }
@@ -157,7 +157,7 @@ namespace QuickType.Map
     public partial class Entity
     {
         [JsonPropertyName("identifier")]
-        public Identifier Identifier { get; set; }
+        public string Identifier { get; set; }
 
         [JsonPropertyName("uid")]
         public long Uid { get; set; }
@@ -211,7 +211,7 @@ namespace QuickType.Map
         public bool Hollow { get; set; }
 
         [JsonPropertyName("color")]
-        public Color Color { get; set; }
+        public string Color { get; set; }
 
         [JsonPropertyName("renderMode")]
         public string RenderMode { get; set; }
@@ -353,6 +353,42 @@ namespace QuickType.Map
 
         [JsonPropertyName("tilesetUid")]
         public object TilesetUid { get; set; }
+    }
+
+    public partial class Enum
+    {
+        [JsonPropertyName("identifier")]
+        public string Identifier { get; set; }
+
+        [JsonPropertyName("uid")]
+        public long Uid { get; set; }
+
+        [JsonPropertyName("values")]
+        public Value[] Values { get; set; }
+
+        [JsonPropertyName("iconTilesetUid")]
+        public object IconTilesetUid { get; set; }
+
+        [JsonPropertyName("externalRelPath")]
+        public object ExternalRelPath { get; set; }
+
+        [JsonPropertyName("externalFileChecksum")]
+        public object ExternalFileChecksum { get; set; }
+
+        [JsonPropertyName("tags")]
+        public object[] Tags { get; set; }
+    }
+
+    public partial class Value
+    {
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [JsonPropertyName("tileRect")]
+        public object TileRect { get; set; }
+
+        [JsonPropertyName("color")]
+        public long Color { get; set; }
     }
 
     public partial class Layer
@@ -829,7 +865,7 @@ namespace QuickType.Map
     public partial class EntityInstance
     {
         [JsonPropertyName("__identifier")]
-        public Identifier Identifier { get; set; }
+        public string Identifier { get; set; }
 
         [JsonPropertyName("__grid")]
         public long[] Grid { get; set; }
@@ -844,7 +880,7 @@ namespace QuickType.Map
         public object Tile { get; set; }
 
         [JsonPropertyName("__smartColor")]
-        public Color SmartColor { get; set; }
+        public string SmartColor { get; set; }
 
         [JsonPropertyName("__worldX")]
         public long WorldX { get; set; }
@@ -901,10 +937,6 @@ namespace QuickType.Map
         public long[] Params { get; set; }
     }
 
-    public enum Color { Be4A2F, D77643, Ead4Aa };
-
-    public enum Identifier { PatrolPoint, PlayerSpawn, SpawnPoint };
-
     public enum ImageExportMode { None };
 
     public enum TileMode { Single };
@@ -925,8 +957,6 @@ namespace QuickType.Map
         {
             Converters =
             {
-                ColorConverter.Singleton,
-                IdentifierConverter.Singleton,
                 ImageExportModeConverter.Singleton,
                 TileModeConverter.Singleton,
                 new DateOnlyConverter(),
@@ -934,84 +964,6 @@ namespace QuickType.Map
                 IsoDateTimeOffsetConverter.Singleton
             },
         };
-    }
-
-    internal class ColorConverter : JsonConverter<Color>
-    {
-        public override bool CanConvert(Type t) => t == typeof(Color);
-
-        public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            var value = reader.GetString();
-            switch (value)
-            {
-                case "#BE4A2F":
-                    return Color.Be4A2F;
-                case "#D77643":
-                    return Color.D77643;
-                case "#EAD4AA":
-                    return Color.Ead4Aa;
-            }
-            throw new Exception("Cannot unmarshal type Color");
-        }
-
-        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
-        {
-            switch (value)
-            {
-                case Color.Be4A2F:
-                    JsonSerializer.Serialize(writer, "#BE4A2F", options);
-                    return;
-                case Color.D77643:
-                    JsonSerializer.Serialize(writer, "#D77643", options);
-                    return;
-                case Color.Ead4Aa:
-                    JsonSerializer.Serialize(writer, "#EAD4AA", options);
-                    return;
-            }
-            throw new Exception("Cannot marshal type Color");
-        }
-
-        public static readonly ColorConverter Singleton = new ColorConverter();
-    }
-
-    internal class IdentifierConverter : JsonConverter<Identifier>
-    {
-        public override bool CanConvert(Type t) => t == typeof(Identifier);
-
-        public override Identifier Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            var value = reader.GetString();
-            switch (value)
-            {
-                case "Patrol_Point":
-                    return Identifier.PatrolPoint;
-                case "Player_Spawn":
-                    return Identifier.PlayerSpawn;
-                case "Spawn_Point":
-                    return Identifier.SpawnPoint;
-            }
-            throw new Exception("Cannot unmarshal type Identifier");
-        }
-
-        public override void Write(Utf8JsonWriter writer, Identifier value, JsonSerializerOptions options)
-        {
-            switch (value)
-            {
-                case Identifier.PatrolPoint:
-                    JsonSerializer.Serialize(writer, "Patrol_Point", options);
-                    return;
-                case Identifier.PlayerSpawn:
-                    JsonSerializer.Serialize(writer, "Player_Spawn", options);
-                    return;
-                case Identifier.SpawnPoint:
-                    JsonSerializer.Serialize(writer, "Spawn_Point", options);
-                    return;
-            }
-            throw new Exception("Cannot marshal type Identifier");
-        }
-
-        public static readonly IdentifierConverter Singleton = new IdentifierConverter();
     }
 
     internal class ImageExportModeConverter : JsonConverter<ImageExportMode>
