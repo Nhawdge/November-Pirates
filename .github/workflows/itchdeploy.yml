@@ -1,0 +1,30 @@
+name: Trigger Workflow on Release
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check if a file is uploaded
+      id: check_release
+      run: echo "Files uploaded to release. Add your script/command here."
+
+    - name: Display information
+      run: |
+        echo "Release Tag: ${{ github.event.release.tag_name }}"
+        echo "Release ID: ${{ github.event.release.id }}"
+        echo "Action Run ID: ${{ github.run_id }}"        
+    - name: Itch.io - Publish
+      uses: KikimoraGames/itch-publish@v0.0.3
+      with:
+          butlerApiKey: ${{ secrets.BUTLER_CREDENTIALS }}
+          gameData: 'November-Pirates-win-${{ github.ref_name }}*'
+          itchUsername: nhawdge
+          itchGameId: november-pirates
+          buildChannel: windows
+          buildNumber: ${{ github.ref_name }}    
