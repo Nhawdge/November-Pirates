@@ -31,6 +31,7 @@ jobs:
   itch:
     runs-on: ubuntu-latest    
     environment: itch
+    needs: build
 
     steps:
     - name: Itch.io - Publish
