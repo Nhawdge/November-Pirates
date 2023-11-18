@@ -38,7 +38,7 @@ jobs:
       uses: KikimoraGames/itch-publish@v0.0.3
       with:
           butlerApiKey: ${{ secrets.BUTLER_CREDENTIALS }}
-          gameData: 'November-Pirates-win-${{ github.ref_name }}*'
+          gameData: 'November-Pirates-win-${{ github.ref_name }}.zip'
           itchUsername: nhawdge
           itchGameId: november-pirates
           buildChannel: windows
