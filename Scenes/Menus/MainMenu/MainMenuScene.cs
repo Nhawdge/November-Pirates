@@ -3,6 +3,7 @@ using NovemberPirates.Scenes.Levels;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
 using NovemberPirates.Utilities;
+using Raylib_CsLo;
 using System.Numerics;
 
 namespace NovemberPirates.Scenes.Menus.MainMenu
@@ -16,6 +17,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
             //var title = World.Create<UiTitle>();
             //var uiTitle = new UiTitle() { Text = "November Pirates" };
             //title.Set(uiTitle);
+            var width = Raylib.GetScreenWidth() * 0.7f;
 
             World.Create(new SpriteButton
             {
@@ -27,12 +29,12 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Order = 1,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
                 {
-                    Position = new Vector2(750, 150),
+                    Position = new Vector2(width, 150),
                     OriginPos = Render.OriginAlignment.LeftTop
                 },
                 ButtonSprite = new Sprite(TextureKey.Button, "Assets/Art/Button")
                 {
-                    Position = new Vector2(750, 150),
+                    Position = new Vector2(width, 150),
                     OriginPos = Render.OriginAlignment.LeftTop
                 }
             });
@@ -47,12 +49,12 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Order = 2,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
                 {
-                    Position = new Vector2(750, 300),
+                    Position = new Vector2(width, 300),
                     OriginPos = Render.OriginAlignment.LeftTop,
                 },
                 ButtonSprite = new Sprite(TextureKey.Button, "Assets/Art/Button")
                 {
-                    Position = new Vector2(750, 300),
+                    Position = new Vector2(width, 300),
                     OriginPos = Render.OriginAlignment.LeftTop
                 }
             });
@@ -67,24 +69,34 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Order = 3,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
                 {
-                    Position = new Vector2(750, 450),
+                    Position = new Vector2(width, 450),
                     OriginPos = Render.OriginAlignment.LeftTop
                 },
                 ButtonSprite = new Sprite(TextureKey.Button, "Assets/Art/Button")
                 {
-                    Position = new Vector2(750, 450),
+                    Position = new Vector2(width, 450),
                     OriginPos = Render.OriginAlignment.LeftTop
                 }
             });
 
-            World.Create(new UiButton
+            World.Create(new SpriteButton
             {
                 Text = "Exit",
                 Action = () =>
                 {
                     Environment.Exit(0);
                 },
-                Order = 5
+                Order = 5,
+                TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
+                {
+                    Position = new Vector2(width, 750),
+                    OriginPos = Render.OriginAlignment.LeftTop
+                },
+                ButtonSprite = new Sprite(TextureKey.Button, "Assets/Art/Button")
+                {
+                    Position = new Vector2(width, 750),
+                    OriginPos = Render.OriginAlignment.LeftTop
+                }
             });
         }
     }

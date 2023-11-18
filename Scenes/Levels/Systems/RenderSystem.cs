@@ -4,6 +4,7 @@ using NovemberPirates.Components;
 using NovemberPirates.Extensions;
 using NovemberPirates.Systems;
 using Raylib_CsLo;
+using System.Numerics;
 
 namespace NovemberPirates.Scenes.Levels.Systems
 {
@@ -20,9 +21,12 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var singleton = singletonEntity.Get<Singleton>();
 
             var renders = new QueryDescription().WithAll<Render>().WithNone<Effect>();
+            var camera = NovemberPiratesEngine.Instance.Camera;
             world.Query(in renders, (entity) =>
             {
                 var myRender = entity.Get<Render>();
+                if (Vector2.Abs(myRender.Position - camera.target).Length() > Math.Max(Raylib.GetScreenWidth(), Raylib.GetScreenHeight()) + 200)
+                    return;
 
                 if (singleton.Debug != DebugLevel.High)
                 {

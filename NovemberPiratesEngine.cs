@@ -16,7 +16,14 @@ namespace NovemberPirates
 
         public void StartGame()
         {
-            Raylib.InitWindow(1280, 720, "November Pirates");
+            //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_TOPMOST);
+            //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_MAXIMIZED);
+            //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_UNDECORATED);
+
+            var width = Raylib.GetMonitorWidth(0);
+            var height = Raylib.GetMonitorHeight(0);
+
+            Raylib.InitWindow(width, height, "November Pirates");
             Raylib.SetTargetFPS(60);
             Raylib.InitAudioDevice();
             Raylib.SetExitKey(0);

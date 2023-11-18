@@ -1,15 +1,27 @@
-﻿using System.Numerics;
+﻿using NovemberPirates.Utilities.Data;
+using System.Numerics;
 
 namespace NovemberPirates.Components
 {
     internal class Cannon
     {
-        internal BoatSide Placement;
+        internal CannonType CannonType;
 
-        internal float ReloadTime =0.5f;
-        internal float ReloadElapsed = 0f;
         internal Vector2 Position;
+        internal BoatSide Placement;
         internal int Row;
+
+        internal float ReloadElapsed = 0f;
+        internal float ReloadTime;
+        internal float ReloadRate;
+        internal float HullDamage;
+        internal float SailDamage;
+        internal float CrewKillChance;
+        internal float CrewKillChainLimit;
+        internal float Spread;
+        internal float BallSpeed;
+        internal float BallDuration;
+        internal float ShotPer;
     }
 
     internal enum BoatSide

@@ -8,6 +8,7 @@ namespace NovemberPirates.Components
         internal Team FiredBy;
         internal float Duration = 0.75f;
         internal float Elapsed = 0f;
+        internal Cannon FiredByCannon;
     }
     internal enum Team
     {

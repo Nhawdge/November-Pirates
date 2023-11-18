@@ -11,11 +11,21 @@ namespace NovemberPirates.Scenes.Menus.Systems
 {
     internal class MenuSystem : GameSystem
     {
+        private Font CreditsFont;
+
+        public MenuSystem()
+        {
+            CreditsFont = Raylib.LoadFont("Assets/Fonts/AguafinaScript-Regular.ttf");
+        }
         internal override void Update(World world) { }
 
         internal override void UpdateNoCamera(World world)
         {
-            Raylib.DrawTexture(TextureManager.Instance.GetTexture(TextureKey.MainMenuBackground), 0, 0, Raylib.WHITE);
+            var backgroundTexture = TextureManager.Instance.GetTexture(TextureKey.MainMenuBackground);
+            Raylib.DrawTexturePro(backgroundTexture,
+                new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height),
+                new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()),
+                Vector2.Zero, 0f, Raylib.WHITE);
             var query = new QueryDescription().WithAny<UiTitle, UiButton, SpriteButton>();
 
             var centerPoint = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
@@ -24,10 +34,12 @@ namespace NovemberPirates.Scenes.Menus.Systems
             //RayGui.GuiDummyRec(dummyrect, "");
             var index = 0;
 
+            //RayGui.GuiSetFont(CreditsFont);
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 48);
             RayGui.GuiSetStyle((int)GuiControl.LABEL, (int)GuiControlProperty.TEXT_ALIGNMENT, 1);
 
             RayGui.GuiSetStyle((int)GuiControl.BUTTON, (int)GuiControlProperty.TEXT_ALIGNMENT, 0);
+
             world.Query(in query, (entity) =>
             {
                 index++;

@@ -14,19 +14,10 @@ namespace NovemberPirates.Entities.Archetypes
             var playerComponent = new Player();
             player.Set(playerComponent);
 
-            var ship = new Ship();
-            ship.Team = Team.Player;
-            ship.BoatColor = BoatColor.Dead;
-            ship.BoatType = BoatType.HullMedium;
+            var ship = new Ship(HullType.Small, BoatColor.Dead, Team.Player);
             ship.Sail = SailStatus.Closed;
-            ship.Crew = 10;
-            ship.RowingPower = 150f;
-            ship.Cannons.Add(new Cannon { Placement = BoatSide.Port, Row = 1 });
-            ship.Cannons.Add(new Cannon { Placement = BoatSide.Starboard, Row = 1 });
-            ship.Cannons.Add(new Cannon { Placement = BoatSide.Port, Row = 2 });
-            ship.Cannons.Add(new Cannon { Placement = BoatSide.Starboard, Row = 2 });
-            ship.Cannons.Add(new Cannon { Placement = BoatSide.Port, Row = 3 });
-            ship.Cannons.Add(new Cannon { Placement = BoatSide.Starboard, Row = 3 });
+
+            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.BFC1700, BoatSide.Starboard, 1));
 
             player.Set(ship);
 

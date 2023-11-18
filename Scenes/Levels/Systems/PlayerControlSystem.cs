@@ -66,7 +66,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     var cannonPos = sprite.Position + RayMath.Vector2Rotate(nextCannon.Position, sprite.RotationAsRadians);
                     Raylib.DrawCircleV(cannonPos, 10, Raylib.RED);
 
-                    CannonballBuilder.Create(world, cannonPos, sprite.RenderRotation + 180, Team.Player);
+                    CannonballBuilder.Create(world, nextCannon, cannonPos, sprite.RenderRotation + 180, Team.Player);
 
                     var sound = world.Create<AudioEvent>();
                     sound.Set(new AudioEvent() { Position = cannonPos, Key = AudioKey.CannonFire });
@@ -84,7 +84,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     var cannonPos = sprite.Position + RayMath.Vector2Rotate(nextCannon.Position, sprite.RotationAsRadians);
                     //Raylib.DrawCircleV(cannonPos, 10, Raylib.RED);
 
-                    CannonballBuilder.Create(world, cannonPos, sprite.RenderRotation, Team.Player);
+                    CannonballBuilder.Create(world, nextCannon, cannonPos, sprite.RenderRotation, Team.Player);
 
                     var sound = world.Create<AudioEvent>();
                     sound.Set(new AudioEvent() { Position = cannonPos, Key = AudioKey.CannonFire });
@@ -95,13 +95,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
             {
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_PAGE_UP))
                 {
-                    playerShip.BoatType = (BoatType)Math.Min(Enum.GetValues<BoatType>().Length - 1, (int)playerShip.BoatType + 1);
+                    playerShip.BoatType = (HullType)Math.Min(Enum.GetValues<HullType>().Length - 1, (int)playerShip.BoatType + 1);
                     boatChanged = true;
 
                 }
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_PAGE_DOWN))
                 {
-                    playerShip.BoatType = (BoatType)Math.Max(0, (int)playerShip.BoatType - 1);
+                    playerShip.BoatType = (HullType)Math.Max(0, (int)playerShip.BoatType - 1);
                     boatChanged = true;
 
                 }

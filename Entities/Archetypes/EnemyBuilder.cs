@@ -11,10 +11,10 @@ namespace NovemberPirates.Entities.Archetypes
         public static void CreateEnemyShip(World world, Vector2 position, Team team)
         {
             var entity = world.Create<Ship, Sprite, Npc>();
-            var ship = new Ship();
+            var ship = new Ship(HullType.Small, BoatColor.Yellow, Team.Yellow);
             ship.Team = team;
             ship.BoatColor = BoatColor.Yellow;
-            ship.BoatType = BoatType.HullLarge;
+            ship.BoatType = HullType.Large;
             ship.Sail = SailStatus.Closed;
             ship.Crew = 10;
 

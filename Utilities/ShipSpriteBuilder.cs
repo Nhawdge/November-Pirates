@@ -12,7 +12,7 @@ namespace NovemberPirates.Utilities
         {
             var spriteHeight = options.Hull switch
             {
-                BoatType.HullLarge => 128,
+                HullType.Large => 128,
                 _ => 108,
             };
             var shipSize = new Vector2(66, spriteHeight);
@@ -41,9 +41,9 @@ namespace NovemberPirates.Utilities
 
             var baseHullSprite = options.Hull switch
             {
-                BoatType.HullLarge => new Sprite(TextureKey.HullLarge, "Assets/Art/hullLarge") { Position = shipSize / 2 },
-                BoatType.HullMedium => new Sprite(TextureKey.HullMedium, "Assets/Art/hullMedium") { Position = shipSize / 2 },
-                BoatType.HullSmall => new Sprite(TextureKey.HullSmall, "Assets/Art/hullSmall") { Position = shipSize / 2 },
+                HullType.Large => new Sprite(TextureKey.HullLarge, "Assets/Art/hullLarge") { Position = shipSize / 2 },
+                HullType.Medium => new Sprite(TextureKey.HullMedium, "Assets/Art/hullMedium") { Position = shipSize / 2 },
+                HullType.Small => new Sprite(TextureKey.HullSmall, "Assets/Art/hullSmall") { Position = shipSize / 2 },
                 _ => throw new NotImplementedException($"Hull type: '{options.Hull}' does not exist "),
             };
             baseHullSprite.Play($"HullLarge{(int)options.Condition}");
@@ -91,12 +91,12 @@ namespace NovemberPirates.Utilities
 
             //Pole
             var poleSprite = new Sprite(TextureKey.Pole, "Assets/Art/pole") { };
-            poleSprite.Position = new Vector2(shipSize.X / 2, options.Hull == BoatType.HullLarge ? 100 : 80);
+            poleSprite.Position = new Vector2(shipSize.X / 2, options.Hull == HullType.Large ? 100 : 80);
 
             //front sail
             var frontSailSprite = new Sprite(TextureKey.SailSmall, "Assets/Art/sailSmall1");
             frontSailSprite.Play($"{options.Color}{(int)options.Condition}");
-            frontSailSprite.Position = new Vector2(shipSize.X / 2, options.Hull == BoatType.HullLarge ? 105 : 85);
+            frontSailSprite.Position = new Vector2(shipSize.X / 2, options.Hull == HullType.Large ? 105 : 85);
 
             // Build Texture
             var renderTexture = Raylib.LoadRenderTexture((int)shipSize.X, (int)shipSize.Y);
@@ -140,7 +140,7 @@ namespace NovemberPirates.Utilities
         }
 
     }
-    internal record BoatOptions(BoatType Hull, BoatColor Color, SailStatus Sails, List<Cannon> Cannons, BoatCondition Condition = BoatCondition.Good)
+    internal record BoatOptions(HullType Hull, BoatColor Color, SailStatus Sails, List<Cannon> Cannons, BoatCondition Condition = BoatCondition.Good)
     {
         internal BoatOptions(Ship ship) : this(ship.BoatType, ship.BoatColor, ship.Sail, ship.Cannons, ship.BoatCondition) { }
 
@@ -150,11 +150,11 @@ namespace NovemberPirates.Utilities
         }
     }
 
-    internal enum BoatType
+    internal enum HullType
     {
-        HullSmall,
-        HullMedium,
-        HullLarge,
+        Small,
+        Medium,
+        Large,
     }
 
     internal enum BoatColor
@@ -181,17 +181,17 @@ namespace NovemberPirates.Utilities
             {$"Port", 13},
             {$"Starboard", 53},
 
-            {$"{BoatType.HullLarge}1", 38},
-            {$"{BoatType.HullLarge}2", 56},
-            {$"{BoatType.HullLarge}3", 75},
+            {$"{HullType.Large}1", 38},
+            {$"{HullType.Large}2", 56},
+            {$"{HullType.Large}3", 75},
 
-            {$"{BoatType.HullMedium}1", 38},
-            {$"{BoatType.HullMedium}2", 56},
-            {$"{BoatType.HullMedium}3", 75},
+            {$"{HullType.Medium}1", 38},
+            {$"{HullType.Medium}2", 56},
+            {$"{HullType.Medium}3", 75},
 
-            {$"{BoatType.HullSmall}1", 38},
-            {$"{BoatType.HullSmall}2", 56},
-            {$"{BoatType.HullSmall}3", 75},
+            {$"{HullType.Small}1", 38},
+            {$"{HullType.Small}2", 56},
+            {$"{HullType.Small}3", 75},
             };
     }
 
