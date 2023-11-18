@@ -7,7 +7,6 @@ on:
       
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
@@ -29,4 +28,16 @@ jobs:
       uses: softprops/action-gh-release@v0.1.14
       with:
         files: 'November-Pirates-win-${{ github.ref_name }}*'
+  itch:
+    runs-on: ubuntu-latest    
+    steps:
+    - name: Itch.io - Publish
+      uses: KikimoraGames/itch-publish@v0.0.3
+      with:
+          butlerApiKey: ${{ secrets.BUTLER_CREDENTIALS }}
+          gameData: 'November-Pirates-win-${{ github.ref_name }}*'
+          itchUsername: nhawdge
+          itchGameId: november-pirates
+          buildChannel: windows
+          buildNumber: ${{ github.ref_name }}    
     
