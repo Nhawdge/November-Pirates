@@ -6,11 +6,11 @@ on:
       - "v*.*.*"
 
 env:
-  BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+  BUTLER_CREDENTIALS: 
   CHANNEL: windows
   ITCH_GAME: november-pirates
   ITCH_USER: nhawdge
-  PACKAGE: 'November-Pirates-win-${{ github.ref_name }}*'
+  PACKAGE: 
       
 jobs:
   build:
@@ -37,6 +37,12 @@ jobs:
       uses: softprops/action-gh-release@v0.1.14
       with:
         files: 'November-Pirates-win-${{ github.ref_name }}*'
-    - uses: manleydev/butler-publish-itchio-action@master
- 
-    
+    - name: Itch.io - Publish
+      uses: KikimoraGames/itch-publish@v0.0.3
+      with:
+          butlerApiKey: ${{ secrets.BUTLER_CREDENTIALS }}
+          gameData: 'November-Pirates-win-${{ github.ref_name }}*'
+          itchUsername: nhawdge
+          itchGameId: november-pirates
+          buildChannel: windows
+          buildNumber: ${{ github.ref_name }}    
