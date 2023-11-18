@@ -30,6 +30,8 @@ jobs:
         files: 'November-Pirates-win-${{ github.ref_name }}*'
   itch:
     runs-on: ubuntu-latest    
+    environment: itch
+
     steps:
     - name: Itch.io - Publish
       uses: KikimoraGames/itch-publish@v0.0.3
