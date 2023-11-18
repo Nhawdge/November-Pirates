@@ -3,19 +3,10 @@ name: .NET
 on:
   push:
     tags:
-      - "v*.*.*"
-
-env:
-  BUTLER_CREDENTIALS: 
-  CHANNEL: windows
-  ITCH_GAME: november-pirates
-  ITCH_USER: nhawdge
-  PACKAGE: 
-      
+      - "v*.*.*"     
 jobs:
   build:
-
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
