@@ -12,13 +12,13 @@ namespace NovemberPirates.Utilities
         {
             LoadTextures();
         }
-
+           
         private void LoadTextures()
         {
-            TextureStore.Add(TextureKey.MapTileset, Raylib.LoadTexture("Assets/Maps/tiles_sheet.png"));
+            TextureStore.Add(TextureKey.MapTileset, Raylib.LoadTexture("Assets/Maps/tiles_sheet2.png"));
             TextureStore.Add(TextureKey.MainMenuBackground, Raylib.LoadTexture("Assets/Art/Main_Menu.png"));
             TextureStore.Add(TextureKey.Words, Raylib.LoadTexture("Assets/Art/words.png"));
-            TextureStore.Add(TextureKey.Button, Raylib.LoadTexture("Assets/Art/Button.png"));
+            TextureStore.Add(TextureKey.Button, Raylib.LoadTexture("Assets/Art/Button.png"));   
 
             TextureStore.Add(TextureKey.HullLarge, Raylib.LoadTexture("Assets/Art/hullLarge.png"));
             TextureStore.Add(TextureKey.HullMedium, Raylib.LoadTexture("Assets/Art/hullMedium.png"));

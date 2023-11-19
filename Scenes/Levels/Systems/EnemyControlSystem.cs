@@ -55,6 +55,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (ship.HullHealth <= -100)
                 {
                     world.Destroy(entity);
+                    return;
                 }
 
                 ship.Target = Vector2.Zero;
@@ -91,7 +92,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         shipTile.MovementCost);
 
                     var openTiles = new List<MapPath>();
-                    var closedTiles = new List<MapPath>();
+                    var closedTiles = new List<Vector2>();
 
                     var neighbors = singleton.Map.GetTileNeighborsForTile(shipTile).Select(neighbor =>
                         new MapPath(
@@ -111,32 +112,40 @@ namespace NovemberPirates.Scenes.Levels.Systems
                             pathToTarget = openTile;
                             break;
                         }
+                        closedTiles.Add(openTile.Coords);
+
                         neighbors = singleton.Map.GetTileNeighborsForCoords(openTile.Coords)
+                        .Where(x => !closedTiles.Contains(x.Coordinates))
                         .Select(neighbor =>
                             new MapPath(
                                 neighbor.Coordinates,
                                 neighbor.Coordinates.DistanceTo(targetTile.Coordinates),
                                 neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
                                 neighbor.MovementCost,
-                                last)
-                            ).Where(path => !closedTiles.Contains(path));
+                                openTile)
+                            );
 
                         openTiles.AddRange(neighbors);
-                        openTiles.Remove(openTile);
-                        closedTiles.Add(openTile);
+                        openTiles.RemoveAll(x => x.Coords == openTile.Coords);
 
-                        //Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
+                        //Console.WriteLine($"Adding {openTile.Coords}");
+
+                        Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
                     }
-
+                    //var lastStep = Vector2.Zero;
                     while (pathToTarget.Parent is not null)
                     {
+                        //if (last.Coords.X != pathToTarget.Coords.X && last.Coords.Y != pathToTarget.Coords.Y)
+                        //{
                         ship.Route.Insert(0, pathToTarget.Coords.ToPixels());
+                        //}
+                        //lastStep = pathToTarget.Coords;
                         pathToTarget = pathToTarget.Parent;
                     }
                 }
 
                 var sailTarget = ship.Route.First();
-                if (sprite.Position.DistanceTo(sailTarget) < 20)
+                if (sprite.Position.DistanceTo(sailTarget) < 300)
                 {
                     ship.Route.RemoveAt(0);
                     ship.NextPatrolPoint += 1;
@@ -152,15 +161,24 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     var targetDirection = Vector2.Normalize(sprite.Position - sailTarget);
 
                     var rotationInDegrees = Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI);
-                    if (sprite.Rotation > rotationInDegrees)
+                    if (sprite.Rotation != rotationInDegrees)
                     {
                         var rotationNeeded = (float)Math.Min(sprite.Rotation - rotationInDegrees, ship.RotationSpeed * Raylib.GetFrameTime());
-                        sprite.Rotation -= rotationNeeded;
+                        if (Math.Abs(rotationInDegrees) > 1)
+                        {
+                            sprite.Rotation -= rotationNeeded;
+                        }
+                        //Console.WriteLine($" Spin left: {rotationInDegrees}");
                     }
                     else
                     {
                         var rotationNeeded = (float)Math.Min(rotationInDegrees - sprite.Rotation, ship.RotationSpeed * Raylib.GetFrameTime());
+                        if (Math.Abs(rotationInDegrees) > 1)
+                        {
+                            sprite.Rotation += rotationNeeded;
+                        }
                         sprite.Rotation += ship.RotationSpeed * Raylib.GetFrameTime();
+                        //Console.WriteLine($"Spin Right: {rotationInDegrees}");
                     }
                 }
 

@@ -56,6 +56,16 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 NovemberPiratesEngine.Instance.Camera.target.X = futurePos.X;
                 NovemberPiratesEngine.Instance.Camera.target.Y = futurePos.Y;
             });
+
+            var scroll = Raylib.GetMouseWheelMove();
+            if (scroll < 0)
+            {
+                NovemberPiratesEngine.Instance.Camera.zoom -= 0.1f;
+            }
+            else if (scroll > 0)
+            {
+                NovemberPiratesEngine.Instance.Camera.zoom += 0.1f;
+            }
         }
     }
 }

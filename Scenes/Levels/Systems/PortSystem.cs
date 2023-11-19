@@ -14,15 +14,17 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var portQuery = new QueryDescription().WithAll<Port>();
             var singletonEntity = world.QueryFirst<Singleton>();
             var singleton = singletonEntity.Get<Singleton>();
-
-            world.Query(portQuery, (portEntity) =>
+   
+            world.Query(portQuery, (portEntity) => 
             {
                 var port = portEntity.Get<Port>();
-                port.Currency += 1f * Raylib.GetFrameTime();
+                port.Currency += (port.Population / 10_000) * Raylib.GetFrameTime();
+                port.Population += (port.Population / 1000) * Raylib.GetFrameTime();
+                port.Population = Math.Min(port.Population, 10_000);
 
                 if (singleton.Debug >= DebugLevel.Low)
                 {
-                    Raylib.DrawText($"Port Currency: {port.Currency.ToString("C")}", port.Position.X, port.Position.Y, 20, Raylib.BLACK);
+                    Raylib.DrawText($"Port Currency: {port.Currency.ToString("C")}\nPop: {port.Population.ToString("0")}", port.Position.X, port.Position.Y, 20, Raylib.BLACK);
                 }
             });
         }

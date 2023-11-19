@@ -27,7 +27,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     world.Destroy(entity);
                 }
-
                 var dist = (sprite.Position - crewMember.Target).Length();
                 if (dist > 10)
                 {

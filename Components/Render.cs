@@ -62,8 +62,8 @@ namespace NovemberPirates.Components
         public virtual Rectangle Source
         {
             get => new Rectangle(
-                    Column * SpriteWidth,
-                    Row * SpriteHeight,
+                    Column * SpriteWidth + (2 * Column) + 1,
+                    Row * SpriteHeight + (2 * Row) + 1,
                     SpriteWidth * (IsFlipped ? -1 : 1),
                     SpriteHeight
                     );
