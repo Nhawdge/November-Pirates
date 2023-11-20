@@ -14,6 +14,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
 {
     internal class EnemyControlSystem : GameSystem
     {
+        private Task<List<Vector2>> NavTask { get; set; }
         internal override void Update(World world)
         {
             var singletonEntity = world.QueryFirst<Singleton>();
@@ -58,8 +59,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     return;
                 }
 
-                ship.Target = Vector2.Zero;
-
                 var nextPoint = Vector2.Zero;
 
                 var maxPatrolPoint = 0;
@@ -75,112 +74,136 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         }
                     });
                 }
+                Console.WriteLine($"Next: {ship.NextPatrolPoint}");
 
                 if (ship.Route.Count == 0)
                 {
-                    ship.Route = new List<Vector2>();
-
-                    var shipTile = singleton.Map.GetTileFromPosition(sprite.Position);
-
-                    MapPath pathToTarget = null;
-                    var targetTile = singleton.Map.GetTileFromPosition(nextPoint);
-
-                    var last = new MapPath(
-                        shipTile.Coordinates,
-                        shipTile.Coordinates.DistanceTo(nextPoint),
-                        shipTile.Coordinates.DistanceTo(shipTile.Coordinates),
-                        shipTile.MovementCost);
-
-                    var openTiles = new List<MapPath>();
-                    var closedTiles = new List<Vector2>();
-
-                    var neighbors = singleton.Map.GetTileNeighborsForTile(shipTile).Select(neighbor =>
-                        new MapPath(
-                            neighbor.Coordinates,
-                            neighbor.Coordinates.DistanceTo(nextPoint),
-                            neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
-                            neighbor.MovementCost,
-                            last)
-                        );
-                    openTiles.AddRange(neighbors);
-
-                    while (pathToTarget is null)
-                    {
-                        var openTile = openTiles.OrderBy(tile => tile.TotalCost).ThenBy(tile => tile.DistanceTo).First();
-                        if (openTile.Coords == targetTile.Coordinates)
+                    if (NavTask == null)
+                        NavTask = new Task<List<Vector2>>(() =>
                         {
-                            pathToTarget = openTile;
-                            break;
-                        }
-                        closedTiles.Add(openTile.Coords);
+                            ship.Route = new List<Vector2>();
 
-                        neighbors = singleton.Map.GetTileNeighborsForCoords(openTile.Coords)
-                        .Where(x => !closedTiles.Contains(x.Coordinates))
-                        .Select(neighbor =>
-                            new MapPath(
-                                neighbor.Coordinates,
-                                neighbor.Coordinates.DistanceTo(targetTile.Coordinates),
-                                neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
-                                neighbor.MovementCost,
-                                openTile)
-                            );
+                            var shipTile = singleton.Map.GetTileFromPosition(sprite.Position);
 
-                        openTiles.AddRange(neighbors);
-                        openTiles.RemoveAll(x => x.Coords == openTile.Coords);
+                            MapPath pathToTarget = null;
+                            var targetTile = singleton.Map.GetTileFromPosition(nextPoint);
 
-                        //Console.WriteLine($"Adding {openTile.Coords}");
+                            var last = new MapPath(
+                                    shipTile.Coordinates,
+                                    shipTile.Coordinates.DistanceTo(nextPoint),
+                                    shipTile.Coordinates.DistanceTo(shipTile.Coordinates),
+                                    shipTile.MovementCost);
 
-                        Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
-                    }
-                    //var lastStep = Vector2.Zero;
-                    while (pathToTarget.Parent is not null)
+                            var openTiles = new List<MapPath>();
+                            var closedTiles = new List<Vector2>();
+
+                            var neighbors = singleton.Map.GetTileNeighborsForTile(shipTile).Select(neighbor =>
+                                    new MapPath(
+                                        neighbor.Coordinates,
+                                        neighbor.Coordinates.DistanceTo(nextPoint),
+                                        neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
+                                        neighbor.MovementCost,
+                                        last)
+                                    );
+                            openTiles.AddRange(neighbors);
+
+                            while (pathToTarget is null)
+                            {
+                                var openTile = openTiles.OrderBy(tile => tile.TotalCost).ThenBy(tile => tile.DistanceTo).First();
+                                if (openTile.Coords == targetTile.Coordinates)
+                                {
+                                    pathToTarget = openTile;
+                                    break;
+                                }
+                                closedTiles.Add(openTile.Coords);
+
+                                neighbors = singleton.Map.GetTileNeighborsForCoords(openTile.Coords)
+                                    .Where(x => !closedTiles.Contains(x.Coordinates))
+                                    .Select(neighbor =>
+                                        new MapPath(
+                                            neighbor.Coordinates,
+                                            neighbor.Coordinates.DistanceTo(targetTile.Coordinates),
+                                            neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
+                                            neighbor.MovementCost,
+                                            openTile)
+                                        );
+
+                                openTiles.AddRange(neighbors);
+                                openTiles.RemoveAll(x => x.Coords == openTile.Coords);
+
+                                //Console.WriteLine($"Adding {openTile.Coords}");
+
+                                Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
+                            }
+                            //var lastStep = Vector2.Zero;
+                            var route = new List<Vector2>();
+                            while (pathToTarget.Parent is not null)
+                            {
+                                //if (last.Coords.X != pathToTarget.Coords.X && last.Coords.Y != pathToTarget.Coords.Y)
+                                //{
+                                route.Insert(0, pathToTarget.Coords.ToPixels());
+                                //}
+                                //lastStep = pathToTarget.Coords;
+                                pathToTarget = pathToTarget.Parent;
+                            }
+                            return route;
+                        });
+                    if (NavTask.IsCompleted)
                     {
-                        //if (last.Coords.X != pathToTarget.Coords.X && last.Coords.Y != pathToTarget.Coords.Y)
-                        //{
-                        ship.Route.Insert(0, pathToTarget.Coords.ToPixels());
-                        //}
-                        //lastStep = pathToTarget.Coords;
-                        pathToTarget = pathToTarget.Parent;
+                        ship.Route = NavTask.Result;
+                        NavTask = null;
+                    }
+                    else if (NavTask.Status == TaskStatus.Created)
+                    {
+                        NavTask.Start();
                     }
                 }
-
-                var sailTarget = ship.Route.First();
-                if (sprite.Position.DistanceTo(sailTarget) < 300)
+                var sailTargetVec = ship.Route?.FirstOrDefault();
+                if (sailTargetVec is not null)
                 {
-                    ship.Route.RemoveAt(0);
-                    ship.NextPatrolPoint += 1;
-                    if (ship.NextPatrolPoint > maxPatrolPoint)
-                        ship.NextPatrolPoint = 1;
+                    ship.Target = sailTargetVec.Value;
+                    if (sprite.Position.DistanceTo(ship.Target) < 300)
+                    {
+                        ship.Route?.RemoveAt(0);
+                        if (ship.Route?.Count == 0)
+                        {
+                            ship.NextPatrolPoint += 1;
+                            if (ship.NextPatrolPoint > maxPatrolPoint)
+                                ship.NextPatrolPoint = 1;
+                        }
+                    }
+                    if (singleton.Debug >= DebugLevel.Low)
+                        Raylib.DrawLine((int)ship.Target.X, (int)ship.Target.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
+
+                       
+                    if (ship.Target != Vector2.Zero)
+                    {
+                        if (ship.CanDo(ShipAbilities.Steering))
+                        {
+                            var targetDirection = Vector2.Normalize(sprite.Position - ship.Target);
+
+                            var rotationInDegrees = Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI);
+                            if (sprite.Rotation != rotationInDegrees)
+                            {
+                                var rotationNeeded = (float)Math.Min(sprite.Rotation - rotationInDegrees, ship.RotationSpeed * Raylib.GetFrameTime());
+                                if (Math.Abs(rotationInDegrees) > 1)
+                                {
+                                    sprite.Rotation -= rotationNeeded;
+                                }
+                            }
+                            else
+                            {
+                                var rotationNeeded = (float)Math.Min(rotationInDegrees - sprite.Rotation, ship.RotationSpeed * Raylib.GetFrameTime());
+                                if (Math.Abs(rotationInDegrees) > 1)
+                                {
+                                    sprite.Rotation += rotationNeeded;
+                                }
+                                sprite.Rotation += ship.RotationSpeed * Raylib.GetFrameTime();
+                            }
+                        }
+                    }
                 }
 
-                if (singleton.Debug >= DebugLevel.Low)
-                    Raylib.DrawLine((int)sailTarget.X, (int)sailTarget.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
-
-                if (ship.CanDo(ShipAbilities.Steering))
-                {
-                    var targetDirection = Vector2.Normalize(sprite.Position - sailTarget);
-
-                    var rotationInDegrees = Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI);
-                    if (sprite.Rotation != rotationInDegrees)
-                    {
-                        var rotationNeeded = (float)Math.Min(sprite.Rotation - rotationInDegrees, ship.RotationSpeed * Raylib.GetFrameTime());
-                        if (Math.Abs(rotationInDegrees) > 1)
-                        {
-                            sprite.Rotation -= rotationNeeded;
-                        }
-                        //Console.WriteLine($" Spin left: {rotationInDegrees}");
-                    }
-                    else
-                    {
-                        var rotationNeeded = (float)Math.Min(rotationInDegrees - sprite.Rotation, ship.RotationSpeed * Raylib.GetFrameTime());
-                        if (Math.Abs(rotationInDegrees) > 1)
-                        {
-                            sprite.Rotation += rotationNeeded;
-                        }
-                        sprite.Rotation += ship.RotationSpeed * Raylib.GetFrameTime();
-                        //Console.WriteLine($"Spin Right: {rotationInDegrees}");
-                    }
-                }
 
                 if (ship.CanDo(ShipAbilities.FullSail))
                 {

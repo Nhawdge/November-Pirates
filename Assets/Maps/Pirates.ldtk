@@ -2428,18 +2428,18 @@
 						},
 						{
 							"__identifier": "Patrol_Point",
-							"__grid": [169,199],
+							"__grid": [177,209],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
 							"__smartColor": "#BE4A2F",
-							"__worldX": 2704,
-							"__worldY": 3184,
+							"__worldX": 2832,
+							"__worldY": 3344,
 							"iid": "5f66e180-6280-11ee-8bdd-0182c99f7ed8",
 							"width": 16,
 							"height": 16,
 							"defUid": 427,
-							"px": [2704,3184],
+							"px": [2832,3344],
 							"fieldInstances": [{ "__identifier": "Order", "__type": "Int", "__value": 1, "__tile": null, "defUid": 430, "realEditorValues": [{ "id": "V_Int", "params": [1] }] }]
 						},
 						{
