@@ -1,5 +1,6 @@
 ﻿using NovemberPirates.Components;
 using NovemberPirates.Scenes.Levels;
+using NovemberPirates.Scenes.Levels.Systems;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
 using NovemberPirates.Utilities;
@@ -13,6 +14,10 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
         public MainMenuScene()
         {
             Systems.Add(new MenuSystem());
+            Systems.Add(new MenuMusicSystem());
+
+            World.Create(new Singleton() { Music = AudioKey.DreamingOfTreasure });
+
 
             //var title = World.Create<UiTitle>();
             //var uiTitle = new UiTitle() { Text = "November Pirates" };

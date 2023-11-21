@@ -8,6 +8,8 @@ namespace NovemberPirates.Utilities
         public static AudioManager Instance = new();
 
         public Dictionary<AudioKey, Sound[]> AudioStore = new();
+        public Dictionary<AudioKey, Music> MusicStore = new();
+
 
         internal void LoadAllAudio()
         {
@@ -60,6 +62,8 @@ namespace NovemberPirates.Utilities
             {
                 Raylib.LoadSound("Assets/Audio/sfx_WindinSail.ogg"),
             });
+
+            MusicStore.Add(AudioKey.DreamingOfTreasure, Raylib.LoadMusicStream("Assets/Audio/Dreaming-of-Treasure.wav"));
         }
         internal Sound GetSound(AudioKey key)
         {
@@ -69,6 +73,28 @@ namespace NovemberPirates.Utilities
             }
             var group = AudioStore[key];
             return group[Random.Shared.Next(0, group.Length)];
+        }
+
+        internal Music GetMusic(AudioKey key)
+        {
+            if (AudioStore.Count <= 0)
+            {
+                LoadAllAudio();
+            }
+            return MusicStore[key];
+        }
+
+        internal void StopAllSounds()
+        {
+            AudioStore.ToList().ForEach(x =>
+            {
+                x.Value.ToList().ForEach(s => Raylib.StopSound(s));
+            });
+
+            MusicStore.ToList().ForEach(x =>
+            {
+                Raylib.StopMusicStream(x.Value);
+            });
         }
     }
     internal enum AudioKey
@@ -83,5 +109,6 @@ namespace NovemberPirates.Utilities
         SailOpen,
         WindInSail,
         CannonHitShip,
+        DreamingOfTreasure,
     }
 }

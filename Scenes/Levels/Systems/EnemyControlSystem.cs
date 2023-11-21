@@ -74,9 +74,8 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         }
                     });
                 }
-                Console.WriteLine($"Next: {ship.NextPatrolPoint}");
 
-                if (ship.Route.Count == 0)
+                if (ship.Route.Count < 10)
                 {
                     if (NavTask == null)
                         NavTask = new Task<List<Vector2>>(() =>
@@ -131,9 +130,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                                 openTiles.AddRange(neighbors);
                                 openTiles.RemoveAll(x => x.Coords == openTile.Coords);
 
-                                //Console.WriteLine($"Adding {openTile.Coords}");
-
-                                Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
+                                //Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
                             }
                             //var lastStep = Vector2.Zero;
                             var route = new List<Vector2>();
@@ -164,7 +161,9 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     ship.Target = sailTargetVec.Value;
                     if (sprite.Position.DistanceTo(ship.Target) < 300)
                     {
-                        ship.Route?.RemoveAt(0);
+                        if (ship.Route?.Count > 0)
+                            ship.Route?.RemoveAt(0);
+
                         if (ship.Route?.Count == 0)
                         {
                             ship.NextPatrolPoint += 1;
@@ -175,7 +174,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     if (singleton.Debug >= DebugLevel.Low)
                         Raylib.DrawLine((int)ship.Target.X, (int)ship.Target.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
 
-                       
                     if (ship.Target != Vector2.Zero)
                     {
                         if (ship.CanDo(ShipAbilities.Steering))

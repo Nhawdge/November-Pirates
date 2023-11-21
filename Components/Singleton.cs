@@ -1,4 +1,5 @@
-﻿using NovemberPirates.Utilities.Maps;
+﻿using NovemberPirates.Utilities;
+using NovemberPirates.Utilities.Maps;
 
 namespace NovemberPirates.Components
 {
@@ -8,6 +9,8 @@ namespace NovemberPirates.Components
         public string DebugText = "";
 
         internal Map Map;
+
+        public AudioKey Music;
     }
 
     public enum DebugLevel
