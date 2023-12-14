@@ -256,13 +256,13 @@ namespace QuickType.Map
     public partial class FieldDef
     {
         [JsonPropertyName("identifier")]
-        public string Identifier { get; set; }
+        public Identifier Identifier { get; set; }
 
         [JsonPropertyName("doc")]
         public object Doc { get; set; }
 
         [JsonPropertyName("__type")]
-        public string Type { get; set; }
+        public TypeEnum Type { get; set; }
 
         [JsonPropertyName("uid")]
         public long Uid { get; set; }
@@ -358,13 +358,13 @@ namespace QuickType.Map
     public partial class Enum
     {
         [JsonPropertyName("identifier")]
-        public string Identifier { get; set; }
+        public Identifier Identifier { get; set; }
 
         [JsonPropertyName("uid")]
         public long Uid { get; set; }
 
         [JsonPropertyName("values")]
-        public Value[] Values { get; set; }
+        public ValueElement[] Values { get; set; }
 
         [JsonPropertyName("iconTilesetUid")]
         public object IconTilesetUid { get; set; }
@@ -379,7 +379,7 @@ namespace QuickType.Map
         public object[] Tags { get; set; }
     }
 
-    public partial class Value
+    public partial class ValueElement
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
@@ -910,13 +910,13 @@ namespace QuickType.Map
     public partial class FieldInstance
     {
         [JsonPropertyName("__identifier")]
-        public string Identifier { get; set; }
+        public Identifier Identifier { get; set; }
 
         [JsonPropertyName("__type")]
-        public string Type { get; set; }
+        public TypeEnum Type { get; set; }
 
         [JsonPropertyName("__value")]
-        public long Value { get; set; }
+        public ParamElement Value { get; set; }
 
         [JsonPropertyName("__tile")]
         public object Tile { get; set; }
@@ -931,15 +931,30 @@ namespace QuickType.Map
     public partial class RealEditorValue
     {
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public Id Id { get; set; }
 
         [JsonPropertyName("params")]
-        public long[] Params { get; set; }
+        public ParamElement[] Params { get; set; }
     }
+
+    public enum Identifier { Faction, Order };
+
+    public enum TypeEnum { Int, LocalEnumFaction };
 
     public enum ImageExportMode { None };
 
     public enum TileMode { Single };
+
+    public enum Id { VInt, VString };
+
+    public partial struct ParamElement
+    {
+        public long? Integer;
+        public string String;
+
+        public static implicit operator ParamElement(long Integer) => new ParamElement { Integer = Integer };
+        public static implicit operator ParamElement(string String) => new ParamElement { String = String };
+    }
 
     public partial class LdtkData
     {
@@ -957,13 +972,85 @@ namespace QuickType.Map
         {
             Converters =
             {
+                TypeEnumConverter.Singleton,
+                IdentifierConverter.Singleton,
                 ImageExportModeConverter.Singleton,
                 TileModeConverter.Singleton,
+                ParamElementConverter.Singleton,
+                IdConverter.Singleton,
                 new DateOnlyConverter(),
                 new TimeOnlyConverter(),
                 IsoDateTimeOffsetConverter.Singleton
             },
         };
+    }
+
+    internal class TypeEnumConverter : JsonConverter<TypeEnum>
+    {
+        public override bool CanConvert(Type t) => t == typeof(TypeEnum);
+
+        public override TypeEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var value = reader.GetString();
+            switch (value)
+            {
+                case "Int":
+                    return TypeEnum.Int;
+                case "LocalEnum.Faction":
+                    return TypeEnum.LocalEnumFaction;
+            }
+            throw new Exception("Cannot unmarshal type TypeEnum");
+        }
+
+        public override void Write(Utf8JsonWriter writer, TypeEnum value, JsonSerializerOptions options)
+        {
+            switch (value)
+            {
+                case TypeEnum.Int:
+                    JsonSerializer.Serialize(writer, "Int", options);
+                    return;
+                case TypeEnum.LocalEnumFaction:
+                    JsonSerializer.Serialize(writer, "LocalEnum.Faction", options);
+                    return;
+            }
+            throw new Exception("Cannot marshal type TypeEnum");
+        }
+
+        public static readonly TypeEnumConverter Singleton = new TypeEnumConverter();
+    }
+
+    internal class IdentifierConverter : JsonConverter<Identifier>
+    {
+        public override bool CanConvert(Type t) => t == typeof(Identifier);
+
+        public override Identifier Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var value = reader.GetString();
+            switch (value)
+            {
+                case "Faction":
+                    return Identifier.Faction;
+                case "Order":
+                    return Identifier.Order;
+            }
+            throw new Exception("Cannot unmarshal type Identifier");
+        }
+
+        public override void Write(Utf8JsonWriter writer, Identifier value, JsonSerializerOptions options)
+        {
+            switch (value)
+            {
+                case Identifier.Faction:
+                    JsonSerializer.Serialize(writer, "Faction", options);
+                    return;
+                case Identifier.Order:
+                    JsonSerializer.Serialize(writer, "Order", options);
+                    return;
+            }
+            throw new Exception("Cannot marshal type Identifier");
+        }
+
+        public static readonly IdentifierConverter Singleton = new IdentifierConverter();
     }
 
     internal class ImageExportModeConverter : JsonConverter<ImageExportMode>
@@ -1018,6 +1105,76 @@ namespace QuickType.Map
         }
 
         public static readonly TileModeConverter Singleton = new TileModeConverter();
+    }
+
+    internal class ParamElementConverter : JsonConverter<ParamElement>
+    {
+        public override bool CanConvert(Type t) => t == typeof(ParamElement);
+
+        public override ParamElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            switch (reader.TokenType)
+            {
+                case JsonTokenType.Number:
+                    var integerValue = reader.GetInt64();
+                    return new ParamElement { Integer = integerValue };
+                case JsonTokenType.String:
+                    var stringValue = reader.GetString();
+                    return new ParamElement { String = stringValue };
+            }
+            throw new Exception("Cannot unmarshal type ParamElement");
+        }
+
+        public override void Write(Utf8JsonWriter writer, ParamElement value, JsonSerializerOptions options)
+        {
+            if (value.Integer != null)
+            {
+                JsonSerializer.Serialize(writer, value.Integer.Value, options);
+                return;
+            }
+            if (value.String != null)
+            {
+                JsonSerializer.Serialize(writer, value.String, options);
+                return;
+            }
+            throw new Exception("Cannot marshal type ParamElement");
+        }
+
+        public static readonly ParamElementConverter Singleton = new ParamElementConverter();
+    }
+
+    internal class IdConverter : JsonConverter<Id>
+    {
+        public override bool CanConvert(Type t) => t == typeof(Id);
+
+        public override Id Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var value = reader.GetString();
+            switch (value)
+            {
+                case "V_Int":
+                    return Id.VInt;
+                case "V_String":
+                    return Id.VString;
+            }
+            throw new Exception("Cannot unmarshal type Id");
+        }
+
+        public override void Write(Utf8JsonWriter writer, Id value, JsonSerializerOptions options)
+        {
+            switch (value)
+            {
+                case Id.VInt:
+                    JsonSerializer.Serialize(writer, "V_Int", options);
+                    return;
+                case Id.VString:
+                    JsonSerializer.Serialize(writer, "V_String", options);
+                    return;
+            }
+            throw new Exception("Cannot marshal type Id");
+        }
+
+        public static readonly IdConverter Singleton = new IdConverter();
     }
 
     public class DateOnlyConverter : JsonConverter<DateOnly>

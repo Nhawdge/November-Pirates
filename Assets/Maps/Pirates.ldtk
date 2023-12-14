@@ -11,7 +11,7 @@
 	"iid": "29d82450-6280-11ee-8d21-034767e7df7b",
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
-	"nextUid": 601,
+	"nextUid": 602,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -2235,7 +2235,43 @@
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0,
 			"pivotY": 0,
-			"fieldDefs": []
+			"fieldDefs": [
+				{
+					"identifier": "Faction",
+					"doc": null,
+					"__type": "LocalEnum.Faction",
+					"uid": 601,
+					"type": "F_Enum(433)",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Above",
+					"editorLinkStyle": "StraightArrow",
+					"editorDisplayColor": null,
+					"editorAlwaysShow": false,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "OnlySame",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
+				}
+			]
 		}
 	], "tilesets": [
 		{
@@ -2360,7 +2396,10 @@
 							"height": 16,
 							"defUid": 432,
 							"px": [5872,3824],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "Faction", "__type": "LocalEnum.Faction", "__value": "White", "__tile": null, "defUid": 601, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["White"]
+							}] }]
 						},
 						{
 							"__identifier": "Port",
@@ -2376,7 +2415,10 @@
 							"height": 16,
 							"defUid": 432,
 							"px": [1984,5056],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "Faction", "__type": "LocalEnum.Faction", "__value": "Green", "__tile": null, "defUid": 601, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["Green"]
+							}] }]
 						},
 						{
 							"__identifier": "Port",
@@ -2392,7 +2434,10 @@
 							"height": 16,
 							"defUid": 432,
 							"px": [7152,5248],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "Faction", "__type": "LocalEnum.Faction", "__value": "Blue", "__tile": null, "defUid": 601, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["Blue"]
+							}] }]
 						},
 						{
 							"__identifier": "Port",
@@ -2408,7 +2453,10 @@
 							"height": 16,
 							"defUid": 432,
 							"px": [8624,2112],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "Faction", "__type": "LocalEnum.Faction", "__value": "Red", "__tile": null, "defUid": 601, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["Red"]
+							}] }]
 						},
 						{
 							"__identifier": "Port",
@@ -2424,7 +2472,10 @@
 							"height": 16,
 							"defUid": 432,
 							"px": [2480,2624],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "Faction", "__type": "LocalEnum.Faction", "__value": "Yellow", "__tile": null, "defUid": 601, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["Yellow"]
+							}] }]
 						},
 						{
 							"__identifier": "Patrol_Point",
@@ -2521,6 +2572,25 @@
 							"defUid": 427,
 							"px": [560,1168],
 							"fieldInstances": [{ "__identifier": "Order", "__type": "Int", "__value": 3, "__tile": null, "defUid": 430, "realEditorValues": [{ "id": "V_Int", "params": [3] }] }]
+						},
+						{
+							"__identifier": "Port",
+							"__grid": [282,37],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#E4A672",
+							"__worldX": 4512,
+							"__worldY": 592,
+							"iid": "07d95710-6280-11ee-8bdd-ef56294e2180",
+							"width": 16,
+							"height": 16,
+							"defUid": 432,
+							"px": [4512,592],
+							"fieldInstances": [{ "__identifier": "Faction", "__type": "LocalEnum.Faction", "__value": "November", "__tile": null, "defUid": 601, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["November"]
+							}] }]
 						}
 					]
 				},

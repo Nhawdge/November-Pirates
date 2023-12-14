@@ -18,7 +18,6 @@ namespace NovemberPirates.Entities.Archetypes
             ship.Sail = SailStatus.Closed;
             ship.Crew = 10;
 
-
             var sprite = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship));
             sprite.Position = position;
 
@@ -26,7 +25,7 @@ namespace NovemberPirates.Entities.Archetypes
             entity.Set(ship);
             entity.Set(sprite);
 
-            entity.Set(new Npc());
+            entity.Set(new Npc() { Purpose = Purpose.Trade });
         }
 
         internal static void CreatePatrolPoint(World world, Vector2 vector2, Team team, int order)

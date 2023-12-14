@@ -81,7 +81,7 @@ namespace NovemberPirates.Utilities
                     }
                     if (entity.Identifier == "Patrol_Point")
                     {
-                        var order = (int)(entity.FieldInstances.FirstOrDefault(x => x.Identifier == "Order").Value);
+                        var order = (int)(entity.FieldInstances.FirstOrDefault(x => x.Identifier == Identifier.Order).Value.Integer);
                         EnemyBuilder.CreatePatrolPoint(world, entity.Px.ToVector2(), Team.Red, order);
                     }
                     if (entity.Identifier == "Player_Spawn")
@@ -90,10 +90,11 @@ namespace NovemberPirates.Utilities
                     }
                     if (entity.Identifier == "Port")
                     {
+                        var team = entity.FieldInstances.FirstOrDefault(x => x.Identifier == Identifier.Faction).Value;
                         world.Create(new Port()
                         {
                             Position = entity.Px.ToVector2(),
-                            Team = Team.Yellow,
+                            Team = System.Enum.Parse<Team>(team.String),
                             Currency = 1
                         });
                     }

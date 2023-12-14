@@ -46,5 +46,6 @@ namespace NovemberPirates.Components
         internal float HalfSailSpeedModifier;
         internal float FullSailSpeedModifier;
         internal float SailSpeedEasing;
+        internal Vector2 Goal;
     }
 }

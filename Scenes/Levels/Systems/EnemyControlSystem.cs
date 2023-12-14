@@ -60,20 +60,42 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 }
 
                 var nextPoint = Vector2.Zero;
-
                 var maxPatrolPoint = 0;
-                if (nextPoint == Vector2.Zero)
+
+                var npc = entity.Get<Npc>();
+                if (npc.Purpose == Purpose.Patrol)
                 {
-                    world.Query(in patrolQuery, (patrolEntity) =>
+                    if (nextPoint == Vector2.Zero)
                     {
-                        var point = patrolEntity.Get<PatrolPoint>();
-                        maxPatrolPoint = Math.Max(maxPatrolPoint, point.Order);
-                        if (point.Order == ship.NextPatrolPoint)
+                        world.Query(in patrolQuery, (patrolEntity) =>
                         {
-                            nextPoint = point.Position;
-                        }
-                    });
+                            var point = patrolEntity.Get<PatrolPoint>();
+                            maxPatrolPoint = Math.Max(maxPatrolPoint, point.Order);
+                            if (point.Order == ship.NextPatrolPoint)
+                            {
+                                nextPoint = point.Position;
+                            }
+                        });
+                    }
                 }
+
+                if (npc.Purpose == Purpose.Trade)
+                {
+                    if (ship.Goal == Vector2.Zero)
+                    {
+                        var portQuery = new QueryDescription().WithAll<Port>();
+                        var ports = new List<(Vector2 pos, float currency, float distance)>();
+                        world.Query(portQuery, (portEntity) =>
+                        {
+                            var port = portEntity.Get<Port>();
+                            ports.Add(new(port.Position, port.Currency, sprite.Position.DistanceTo(port.Position)));
+                        });
+                        var port = ports.OrderBy(port => port.currency).ThenBy(port => port.distance).First();
+                        nextPoint = port.pos;
+                        ship.Goal = nextPoint;
+                    }
+                }
+
 
                 if (ship.Route.Count < 10)
                 {
@@ -132,15 +154,10 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                                 //Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
                             }
-                            //var lastStep = Vector2.Zero;
                             var route = new List<Vector2>();
                             while (pathToTarget.Parent is not null)
                             {
-                                //if (last.Coords.X != pathToTarget.Coords.X && last.Coords.Y != pathToTarget.Coords.Y)
-                                //{
                                 route.Insert(0, pathToTarget.Coords.ToPixels());
-                                //}
-                                //lastStep = pathToTarget.Coords;
                                 pathToTarget = pathToTarget.Parent;
                             }
                             return route;
@@ -164,7 +181,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         if (ship.Route?.Count > 0)
                             ship.Route?.RemoveAt(0);
 
-                        if (ship.Route?.Count == 0)
+                        if (ship.Route?.Count == 0 && npc.Purpose == Purpose.Patrol)
                         {
                             ship.NextPatrolPoint += 1;
                             if (ship.NextPatrolPoint > maxPatrolPoint)

@@ -66,7 +66,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     var cannonPos = sprite.Position + RayMath.Vector2Rotate(nextCannon.Position, sprite.RotationAsRadians);
                     Raylib.DrawCircleV(cannonPos, 10, Raylib.RED);
 
-                    CannonballBuilder.Create(world, nextCannon, cannonPos, sprite.RenderRotation + 180, Team.Player);
+                    CannonballBuilder.Create(world, nextCannon, cannonPos, sprite.RenderRotation + 180, playerShip.Team);
 
                     var sound = world.Create<AudioEvent>();
                     sound.Set(new AudioEvent() { Position = cannonPos, Key = AudioKey.CannonFire });
@@ -84,7 +84,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     var cannonPos = sprite.Position + RayMath.Vector2Rotate(nextCannon.Position, sprite.RotationAsRadians);
                     //Raylib.DrawCircleV(cannonPos, 10, Raylib.RED);
 
-                    CannonballBuilder.Create(world, nextCannon, cannonPos, sprite.RenderRotation, Team.Player);
+                    CannonballBuilder.Create(world, nextCannon, cannonPos, sprite.RenderRotation, playerShip.Team);
 
                     var sound = world.Create<AudioEvent>();
                     sound.Set(new AudioEvent() { Position = cannonPos, Key = AudioKey.CannonFire });

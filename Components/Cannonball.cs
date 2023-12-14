@@ -13,7 +13,8 @@ namespace NovemberPirates.Components
     internal enum Team
     {
         None,
-        Player,
+        White,
+        November,
         Red,
         Green,
         Blue,

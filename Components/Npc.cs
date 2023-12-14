@@ -2,6 +2,7 @@
 {
     internal class Npc
     {
+        internal Purpose Purpose;
     }
 
     public enum Purpose
