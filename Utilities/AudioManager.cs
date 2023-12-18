@@ -63,7 +63,11 @@ namespace NovemberPirates.Utilities
                 Raylib.LoadSound("Assets/Audio/sfx_WindinSail.ogg"),
             });
 
+            MusicStore.Add(AudioKey.Charge, Raylib.LoadMusicStream("Assets/Audio/Charge.wav"));
+            MusicStore.Add(AudioKey.Drifting, Raylib.LoadMusicStream("Assets/Audio/Drifting.wav"));
+            MusicStore.Add(AudioKey.TheBleedingOcean, Raylib.LoadMusicStream("Assets/Audio/The-Bleeding-Ocean.wav"));
             MusicStore.Add(AudioKey.DreamingOfTreasure, Raylib.LoadMusicStream("Assets/Audio/Dreaming-of-Treasure.wav"));
+            MusicStore.Add(AudioKey.TheWarriorsOfTheWater, Raylib.LoadMusicStream("Assets/Audio/The-Warriors-of-the-Water.wav"));
         }
         internal Sound GetSound(AudioKey key)
         {
@@ -110,5 +114,9 @@ namespace NovemberPirates.Utilities
         WindInSail,
         CannonHitShip,
         DreamingOfTreasure,
+        Charge,
+        Drifting,
+        TheWarriorsOfTheWater,
+        TheBleedingOcean,
     }
 }

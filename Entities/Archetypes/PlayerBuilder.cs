@@ -17,7 +17,8 @@ namespace NovemberPirates.Entities.Archetypes
             var ship = new Ship(HullType.Small, BoatColor.Dead, Team.November);
             ship.Sail = SailStatus.Closed;
 
-            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.BFC1700, BoatSide.Starboard, 1));
+            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.TrustyRusty, BoatSide.Starboard, 1));
+            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.TrustyRusty, BoatSide.Port, 1));
 
             player.Set(ship);
 

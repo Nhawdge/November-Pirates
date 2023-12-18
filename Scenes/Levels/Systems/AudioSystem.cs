@@ -16,6 +16,16 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var audioQuery = new QueryDescription().WithAll<AudioEvent>();
             var singleton = world.QueryFirst<Singleton>().Get<Singleton>();
 
+            var music = AudioManager.Instance.GetMusic(singleton.Music);
+            if (Raylib.IsMusicStreamPlaying(music))
+            {
+                Raylib.UpdateMusicStream(music);
+            }
+            else
+            {
+                Raylib.PlayMusicStream(AudioManager.Instance.GetMusic(singleton.Music));
+            }
+
             world.Query(in audioQuery, (entity) =>
             {
                 var audioEvent = entity.Get<AudioEvent>();

@@ -39,7 +39,7 @@ namespace NovemberPirates.Scenes.Levels
 
             var singleton = World.Create<Singleton, Wind>();
             singleton.Set(new Wind());
-            singleton.Set(new Singleton());
+            singleton.Set(new Singleton() { Music = AudioKey.Drifting });
 
             NavigationUtilities.BuildMap(World);
 

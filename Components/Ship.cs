@@ -47,5 +47,9 @@ namespace NovemberPirates.Components
         internal float FullSailSpeedModifier;
         internal float SailSpeedEasing;
         internal Vector2 Goal;
+        internal float Currency;
+        internal Port? TargetPort;
+
+        public Task<List<Vector2>> NavTask { get; set; }
     }
 }

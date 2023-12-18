@@ -14,7 +14,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
 {
     internal class EnemyControlSystem : GameSystem
     {
-        private Task<List<Vector2>> NavTask { get; set; }
         internal override void Update(World world)
         {
             var singletonEntity = world.QueryFirst<Singleton>();
@@ -42,6 +41,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                         PickupBuilder.CreateCrewMember(world, sprite.Position);
                     }
                 }
+
                 if (ship.BoatCondition == BoatCondition.Empty)
                 {
                     sprite.Position += wind.WindDirection * Raylib.GetFrameTime() * wind.WindStrength * .1f;
@@ -59,13 +59,12 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     return;
                 }
 
-                var nextPoint = Vector2.Zero;
                 var maxPatrolPoint = 0;
 
                 var npc = entity.Get<Npc>();
                 if (npc.Purpose == Purpose.Patrol)
                 {
-                    if (nextPoint == Vector2.Zero)
+                    if (ship.Goal == Vector2.Zero)
                     {
                         world.Query(in patrolQuery, (patrolEntity) =>
                         {
@@ -73,45 +72,43 @@ namespace NovemberPirates.Scenes.Levels.Systems
                             maxPatrolPoint = Math.Max(maxPatrolPoint, point.Order);
                             if (point.Order == ship.NextPatrolPoint)
                             {
-                                nextPoint = point.Position;
+                                ship.Goal = point.Position;
                             }
                         });
                     }
                 }
-
                 if (npc.Purpose == Purpose.Trade)
                 {
                     if (ship.Goal == Vector2.Zero)
                     {
                         var portQuery = new QueryDescription().WithAll<Port>();
-                        var ports = new List<(Vector2 pos, float currency, float distance)>();
+                        var ports = new List<(Port? port, float distance)>();
                         world.Query(portQuery, (portEntity) =>
                         {
                             var port = portEntity.Get<Port>();
-                            ports.Add(new(port.Position, port.Currency, sprite.Position.DistanceTo(port.Position)));
+                            ports.Add(new(port, sprite.Position.DistanceTo(port.Position)));
                         });
-                        var port = ports.OrderBy(port => port.currency).ThenBy(port => port.distance).First();
-                        nextPoint = port.pos;
-                        ship.Goal = nextPoint;
+                        var port = ports.OrderBy(port => port.port.Currency).ThenBy(port => port.distance).First();
+                        ship.TargetPort = port.port;
+                        ship.Goal = port.port.Position;
                     }
                 }
 
-
                 if (ship.Route.Count < 10)
                 {
-                    if (NavTask == null)
-                        NavTask = new Task<List<Vector2>>(() =>
+                    if (ship.NavTask == null)
+                        ship.NavTask = new Task<List<Vector2>>(() =>
                         {
                             ship.Route = new List<Vector2>();
 
                             var shipTile = singleton.Map.GetTileFromPosition(sprite.Position);
 
                             MapPath pathToTarget = null;
-                            var targetTile = singleton.Map.GetTileFromPosition(nextPoint);
+                            var targetTile = singleton.Map.GetTileFromPosition(ship.Goal);
 
                             var last = new MapPath(
                                     shipTile.Coordinates,
-                                    shipTile.Coordinates.DistanceTo(nextPoint),
+                                    shipTile.Coordinates.DistanceTo(ship.Goal),
                                     shipTile.Coordinates.DistanceTo(shipTile.Coordinates),
                                     shipTile.MovementCost);
 
@@ -121,7 +118,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                             var neighbors = singleton.Map.GetTileNeighborsForTile(shipTile).Select(neighbor =>
                                     new MapPath(
                                         neighbor.Coordinates,
-                                        neighbor.Coordinates.DistanceTo(nextPoint),
+                                        neighbor.Coordinates.DistanceTo(ship.Goal),
                                         neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
                                         neighbor.MovementCost,
                                         last)
@@ -162,14 +159,14 @@ namespace NovemberPirates.Scenes.Levels.Systems
                             }
                             return route;
                         });
-                    if (NavTask.IsCompleted)
+                    if (ship.NavTask.IsCompleted)
                     {
-                        ship.Route = NavTask.Result;
-                        NavTask = null;
+                        ship.Route = ship.NavTask.Result;
+                        ship.NavTask = null;
                     }
-                    else if (NavTask.Status == TaskStatus.Created)
+                    else if (ship.NavTask.Status == TaskStatus.Created)
                     {
-                        NavTask.Start();
+                        ship.NavTask.Start();
                     }
                 }
                 var sailTargetVec = ship.Route?.FirstOrDefault();
@@ -186,6 +183,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
                             ship.NextPatrolPoint += 1;
                             if (ship.NextPatrolPoint > maxPatrolPoint)
                                 ship.NextPatrolPoint = 1;
+                        }
+                        if (ship.Route?.Count == 0 && npc.Purpose == Purpose.Trade)
+                        {
+                            ship.Goal = Vector2.Zero;
+                            var availableMoney = Math.Min(10, ship.TargetPort.Currency);
+                            ship.TargetPort.Currency -= availableMoney;
+                            ship.Currency += availableMoney;
                         }
                     }
                     if (singleton.Debug >= DebugLevel.Low)
@@ -219,8 +223,18 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     }
                 }
 
+                Console.WriteLine($"Target {ship.Target}");
 
-                if (ship.CanDo(ShipAbilities.FullSail))
+                if (singleton.Debug > DebugLevel.None)
+                {
+                    Raylib.DrawText($"Route Size:{ship.Route?.Count} \nTarget:{ship.Route?.LastOrDefault()}", sprite.Position.X, sprite.Position.Y, 12, Raylib.RED);
+                }
+                if (ship.Target == Vector2.Zero)
+                {
+                    ship.Sail = SailStatus.Closed;
+                    sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
+                }
+                else if (ship.CanDo(ShipAbilities.FullSail))
                 {
                     ship.Sail = SailStatus.Full;
                     sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
@@ -240,7 +254,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     ship.Sail = SailStatus.Closed;
                     sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
                 }
-                //Console.WriteLine($"{new BoatOptions(ship).ToString()} {ship.Crew} {ship.HullHealth} ");
             });
         }
     }
