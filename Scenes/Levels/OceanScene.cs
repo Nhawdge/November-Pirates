@@ -5,6 +5,7 @@ using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Scenes.Levels.Systems;
 using NovemberPirates.Utilities;
 using NovemberPirates.Utilities.Maps;
+using Raylib_CsLo;
 
 namespace NovemberPirates.Scenes.Levels
 {
@@ -42,6 +43,7 @@ namespace NovemberPirates.Scenes.Levels
             singleton.Set(new Singleton() { Music = AudioKey.Drifting });
 
             NavigationUtilities.BuildMap(World);
+            NavigationUtilities.AddTradeRoutes(World);
 
             World.Create<AudioEvent>().Set(new AudioEvent() { Key = AudioKey.ShipSailingWater, Replay = true, AllowMultiple = false });
             World.Create<AudioEvent>().Set(new AudioEvent() { Key = AudioKey.Wind, Replay = true, AllowMultiple = false });

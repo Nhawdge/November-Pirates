@@ -18,10 +18,6 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
 
             World.Create(new Singleton() { Music = AudioKey.DreamingOfTreasure });
 
-
-            //var title = World.Create<UiTitle>();
-            //var uiTitle = new UiTitle() { Text = "November Pirates" };
-            //title.Set(uiTitle);
             var width = Raylib.GetScreenWidth() * 0.7f;
 
             World.Create(new SpriteButton

@@ -94,71 +94,12 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     }
                 }
 
-                if (ship.Route.Count < 10)
+                if ((ship.Route.Count < 10 && npc.Purpose == Purpose.Patrol)
+                || npc.Purpose == Purpose.Trade && ship.Route.Count == 0)
                 {
                     if (ship.NavTask == null)
-                        ship.NavTask = new Task<List<Vector2>>(() =>
-                        {
-                            ship.Route = new List<Vector2>();
+                        ship.NavTask = new Task<List<Vector2>>(() => NavigationUtilities.CalculateRouteFromShip(world, entity).ToList());
 
-                            var shipTile = singleton.Map.GetTileFromPosition(sprite.Position);
-
-                            MapPath pathToTarget = null;
-                            var targetTile = singleton.Map.GetTileFromPosition(ship.Goal);
-
-                            var last = new MapPath(
-                                    shipTile.Coordinates,
-                                    shipTile.Coordinates.DistanceTo(ship.Goal),
-                                    shipTile.Coordinates.DistanceTo(shipTile.Coordinates),
-                                    shipTile.MovementCost);
-
-                            var openTiles = new List<MapPath>();
-                            var closedTiles = new List<Vector2>();
-
-                            var neighbors = singleton.Map.GetTileNeighborsForTile(shipTile).Select(neighbor =>
-                                    new MapPath(
-                                        neighbor.Coordinates,
-                                        neighbor.Coordinates.DistanceTo(ship.Goal),
-                                        neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
-                                        neighbor.MovementCost,
-                                        last)
-                                    );
-                            openTiles.AddRange(neighbors);
-
-                            while (pathToTarget is null)
-                            {
-                                var openTile = openTiles.OrderBy(tile => tile.TotalCost).ThenBy(tile => tile.DistanceTo).First();
-                                if (openTile.Coords == targetTile.Coordinates)
-                                {
-                                    pathToTarget = openTile;
-                                    break;
-                                }
-                                closedTiles.Add(openTile.Coords);
-
-                                neighbors = singleton.Map.GetTileNeighborsForCoords(openTile.Coords)
-                                    .Where(x => !closedTiles.Contains(x.Coordinates))
-                                    .Select(neighbor =>
-                                        new MapPath(
-                                            neighbor.Coordinates,
-                                            neighbor.Coordinates.DistanceTo(targetTile.Coordinates),
-                                            neighbor.Coordinates.DistanceTo(shipTile.Coordinates),
-                                            neighbor.MovementCost,
-                                            openTile)
-                                        );
-
-                                openTiles.AddRange(neighbors);
-                                openTiles.RemoveAll(x => x.Coords == openTile.Coords);
-
-                                //Console.WriteLine($"Open Count: {openTiles.Count()}\t Closed Count: {closedTiles.Count()}\t{openTile.DistanceFrom} => {openTile.DistanceTo}");
-                            }
-                            var route = new List<Vector2>();
-                            while (pathToTarget.Parent is not null)
-                            {
-                                route.Insert(0, pathToTarget.Coords.ToPixels());
-                                pathToTarget = pathToTarget.Parent;
-                            }
-                            return route;
-                        });
                     if (ship.NavTask.IsCompleted)
                     {
                         ship.Route = ship.NavTask.Result;

@@ -25,6 +25,9 @@ namespace NovemberPirates.Entities.Archetypes
             var playerSprite = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship));
             playerSprite.Position = new System.Numerics.Vector2(3000, 3000);
             player.Set(playerSprite);
+
+            NovemberPiratesEngine.Instance.Camera.target.X = playerSprite.Position.X;
+            NovemberPiratesEngine.Instance.Camera.target.Y = playerSprite.Position.Y;
         }
     }
 }
