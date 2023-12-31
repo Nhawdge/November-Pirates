@@ -49,12 +49,17 @@ namespace NovemberPirates
             Raylib.BeginMode2D(Camera);
 
             Raylib.ClearBackground(Raylib.BLACK);
-
-            ActiveScene.Systems.ForEach(system => system.Update(ActiveScene.World));
+            for (int i = 0; i < ActiveScene.Systems.Count; i++)
+            {
+                ActiveScene.Systems[i].Update(ActiveScene.World);
+            }
 
             Raylib.EndMode2D();
 
-            ActiveScene.Systems.ForEach(system => system.UpdateNoCamera(ActiveScene.World));
+            for (int i = 0; i < ActiveScene.Systems.Count; i++)
+            {
+                ActiveScene.Systems[i].UpdateNoCamera(ActiveScene.World);
+            }
             Raylib.EndDrawing();
         }
     }

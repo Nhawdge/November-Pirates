@@ -72,9 +72,10 @@ namespace NovemberPirates.Utilities
 
                     mapTileEntity.Set(mapTile);
                 }
+                
                 foreach (var entity in layer.EntityInstances)
                 {
-                    Console.WriteLine($"entity: {entity.Identifier}");
+                    //Console.WriteLine($"entity: {entity.Identifier}");
                     if (entity.Identifier == "Spawn_Point")
                     {
                         EnemyBuilder.CreateSpawnPoint(world, entity.Px.ToVector2(), Team.Red);

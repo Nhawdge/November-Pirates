@@ -10,11 +10,15 @@ namespace NovemberPirates.Scenes
         public BaseScene()
         {
             AudioManager.Instance.StopAllSounds();
+            Systems.Add(new LoadingSystem(this));
         }
+
+        internal Dictionary<string, Action> LoadingTasks = new();
 
         internal World World = World.Create();
 
         internal List<GameSystem> Systems = new();
+
 
         public Vector2 MapEdge;
         public int TileSize;

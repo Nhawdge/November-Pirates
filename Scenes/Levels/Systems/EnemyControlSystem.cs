@@ -164,7 +164,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     }
                 }
 
-                Console.WriteLine($"Target {ship.Target}");
+                //Console.WriteLine($"Target {ship.Target}");
 
                 if (singleton.Debug > DebugLevel.None)
                 {
