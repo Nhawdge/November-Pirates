@@ -23,12 +23,6 @@ namespace NovemberPirates.Scenes.Levels
                 TileSize = mapDetails.TileSize;
             });
 
-            LoadingTasks.Add("Player", () =>
-            {
-                PlayerBuilder.Create(World);
-                NovemberPiratesEngine.Instance.Camera.target.X = 3000;
-            });
-
             LoadingTasks.Add("World", () =>
             {
                 NavigationUtilities.BuildMap(World);

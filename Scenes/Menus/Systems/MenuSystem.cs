@@ -11,12 +11,6 @@ namespace NovemberPirates.Scenes.Menus.Systems
 {
     internal class MenuSystem : GameSystem
     {
-        private Font CreditsFont;
-
-        public MenuSystem()
-        {
-            CreditsFont = Raylib.LoadFont("Assets/Fonts/AguafinaScript-Regular.ttf");
-        }
         internal override void Update(World world) { }
 
         internal override void UpdateNoCamera(World world)
@@ -37,7 +31,6 @@ namespace NovemberPirates.Scenes.Menus.Systems
             //RayGui.GuiSetFont(CreditsFont);
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 48);
             RayGui.GuiSetStyle((int)GuiControl.LABEL, (int)GuiControlProperty.TEXT_ALIGNMENT, 1);
-
             RayGui.GuiSetStyle((int)GuiControl.BUTTON, (int)GuiControlProperty.TEXT_ALIGNMENT, 0);
 
             world.Query(in query, (entity) =>

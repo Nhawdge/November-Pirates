@@ -2,12 +2,13 @@
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Utilities;
+using System.Numerics;
 
 namespace NovemberPirates.Entities.Archetypes
 {
     internal static class PlayerBuilder
     {
-        internal static void Create(World world)
+        internal static void Create(World world, Vector2 startPos)
         {
             var player = world.Create<Player, Ship, Sprite>();
 
@@ -23,7 +24,7 @@ namespace NovemberPirates.Entities.Archetypes
             player.Set(ship);
 
             var playerSprite = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship));
-            playerSprite.Position = new System.Numerics.Vector2(3000, 3000);
+            playerSprite.Position = startPos;
             player.Set(playerSprite);
 
             NovemberPiratesEngine.Instance.Camera.target.X = playerSprite.Position.X;

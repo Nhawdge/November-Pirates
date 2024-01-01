@@ -87,7 +87,7 @@ namespace NovemberPirates.Utilities
                     }
                     if (entity.Identifier == "Player_Spawn")
                     {
-                        // TODO - Create player spawn
+                        PlayerBuilder.Create(world, entity.Px.ToVector2());
                     }
                     if (entity.Identifier == "Port")
                     {
