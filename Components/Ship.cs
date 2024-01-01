@@ -49,6 +49,7 @@ namespace NovemberPirates.Components
         internal Vector2 Goal;
         internal float Currency;
         internal Port? TargetPort;
+        internal List<Route> SailingRoute;
 
         public Task<List<Vector2>> NavTask { get; set; }
     }

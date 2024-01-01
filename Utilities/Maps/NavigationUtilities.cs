@@ -49,29 +49,44 @@ namespace NovemberPirates.Utilities.Maps
             });
 
 
-            foreach (var port in allPorts)
+            for (var i = 0; i < allPorts.Count; i++)
             {
-                var routePorts = allPorts.OrderBy(x => Random.Shared.Next()).Take(3);
+                var routePorts = allPorts.OrderBy(x => Random.Shared.Next()).Take(3).ToList();
                 var routes = new List<Route>();
-
-                var index = 0;
-                foreach (var destinationPort in routePorts)
+                var key = $"Route-{i}";
+                if (RouteDataStore.Instance.Routes.ContainsKey(key))
                 {
-                    index++;
-                    var secondPort = routePorts.ElementAtOrDefault(index);
-                    if (secondPort is null)
-                    {
-                        index = 0;
-                        secondPort = routePorts.ElementAt(index);
-                    }
-                    var route = new Route();
-                    route.FromPort = destinationPort;
-                    route.ToPort = secondPort;
-
-                    route.RoutePoints = CalculateRoute(world, port.Position, secondPort.Position).ToList();
-                    routes.Add(route);
+                    continue;
                 }
-                RouteDataStore.Instance.Routes.Add($"Route-{port.Position.X}-{port.Position.Y}", routes);
+                var index = 0;
+                var calcTasks = new List<Task>();
+                foreach (var port in routePorts)
+                {
+                    calcTasks.Add(new Task(() =>
+                    {
+                        index++;
+                        var secondPort = routePorts.ElementAtOrDefault(index);
+                        if (secondPort is null)
+                        {
+                            index = 0;
+                            secondPort = routePorts.ElementAt(index);
+                        }
+                        var route = new Route();
+
+                        route.FromPort = port;
+                        route.ToPort = secondPort;
+                        Console.WriteLine($"{key} - {route.FromPort.ShortId()} {route.ToPort.ShortId()}");
+                        route.RoutePoints = CalculateRoute(world, route.FromPort.Position, route.ToPort.Position).ToList();
+                        routes.Add(route);
+                    }));
+                }
+                foreach (var task in calcTasks)
+                {
+                    task.Start();
+                }
+                Task.WaitAll(calcTasks.ToArray());
+
+                RouteDataStore.Instance.Routes.Add(key, routes);
             }
         }
 

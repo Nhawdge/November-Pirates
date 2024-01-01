@@ -67,7 +67,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var scroll = Raylib.GetMouseWheelMove();
             if (scroll < 0)
             {
-                NovemberPiratesEngine.Instance.Camera.zoom -= 0.1f;
+                NovemberPiratesEngine.Instance.Camera.zoom = Math.Max(NovemberPiratesEngine.Instance.Camera.zoom - 0.1f, 0.1f);
             }
             else if (scroll > 0)
             {

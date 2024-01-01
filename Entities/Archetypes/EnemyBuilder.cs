@@ -2,13 +2,14 @@
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Utilities;
+using NovemberPirates.Utilities.Data;
 using System.Numerics;
 
 namespace NovemberPirates.Entities.Archetypes
 {
     internal static class EnemyBuilder
     {
-        public static void CreateEnemyShip(World world, Vector2 position, Team team)
+        public static void CreateEnemyShip(World world, Vector2 position, Team team, Purpose purpose = Purpose.None)
         {
             var entity = world.Create<Ship, Sprite, Npc>();
             var ship = new Ship(HullType.Small, BoatColor.Yellow, Team.Yellow);
@@ -25,7 +26,12 @@ namespace NovemberPirates.Entities.Archetypes
             entity.Set(ship);
             entity.Set(sprite);
 
-            entity.Set(new Npc() { Purpose = Purpose.Trade });
+            entity.Set(new Npc() { Purpose = purpose });
+            if (purpose == Purpose.Trade)
+            {
+                ship.SailingRoute = RouteDataStore.Instance.GetRandomRoute();
+                sprite.Position = ship.SailingRoute[0].RoutePoints[0];
+            }
         }
 
         internal static void CreatePatrolPoint(World world, Vector2 vector2, Team team, int order)
@@ -39,7 +45,7 @@ namespace NovemberPirates.Entities.Archetypes
         {
             var spawnerEntity = world.Create<Spawner>();
 
-            spawnerEntity.Set(new Spawner() { Team = team, Position = pos, SpawnTime = 100, Elapsed = 100 });
+            spawnerEntity.Set(new Spawner() { Team = team, Position = pos, SpawnTime = 100, Elapsed = 90 });
         }
     }
 }

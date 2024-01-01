@@ -112,5 +112,6 @@ namespace NovemberPirates.Components
         None,
         Slow,
         Solid,
+        Padding,
     }
 }

@@ -53,6 +53,10 @@ namespace NovemberPirates.Utilities
                     {
                         tileSprite.Collision = CollisionType.Slow;
                     }
+                    else if (layer.Identifier == "IslandProxy")
+                    {
+                        tileSprite.Collision = CollisionType.Padding;
+                    }
                     else if (layer.Identifier == "Islands")
                     {
                         tileSprite.Collision = CollisionType.Solid;
@@ -66,13 +70,14 @@ namespace NovemberPirates.Utilities
                     mapTile.MovementCost = tileSprite.Collision switch
                     {
                         CollisionType.Solid => 9999,
-                        CollisionType.Slow => 2,
+                        CollisionType.Padding => 2,
+                        CollisionType.Slow => 3,
                         _ => 1,
                     };
 
                     mapTileEntity.Set(mapTile);
                 }
-                
+
                 foreach (var entity in layer.EntityInstances)
                 {
                     //Console.WriteLine($"entity: {entity.Identifier}");

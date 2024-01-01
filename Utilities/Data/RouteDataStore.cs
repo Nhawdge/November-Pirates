@@ -10,6 +10,15 @@ namespace NovemberPirates.Utilities.Data
         internal Dictionary<string, List<Route>> Routes = new();
         private RouteDataStore() { }
 
+        internal List<Route> GetRandomRoute()
+        {
+            if (Routes.TryGetValue(Routes.Keys.ElementAtOrDefault(Random.Shared.Next(Routes.Count())), out var route))
+            {
+                return route;
+            }
+            return null;
+        }
+
     }
     internal class Route
     {
