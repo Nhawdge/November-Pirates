@@ -1,7 +1,6 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
-using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Scenes.Levels.Systems;
 using NovemberPirates.Utilities;
 using NovemberPirates.Utilities.Maps;
@@ -12,6 +11,7 @@ namespace NovemberPirates.Scenes.Levels
     {
         internal OceanScene()
         {
+            StopSounds();
             var singleton = World.Create<Singleton, Wind>();
             singleton.Set(new Wind());
             singleton.Set(new Singleton() { Music = AudioKey.Drifting });
@@ -27,7 +27,6 @@ namespace NovemberPirates.Scenes.Levels
             {
                 NavigationUtilities.BuildMap(World);
             });
-
             LoadingTasks.Add("Trade Routes", () =>
             {
                 NavigationUtilities.AddTradeRoutes(World);

@@ -3,7 +3,6 @@ using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Extensions;
 using NovemberPirates.Utilities.Data;
-using QuickType.Map;
 using System.Numerics;
 
 namespace NovemberPirates.Utilities.Maps
@@ -36,7 +35,7 @@ namespace NovemberPirates.Utilities.Maps
                     tile.MovementCost = Math.Max(tile.MovementCost, maptile.MovementCost);
                 });
                 singleton.Map = map;
-            }
+            }  
         }
 
         internal static void AddTradeRoutes(World world)

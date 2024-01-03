@@ -9,8 +9,12 @@ namespace NovemberPirates.Scenes
     {
         public BaseScene()
         {
-            AudioManager.Instance.StopAllSounds();
             Systems.Add(new LoadingSystem(this));
+        }
+
+        internal void StopSounds()
+        {
+            AudioManager.Instance.StopAllSounds();
         }
 
         internal Dictionary<string, Action> LoadingTasks = new();
