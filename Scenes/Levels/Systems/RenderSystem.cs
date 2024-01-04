@@ -10,9 +10,37 @@ namespace NovemberPirates.Scenes.Levels.Systems
 {
     internal class RenderSystem : GameSystem
     {
-        public Texture BackgroundTexture { get; private set; }
+        private Shader WaterShader;
+        private Texture WaterTexture;
+        private float Seconds;
+
         public RenderSystem() : base()
         {
+            WaterShader = Raylib.LoadShader(null, "Assets/Shaders/water.frag");
+
+            int freqXLoc = Raylib.GetShaderLocation(WaterShader, "freqX");
+            int freqYLoc = Raylib.GetShaderLocation(WaterShader, "freqY");
+            int ampXLoc = Raylib.GetShaderLocation(WaterShader, "ampX");
+            int ampYLoc = Raylib.GetShaderLocation(WaterShader, "ampY");
+            int speedXLoc = Raylib.GetShaderLocation(WaterShader, "speedX");
+            int speedYLoc = Raylib.GetShaderLocation(WaterShader, "speedY");
+
+            // Shader uniform values that can be updated at any time
+            float freqX = 12.0f;
+            float freqY = 12.0f;
+            float ampX = 10.0f;
+            float ampY = 8.0f;
+            float speedX = 8.0f;
+            float speedY = 6.0f;
+
+            var screenSize = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+            Raylib.SetShaderValue(WaterShader, Raylib.GetShaderLocation(WaterShader, "size"), screenSize, ShaderUniformDataType.SHADER_UNIFORM_VEC2);
+            Raylib.SetShaderValue(WaterShader, freqXLoc, freqX, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(WaterShader, freqYLoc, freqY, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(WaterShader, ampXLoc, ampX, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(WaterShader, ampYLoc, ampY, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(WaterShader, speedXLoc, speedX, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(WaterShader, speedYLoc, speedY, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
         }
 
         internal override void Update(World world)
@@ -20,6 +48,10 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var singletonEntity = world.QueryFirst<Singleton>();
             var singleton = singletonEntity.Get<Singleton>();
 
+            int secondsLoc = Raylib.GetShaderLocation(WaterShader, "seconds");
+            Seconds += Raylib.GetFrameTime();
+
+            Raylib.SetShaderValue(WaterShader, secondsLoc, Seconds, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
             var renders = new QueryDescription().WithAll<Render>().WithNone<Effect>();
             var camera = NovemberPiratesEngine.Instance.Camera;
             world.Query(in renders, (entity) =>
@@ -28,9 +60,21 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (Vector2.Abs(myRender.Position - camera.target).Length() > Math.Max(Raylib.GetScreenWidth(), Raylib.GetScreenHeight()) + 200)
                     return;
 
+
                 if (singleton.Debug != DebugLevel.High)
                 {
-                    Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);
+                    if (myRender.Collision is CollisionType.None)
+                    {
+                        var offset = 6;
+                        Raylib.BeginShaderMode(WaterShader);
+                        Raylib.DrawTexturePro(myRender.Texture,
+                            myRender.Source,
+                            myRender.Destination with { x = myRender.Destination.x - offset, y = myRender.Destination.y - offset, width = myRender.Destination.width + offset, height = myRender.Destination.height + offset },
+                            myRender.Origin, myRender.RenderRotation, myRender.Color);
+                        Raylib.EndShaderMode();
+                    }
+                    else
+                        Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);
                 }
                 if (singleton.Debug >= DebugLevel.Medium)
                 {
@@ -47,6 +91,8 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     }
                 }
             });
+
+
 
             var effectSprites = new QueryDescription().WithAll<Sprite, Effect, LayerWater>().WithNone<MapTile>();
             world.Query(in effectSprites, (entity) =>

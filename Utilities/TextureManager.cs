@@ -1,4 +1,5 @@
-﻿using Raylib_CsLo;
+using NovemberPirates.Components;
+using Raylib_CsLo;
 
 namespace NovemberPirates.Utilities
 {
@@ -12,13 +13,16 @@ namespace NovemberPirates.Utilities
         {
             LoadTextures();
         }
-           
+
         private void LoadTextures()
         {
             TextureStore.Add(TextureKey.MapTileset, Raylib.LoadTexture("Assets/Maps/tiles_sheet2.png"));
+            //Raylib.SetTextureWrap(TextureStore[TextureKey.MapTileset], TextureWrap.TEXTURE_WRAP_REPEAT);
+            //Raylib.SetTextureFilter(TextureStore[TextureKey.MapTileset], TextureFilter.TEXTURE_FILTER_BILINEAR);
+
             TextureStore.Add(TextureKey.MainMenuBackground, Raylib.LoadTexture("Assets/Art/Main_Menu.png"));
             TextureStore.Add(TextureKey.Words, Raylib.LoadTexture("Assets/Art/words.png"));
-            TextureStore.Add(TextureKey.Button, Raylib.LoadTexture("Assets/Art/Button.png"));   
+            TextureStore.Add(TextureKey.Button, Raylib.LoadTexture("Assets/Art/Button.png"));
 
             TextureStore.Add(TextureKey.HullLarge, Raylib.LoadTexture("Assets/Art/hullLarge.png"));
             TextureStore.Add(TextureKey.HullMedium, Raylib.LoadTexture("Assets/Art/hullMedium.png"));

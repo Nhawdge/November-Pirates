@@ -58,7 +58,11 @@ namespace NovemberPirates.Utilities
                     {
                         tileSprite.Collision = CollisionType.Padding;
                     }
-                    else if (layer.Identifier == "Islands")
+                    else if (layer.Identifier == "Water")
+                    {
+                        tileSprite.Collision = CollisionType.None;
+                    }
+                    else
                     {
                         tileSprite.Collision = CollisionType.Solid;
                     }

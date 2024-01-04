@@ -37,6 +37,8 @@ namespace NovemberPirates
 
             var data = ShipData.Instance;
 
+            //Raylib.SetTraceLogLevel((int)TraceLogLevel.LOG_ERROR);
+
             while (!Raylib.WindowShouldClose())
             {
                 GameLoop();
