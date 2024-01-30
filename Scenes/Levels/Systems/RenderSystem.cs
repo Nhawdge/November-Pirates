@@ -54,6 +54,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
             Raylib.SetShaderValue(WaterShader, secondsLoc, Seconds, ShaderUniformDataType.SHADER_UNIFORM_FLOAT);
             var renders = new QueryDescription().WithAll<Render>().WithNone<Effect>();
             var camera = NovemberPiratesEngine.Instance.Camera;
+            var waterRendered = false;
             world.Query(in renders, (entity) =>
             {
                 var myRender = entity.Get<Render>();
@@ -65,13 +66,21 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     if (myRender.Collision is CollisionType.None)
                     {
-                        var offset = 6;
-                        Raylib.BeginShaderMode(WaterShader);
-                        Raylib.DrawTexturePro(myRender.Texture,
-                            myRender.Source,
-                            myRender.Destination with { x = myRender.Destination.x - offset, y = myRender.Destination.y - offset, width = myRender.Destination.width + offset, height = myRender.Destination.height + offset },
-                            myRender.Origin, myRender.RenderRotation, myRender.Color);
-                        Raylib.EndShaderMode();
+                        if (!waterRendered)
+                        {
+                            var offset = 6;
+                            Raylib.BeginShaderMode(WaterShader);
+                            Raylib.DrawTextureNPatch(myRender.Texture,
+                            //528.0;
+                            //264.0;
+                            new NPatchInfo(myRender.Source, 0, 64, 0, 64, NPatchLayout.NPATCH_NINE_PATCH),
+                                //myRender.Source,
+                                //myRender.Destination with { x = myRender.Destination.x - offset, y = myRender.Destination.y - offset, width = myRender.Destination.width + offset, height = myRender.Destination.height + offset },
+                                new Rectangle(0, 0, 10000, 10000),
+                                myRender.Origin, myRender.RenderRotation, myRender.Color) ;
+                            Raylib.EndShaderMode();
+                            waterRendered = true;
+                        }
                     }
                     else
                         Raylib.DrawTexturePro(myRender.Texture, myRender.Source, myRender.Destination, myRender.Origin, myRender.RenderRotation, myRender.Color);

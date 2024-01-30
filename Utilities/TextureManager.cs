@@ -17,7 +17,7 @@ namespace NovemberPirates.Utilities
         private void LoadTextures()
         {
             TextureStore.Add(TextureKey.MapTileset, Raylib.LoadTexture("Assets/Maps/tiles_sheet2.png"));
-            //Raylib.SetTextureWrap(TextureStore[TextureKey.MapTileset], TextureWrap.TEXTURE_WRAP_REPEAT);
+            Raylib.SetTextureWrap(TextureStore[TextureKey.MapTileset], TextureWrap.TEXTURE_WRAP_REPEAT);
             //Raylib.SetTextureFilter(TextureStore[TextureKey.MapTileset], TextureFilter.TEXTURE_FILTER_BILINEAR);
 
             TextureStore.Add(TextureKey.MainMenuBackground, Raylib.LoadTexture("Assets/Art/Main_Menu.png"));

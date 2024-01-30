@@ -33,5 +33,5 @@ void main() {
     p.x += cos((fragTexCoord.y - boxTop) * freqX / ( pixelWidth * 450.0) + (seconds * speedX)) * ampX * pixelWidth;
     p.y += sin((fragTexCoord.x - boxLeft) * freqY * aspect / ( pixelHeight * 400.0) + (seconds * speedY)) * ampY * pixelHeight;
 
-    finalColor = texture(texture0, p)*colDiffuse*fragColor;
+    finalColor = texture(texture0,  fract(p))*colDiffuse*fragColor;
 }
