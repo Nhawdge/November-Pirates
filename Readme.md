@@ -4,7 +4,7 @@ A Game for [Game of the Month 29 (November 2023)](https://itch.io/jam/one-game-a
 
 # How to play
 
-Download the latest release from [the Releases](https://github.com/Nhawdge/November-Pirates/releases].
+Download the latest release from [itch](https://nhawdge.itch.io/november-pirates).
 
 Extract the zip file and run the executable.
 

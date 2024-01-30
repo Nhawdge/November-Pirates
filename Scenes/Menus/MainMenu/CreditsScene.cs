@@ -1,5 +1,6 @@
 ﻿using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
+using Raylib_CsLo;
 
 namespace NovemberPirates.Scenes.Menus.MainMenu
 {
@@ -8,14 +9,18 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
         public CreditsScene()
         {
             Systems.Add(new MenuSystem());
+            Systems.Add(new MenuMusicSystem());
 
-            World.Create(new UiTitle { Text = @"Credits", Order = 1 });
-            World.Create(new UiTitle { Text = @"Nhawdge - Code", Order = 2 });
-            World.Create(new UiTitle { Text = @"Kaitlyn Schmidt - Game Design", Order = 3 });
-            World.Create(new UiTitle { Text = @"Game Design and Project Management?", Order = 4 });
-            World.Create(new UiTitle { Text = @"Barun Sinha - Sounds", Order = 5 });
-            World.Create(new UiTitle { Text = @"UnicornGirlie - Art ", Order = 6 });
-            World.Create(new UiTitle { Text = @"Kenney.nl - Pirate Asset Pack", Order = 7 });
+            var index = 5;
+            World.Create(new UiContainer { Rectangle = new Rectangle() });
+
+            World.Create(new UiTitle { Text = @"Credits", Order = index++ });
+            World.Create(new UiTitle { Text = @"Nhawdge - Code", Order = index++ });
+            World.Create(new UiTitle { Text = @"Kaitlyn Schmidt - Game Design", Order = index++ });
+            World.Create(new UiTitle { Text = @"Barun Sinha - Sounds", Order = index++ });
+            World.Create(new UiTitle { Text = @"UnicornGirlie - Title Art ", Order = index++ });
+            World.Create(new UiTitle { Text = @"CFHM - Yarrs", Order = index++ });
+            World.Create(new UiTitle { Text = @"Kenney.nl - Pirate Asset Pack", Order = index++ });
 
             World.Create(new UiButton
             {
@@ -24,7 +29,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new MainMenuScene();
                 },
-                Order = 9
+                Order = index++
             });
         }
     }

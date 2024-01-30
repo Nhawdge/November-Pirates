@@ -10,7 +10,6 @@ namespace NovemberPirates.Utilities
         public Dictionary<AudioKey, Sound[]> AudioStore = new();
         public Dictionary<AudioKey, Music> MusicStore = new();
 
-
         internal void LoadAllAudio()
         {
             AudioStore.Add(AudioKey.CannonFire, new[] {
@@ -62,6 +61,15 @@ namespace NovemberPirates.Utilities
             {
                 Raylib.LoadSound("Assets/Audio/sfx_WindinSail.ogg"),
             });
+
+            AudioStore.Add(AudioKey.Yarr, new[]
+            {
+                Raylib.LoadSound("Assets/Audio/yarrs01.wav"),
+                Raylib.LoadSound("Assets/Audio/yarrs02.wav"),
+                Raylib.LoadSound("Assets/Audio/yarrs03.wav"),
+            });
+
+            // M U S I C
 
             MusicStore.Add(AudioKey.Charge, Raylib.LoadMusicStream("Assets/Audio/Charge.wav"));
             MusicStore.Add(AudioKey.Drifting, Raylib.LoadMusicStream("Assets/Audio/Drifting.wav"));
@@ -118,5 +126,6 @@ namespace NovemberPirates.Utilities
         Drifting,
         TheWarriorsOfTheWater,
         TheBleedingOcean,
+        Yarr,
     }
 }

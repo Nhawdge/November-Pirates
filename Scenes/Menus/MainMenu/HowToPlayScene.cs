@@ -2,6 +2,7 @@
 using Arch.Core.Extensions;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
+using Raylib_CsLo;
 
 namespace NovemberPirates.Scenes.Menus.MainMenu
 {
@@ -10,13 +11,18 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
         public HowToPlayScene()
         {
             Systems.Add(new MenuSystem());
+            Systems.Add(new MenuMusicSystem());
+
+            var index = 5;
+
+            World.Create(new UiContainer { Rectangle = new Rectangle() });
 
             var instructions = World.Create<UiTitle>();
-            instructions.Set(new UiTitle { Text = @"WASD to move Q/E or Arrow keys to shoot", Order = 1 });
+            instructions.Set(new UiTitle { Text = @"WASD to move Q/E or Arrow keys to shoot", Order = index++ });
             var instructions2 = World.Create<UiTitle>();
-            instructions2.Set(new UiTitle { Text = @"f3 to change the wind", Order = 2 });
+            instructions2.Set(new UiTitle { Text = @"f3 to change the wind", Order = index++ });
             var instructions3 = World.Create<UiTitle>();
-            instructions3.Set(new UiTitle { Text = @"F2 for the debugger I'm proud of", Order = 3 });
+            instructions3.Set(new UiTitle { Text = @"F2 for the debugger I'm proud of", Order = index++ });
 
             World.Create(new UiButton
             {
@@ -25,7 +31,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new MainMenuScene();
                 },
-                Order = 5
+                Order = index++
             });
         }
 

@@ -21,6 +21,14 @@ namespace NovemberPirates.Extensions
 
             return result.Value;
         }
+        public static Entity? QueryFirstOrNull<T0>(this World world)
+        {
+            try { return world.QueryFirst<T0>(); }
+            catch
+            {
+                return null;
+            }
+        }
 
         public static T0 QueryUnique<T0>(this World world) where T0 : struct
         {

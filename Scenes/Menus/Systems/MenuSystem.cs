@@ -21,11 +21,27 @@ namespace NovemberPirates.Scenes.Menus.Systems
                 new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()),
                 Vector2.Zero, 0f, Raylib.WHITE);
             var query = new QueryDescription().WithAny<UiTitle, UiButton, SpriteButton>();
+            var uiElementCount = world.CountEntities(in query);
 
             var centerPoint = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
 
-            var dummyrect = new Rectangle(centerPoint.X - 200, centerPoint.Y - 300, 400, 500);
-            //RayGui.GuiDummyRec(dummyrect, "");
+            var placementContainer = new Rectangle(centerPoint.X - 300, centerPoint.Y - 300, 600, 500);
+
+            var container = world.QueryFirstOrNull<UiContainer>();
+            if (container.HasValue)
+            {
+                var uiContainer = container.Value.Get<UiContainer>();
+
+                //Raylib.DrawRectangleRec(container.Rectangle, Color.BLACK);
+                RayGui.GuiDummyRec(uiContainer.Rectangle with
+                {
+                    X = placementContainer.x,
+                    y = placementContainer.y,
+                    width = placementContainer.width,
+                    height = 55 * uiElementCount
+                }, "");
+            }
+
             var index = 0;
 
             //RayGui.GuiSetFont(CreditsFont);
@@ -52,7 +68,13 @@ namespace NovemberPirates.Scenes.Menus.Systems
                 if (entity.Has<UiButton>())
                 {
                     var button = entity.Get<UiButton>();
-                    var rect = dummyrect with { x = dummyrect.x + 100, y = dummyrect.y + (60 * button.Order), width = 200, height = 50 };
+                    var rect = placementContainer with
+                    {
+                        x = placementContainer.x + placementContainer.width / 2 - 200 / 2,
+                        y = placementContainer.y + (60 * button.Order),
+                        width = 200,
+                        height = 50
+                    };
 
                     if (RayGui.GuiButton(rect, button.Text))
                     {

@@ -8,6 +8,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
         public PauseScene(BaseScene lastScene)
         {
             Systems.Add(new MenuSystem());
+            Systems.Add(new MenuMusicSystem());
 
             World.Create(new UiButton
             {
