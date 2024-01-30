@@ -2,6 +2,7 @@
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Extensions;
+using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Utilities.Data;
 using System.Numerics;
 

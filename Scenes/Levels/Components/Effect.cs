@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 
-namespace NovemberPirates.Components
+namespace NovemberPirates.Scenes.Levels.Components
 {
     internal class Effect
     {

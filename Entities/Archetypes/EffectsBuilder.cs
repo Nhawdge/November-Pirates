@@ -2,6 +2,7 @@
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Extensions;
+using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Utilities;
 using Raylib_CsLo;
 using System.Numerics;

@@ -3,6 +3,7 @@ using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Extensions;
+using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities;
 using NovemberPirates.Utilities.Data;

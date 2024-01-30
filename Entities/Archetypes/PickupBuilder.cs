@@ -1,6 +1,6 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
-using NovemberPirates.Components;
+using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Utilities;
 using System.Numerics;
 

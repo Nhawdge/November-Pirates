@@ -1,4 +1,4 @@
-﻿namespace NovemberPirates.Components
+﻿namespace NovemberPirates.Scenes.Levels.Components
 {
     internal class Npc
     {

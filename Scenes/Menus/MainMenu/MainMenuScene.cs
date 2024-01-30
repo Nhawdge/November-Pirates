@@ -1,5 +1,6 @@
 ﻿using NovemberPirates.Components;
 using NovemberPirates.Scenes.Levels;
+using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
 using NovemberPirates.Utilities;

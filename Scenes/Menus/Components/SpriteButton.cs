@@ -1,4 +1,4 @@
-﻿using NovemberPirates.Components;
+﻿using NovemberPirates.Scenes.Levels.Components;
 
 namespace NovemberPirates.Scenes.Menus.Components
 {

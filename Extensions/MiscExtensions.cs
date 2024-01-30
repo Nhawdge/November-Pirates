@@ -1,4 +1,4 @@
-﻿using NovemberPirates.Components;
+﻿using NovemberPirates.Scenes.Levels.Components;
 using Raylib_CsLo;
 using System.Numerics;
 

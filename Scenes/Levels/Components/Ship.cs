@@ -2,7 +2,7 @@
 using NovemberPirates.Utilities.Data;
 using System.Numerics;
 
-namespace NovemberPirates.Components
+namespace NovemberPirates.Scenes.Levels.Components
 {
     internal class Ship
     {

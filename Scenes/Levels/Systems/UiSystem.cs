@@ -2,6 +2,7 @@
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Extensions;
+using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Scenes.Menus.MainMenu;
 using NovemberPirates.Systems;
 using Raylib_CsLo;

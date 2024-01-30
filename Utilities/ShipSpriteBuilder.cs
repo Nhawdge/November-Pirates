@@ -1,8 +1,8 @@
-﻿using NovemberPirates.Components;
-using NovemberPirates.Extensions;
+﻿using NovemberPirates.Extensions;
+using NovemberPirates.Scenes.Levels.Components;
 using Raylib_CsLo;
 using System.Numerics;
-using static NovemberPirates.Components.Sprite;
+using static NovemberPirates.Scenes.Levels.Components.Sprite;
 
 namespace NovemberPirates.Utilities
 {

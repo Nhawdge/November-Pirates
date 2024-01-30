@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace NovemberPirates.Components
+namespace NovemberPirates.Scenes.Levels.Components
 {
     internal class Spawner
     {

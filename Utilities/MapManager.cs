@@ -1,9 +1,9 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using Arch.Core.Utils;
-using NovemberPirates.Components;
 using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Extensions;
+using NovemberPirates.Scenes.Levels.Components;
 using QuickType.Map;
 using Raylib_CsLo;
 using System.Numerics;

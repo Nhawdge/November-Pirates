@@ -1,4 +1,4 @@
-﻿using NovemberPirates.Components;
+﻿using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Utilities.Data;
 
 namespace NovemberPirates.Entities.Archetypes

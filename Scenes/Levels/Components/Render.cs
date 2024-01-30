@@ -2,7 +2,7 @@
 using Raylib_CsLo;
 using System.Numerics;
 
-namespace NovemberPirates.Components
+namespace NovemberPirates.Scenes.Levels.Components
 {
     internal class Render
     {
@@ -62,8 +62,8 @@ namespace NovemberPirates.Components
         public virtual Rectangle Source
         {
             get => new Rectangle(
-                    Column * SpriteWidth + (2 * Column) + 1,
-                    Row * SpriteHeight + (2 * Row) + 1,
+                    Column * SpriteWidth + 2 * Column + 1,
+                    Row * SpriteHeight + 2 * Row + 1,
                     SpriteWidth * (IsFlipped ? -1 : 1),
                     SpriteHeight
                     );

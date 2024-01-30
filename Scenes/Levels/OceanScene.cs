@@ -1,6 +1,7 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
 using NovemberPirates.Components;
+using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Scenes.Levels.Systems;
 using NovemberPirates.Utilities;
 using NovemberPirates.Utilities.Maps;

@@ -4,7 +4,7 @@ using Raylib_CsLo;
 using System.Numerics;
 using System.Text.Json;
 
-namespace NovemberPirates.Components
+namespace NovemberPirates.Scenes.Levels.Components
 {
     internal class Sprite : Render
     {
@@ -137,7 +137,7 @@ namespace NovemberPirates.Components
                 Y = (int)y;
                 W = (int)w;
                 H = (int)h;
-                Duration = (float)duration;
+                Duration = duration;
             }
 
             public Frame(Rectangle rect, float duration)
