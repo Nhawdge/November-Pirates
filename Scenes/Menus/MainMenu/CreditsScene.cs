@@ -1,4 +1,5 @@
-﻿using NovemberPirates.Scenes.Menus.Components;
+﻿using NovemberPirates.Components;
+using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
 using Raylib_CsLo;
 
@@ -6,10 +7,12 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
 {
     internal class CreditsScene : BaseScene
     {
-        public CreditsScene()
+        public CreditsScene(Singleton singleton)
         {
             Systems.Add(new MenuSystem());
             Systems.Add(new MenuMusicSystem());
+
+            World.Create(singleton);
 
             var index = 5;
             World.Create(new UiContainer { Rectangle = new Rectangle() });

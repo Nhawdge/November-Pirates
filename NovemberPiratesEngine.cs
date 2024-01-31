@@ -19,11 +19,15 @@ namespace NovemberPirates
             //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_TOPMOST);
             //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_MAXIMIZED);
             //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_UNDECORATED);
+            
+            Raylib.InitWindow(0,0, "November Pirates");
 
-            var width = Raylib.GetMonitorWidth(0);
-            var height = Raylib.GetMonitorHeight(0);
+            var monitor = Raylib.GetCurrentMonitor();
+            var width = Raylib.GetMonitorWidth(monitor);
+            var height = Raylib.GetMonitorHeight(monitor);
 
-            Raylib.InitWindow(width, height, "November Pirates");
+            Raylib.SetWindowSize(width, height);
+
             Raylib.SetTargetFPS(60);
             Raylib.InitAudioDevice();
             Raylib.SetExitKey(0);

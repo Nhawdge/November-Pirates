@@ -15,7 +15,6 @@ namespace NovemberPirates.Scenes.Menus.Systems
             var singletonEntity = world.QueryFirst<Singleton>();
             var singleton = singletonEntity.Get<Singleton>();
 
-
             var music = AudioManager.Instance.GetMusic(singleton.Music);
             if (Raylib.IsMusicStreamPlaying(music))
             {

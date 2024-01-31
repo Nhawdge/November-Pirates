@@ -1,4 +1,6 @@
-﻿using NovemberPirates.Components;
+﻿using Arch.Core.Extensions;
+using NovemberPirates.Components;
+using NovemberPirates.Extensions;
 using NovemberPirates.Scenes.Levels;
 using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Scenes.Menus.Components;
@@ -13,10 +15,12 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
     {
         public MainMenuScene()
         {
+
             Systems.Add(new MenuSystem());
             Systems.Add(new MenuMusicSystem());
 
-            World.Create(new Singleton() { Music = AudioKey.DreamingOfTreasure });
+            var singleton = new Singleton() { Music = AudioKey.DreamingOfTreasure };
+            World.Create(singleton);
 
             var width = Raylib.GetScreenWidth() * 0.7f;
 
@@ -45,7 +49,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Text = "HowToPlay",
                 Action = () =>
                 {
-                    NovemberPiratesEngine.Instance.ActiveScene = new HowToPlayScene();
+                    NovemberPiratesEngine.Instance.ActiveScene = new HowToPlayScene(singleton);
                 },
                 Order = 2,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
@@ -65,7 +69,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Text = "Credits",
                 Action = () =>
                 {
-                    NovemberPiratesEngine.Instance.ActiveScene = new CreditsScene();
+                    NovemberPiratesEngine.Instance.ActiveScene = new CreditsScene(singleton);
                 },
                 Order = 3,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")

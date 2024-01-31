@@ -1,5 +1,6 @@
 ﻿using Arch.Core;
 using Arch.Core.Extensions;
+using NovemberPirates.Components;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
 using Raylib_CsLo;
@@ -8,10 +9,12 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
 {
     internal class HowToPlayScene : BaseScene
     {
-        public HowToPlayScene()
+        public HowToPlayScene(Singleton singleton)
         {
             Systems.Add(new MenuSystem());
             Systems.Add(new MenuMusicSystem());
+
+            World.Create(singleton);
 
             var index = 5;
 
