@@ -23,6 +23,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
             World.Create(singleton);
 
             var width = Raylib.GetScreenWidth() * 0.7f;
+            var order = 1;
 
             World.Create(new SpriteButton
             {
@@ -31,7 +32,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new OceanScene();
                 },
-                Order = 1,
+                Order = order++,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
                 {
                     Position = new Vector2(width, 150),
@@ -51,7 +52,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new HowToPlayScene(singleton);
                 },
-                Order = 2,
+                Order = order++,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
                 {
                     Position = new Vector2(width, 300),
@@ -71,7 +72,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new CreditsScene(singleton);
                 },
-                Order = 3,
+                Order = order++,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
                 {
                     Position = new Vector2(width, 450),
@@ -83,7 +84,25 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                     OriginPos = Render.OriginAlignment.LeftTop
                 }
             });
-
+            World.Create(new UiButton
+            {
+                Text = "Settings",
+                Action = () =>
+                {
+                    NovemberPiratesEngine.Instance.ActiveScene = new SettingsScene(singleton, this);
+                },
+                Order = order++,
+                //TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
+                //{
+                //    Position = new Vector2(width, 750),
+                //    OriginPos = Render.OriginAlignment.LeftTop
+                //},
+                //ButtonSprite = new Sprite(TextureKey.Button, "Assets/Art/Button")
+                //{
+                //    Position = new Vector2(width, 750),
+                //    OriginPos = Render.OriginAlignment.LeftTop
+                //}
+            });
             World.Create(new SpriteButton
             {
                 Text = "Exit",
@@ -91,7 +110,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     Environment.Exit(0);
                 },
-                Order = 5,
+                Order = order += 2,
                 TextSprite = new Sprite(TextureKey.Words, "Assets/Art/words")
                 {
                     Position = new Vector2(width, 750),

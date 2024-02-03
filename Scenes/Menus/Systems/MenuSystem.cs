@@ -20,7 +20,7 @@ namespace NovemberPirates.Scenes.Menus.Systems
                 new Rectangle(0, 0, backgroundTexture.width, backgroundTexture.height),
                 new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()),
                 Vector2.Zero, 0f, Raylib.WHITE);
-            var query = new QueryDescription().WithAny<UiTitle, UiButton, SpriteButton>();
+            var query = new QueryDescription().WithAny<UiTitle, UiButton, SpriteButton, UiSlider>();
             var uiElementCount = world.CountEntities(in query);
 
             var centerPoint = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
@@ -42,8 +42,6 @@ namespace NovemberPirates.Scenes.Menus.Systems
                 }, "");
             }
 
-            var index = 0;
-
             //RayGui.GuiSetFont(CreditsFont);
             RayGui.GuiSetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.TEXT_SIZE, 48);
             RayGui.GuiSetStyle((int)GuiControl.LABEL, (int)GuiControlProperty.TEXT_ALIGNMENT, 1);
@@ -51,7 +49,6 @@ namespace NovemberPirates.Scenes.Menus.Systems
 
             world.Query(in query, (entity) =>
             {
-                index++;
                 if (entity.Has<UiTitle>())
                 {
                     var titleComponent = entity.Get<UiTitle>();
@@ -98,6 +95,24 @@ namespace NovemberPirates.Scenes.Menus.Systems
                     }
                     button.ButtonSprite.Draw();
                     button.TextSprite.Draw();
+                }
+                if (entity.Has<UiSlider>())
+                {
+                    var slider = entity.Get<UiSlider>();
+                    var val = RayGui.GuiSlider(placementContainer with
+                    {
+                        x = placementContainer.x + placementContainer.width / 2 - 200 / 2,
+                        y = placementContainer.y + (60 * slider.Order),
+                        width = 200,
+                        height = 50
+                    },
+                    slider.Text,
+                    (SettingsManager.Instance.Settings[slider.SettingKey]).ToString("0") + "%",
+                    SettingsManager.Instance.Settings[slider.SettingKey],
+                    slider.MinValue, slider.MaxValue);
+
+                    SettingsManager.Instance.Settings[slider.SettingKey] = val;
+
                 }
             });
         }

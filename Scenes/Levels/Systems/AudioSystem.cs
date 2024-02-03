@@ -17,10 +17,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var audioQuery = new QueryDescription().WithAll<AudioEvent>();
             var singleton = world.QueryFirst<Singleton>().Get<Singleton>();
 
+            Raylib.SetMasterVolume(SettingsManager.Instance.Settings[SettingsManager.SettingKeys.MainVolume] / 100f);
+
             var music = AudioManager.Instance.GetMusic(singleton.Music);
             if (Raylib.IsMusicStreamPlaying(music))
             {
                 Raylib.UpdateMusicStream(music);
+                Raylib.SetMusicVolume(music, SettingsManager.Instance.Settings[SettingsManager.SettingKeys.MusicVolume] / 100f);
             }
             else
             {
@@ -39,7 +42,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 var maxDistance = 1280f; // TODO Get dynamically later
                 if (distance < maxDistance)
                 {
-                    var volume = 1 - (distance / maxDistance);
+                    var volume = (1 - (distance / maxDistance)) * (SettingsManager.Instance.Settings[SettingsManager.SettingKeys.SfxVolume] / 100f);
                     var range = maxDistance * 2;
                     var pan = ((audioEvent.Position.X - playerSprite.Position.X) + maxDistance) / range;
 

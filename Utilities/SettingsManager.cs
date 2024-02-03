@@ -4,7 +4,7 @@ namespace NovemberPirates.Utilities
 {
     internal class SettingsManager
     {
-        private SettingsManager() { }
+        private SettingsManager() { LoadSettings(); }
 
         internal static SettingsManager Instance = new();
 
@@ -26,11 +26,23 @@ namespace NovemberPirates.Utilities
             }
             else
             {
-                Settings.Add(SettingKeys.MainVolume, 0.5f);
-                Settings.Add(SettingKeys.MusicVolume, 0.5f);
-                Settings.Add(SettingKeys.SfxVolume, 0.5f);
+                Console.WriteLine("Settings file not found, creating new settings file");
+                Settings.Add(SettingKeys.MainVolume, 50f);
+                Settings.Add(SettingKeys.MusicVolume, 50f);
+                Settings.Add(SettingKeys.SfxVolume, 50f);
 
+            }
+        }
+
+        internal void SaveSettings()
+        {
+            try
+            {
                 File.WriteAllText("settings.json", JsonSerializer.Serialize(Settings));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
             }
         }
 

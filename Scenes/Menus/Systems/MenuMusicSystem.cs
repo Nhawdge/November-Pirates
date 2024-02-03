@@ -19,6 +19,8 @@ namespace NovemberPirates.Scenes.Menus.Systems
             if (Raylib.IsMusicStreamPlaying(music))
             {
                 Raylib.UpdateMusicStream(music);
+                Raylib.SetMasterVolume(SettingsManager.Instance.Settings[SettingsManager.SettingKeys.MainVolume] / 100f);
+                Raylib.SetMusicVolume(music, SettingsManager.Instance.Settings[SettingsManager.SettingKeys.MusicVolume] / 100f);
             }
             else
             {

@@ -1,5 +1,9 @@
-﻿using NovemberPirates.Scenes.Menus.Components;
+﻿using Arch.Core.Extensions;
+using NovemberPirates.Components;
+using NovemberPirates.Extensions;
+using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
+using System.ComponentModel.Design;
 
 namespace NovemberPirates.Scenes.Menus.MainMenu
 {
@@ -9,6 +13,10 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
         {
             Systems.Add(new MenuSystem());
             Systems.Add(new MenuMusicSystem());
+            var singletonEntity = lastScene.World.QueryFirst<Singleton>();
+            var singleton = singletonEntity.Get<Singleton>();
+            World.Create(singleton);
+            var order = 1;
 
             World.Create(new UiButton
             {
@@ -17,7 +25,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = lastScene;
                 },
-                Order = 1
+                Order = order++
             });
 
             World.Create(new UiButton
@@ -25,9 +33,9 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 Text = "Settings",
                 Action = () =>
                 {
-                    //NovemberPiratesEngine.Instance.ActiveScene = new MainMenuScene();
+                    NovemberPiratesEngine.Instance.ActiveScene = new SettingsScene(singleton, lastScene);
                 },
-                Order = 2
+                Order = order++
             });
 
             World.Create(new UiButton
@@ -37,7 +45,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     NovemberPiratesEngine.Instance.ActiveScene = new MainMenuScene();
                 },
-                Order = 3
+                Order = order++
             });
 
             World.Create(new UiButton
@@ -47,7 +55,7 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
                 {
                     Environment.Exit(0);
                 },
-                Order = 5
+                Order = order += 2
             });
         }
     }
