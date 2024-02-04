@@ -1,4 +1,6 @@
-﻿namespace NovemberPirates.Scenes.Levels.DataManagers
+﻿using NovemberPirates.Utilities.ContentData;
+
+namespace NovemberPirates.Scenes.Levels.DataManagers
 {
     internal class InventoryManager
     {
@@ -7,8 +9,8 @@
         public static InventoryManager Instance = new();
 
         public long Gold = 0;
-        public long Food = 0;
-        public long Lumber = 0;
+
+        public List<TradeableGood> Inventory = new();
 
     }
 }

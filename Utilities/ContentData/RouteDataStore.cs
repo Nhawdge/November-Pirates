@@ -20,6 +20,7 @@ namespace NovemberPirates.Utilities.Data
         }
 
     }
+
     internal class Route
     {
         internal Port FromPort { get; set; }

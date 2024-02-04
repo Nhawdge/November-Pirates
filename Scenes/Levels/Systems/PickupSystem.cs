@@ -5,6 +5,7 @@ using NovemberPirates.Extensions;
 using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Scenes.Levels.DataManagers;
 using NovemberPirates.Systems;
+using NovemberPirates.Utilities.ContentData;
 using Raylib_CsLo;
 using System.Numerics;
 
@@ -55,7 +56,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (playerSprite.Position.DistanceTo(sprite.Position) < 50)
                 {
                     world.Destroy(entity);
-                    InventoryManager.Instance.Lumber += 1;
+                    InventoryManager.Instance.Inventory.Add(TradeableGoodsData.GetGood(TradeableGoodsNames.Lumber));
                     world.Create<AudioEvent>().Set(new AudioEvent() { Key = Utilities.AudioKey.CollectWood, Position = sprite.Position });
                 }
             });

@@ -50,7 +50,6 @@ namespace NovemberPirates.Scenes.Levels.Components
         internal float Currency;
         internal Port? TargetPort;
         internal List<Route> SailingRoute;
-        internal int Wood;
 
         public Task<List<Vector2>> NavTask { get; set; }
     }

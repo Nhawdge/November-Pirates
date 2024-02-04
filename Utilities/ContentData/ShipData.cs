@@ -53,7 +53,6 @@ namespace NovemberPirates.Utilities.Data
             { $"{HullType.Small}{ShipAbilities.FullSail}", 10 },
             { $"{HullType.Small}{ShipAbilities.OneCannon}", 5 },
             { $"{HullType.Small}{ShipAbilities.TwoCannon}", 7 },
-            { $"{HullType.Small}{ShipAbilities.MaxCrew}", 15 },
 
             { $"{HullType.Small}{Stats.RowingSpeed}", 100},
             { $"{HullType.Small}{Stats.TurningSpeed}", 100},
@@ -62,6 +61,7 @@ namespace NovemberPirates.Utilities.Data
             { $"{HullType.Small}{Stats.FullSailSpeed}", 1},
             { $"{HullType.Small}{Stats.SailSpeedEasing}" , 1},
             { $"{HullType.Small}{Stats.InitialCrew}" , 10},
+            { $"{HullType.Small}{Stats.MaxCrew}" , 15},
             { $"{HullType.Small}{Stats.HullHealth}" , 100},
             { $"{HullType.Small}{Stats.SailHealth}" , 100},
 
@@ -73,7 +73,7 @@ namespace NovemberPirates.Utilities.Data
             { $"{HullType.Medium}{ShipAbilities.FullSail}", 10 },
             { $"{HullType.Medium}{ShipAbilities.OneCannon}", 5 },
             { $"{HullType.Medium}{ShipAbilities.TwoCannon}", 7 },
-            { $"{HullType.Medium}{ShipAbilities.MaxCrew}", 20 },
+            
 
             { $"{HullType.Medium}{Stats.RowingSpeed}", 100},
             { $"{HullType.Medium}{Stats.TurningSpeed}", 100},
@@ -82,6 +82,7 @@ namespace NovemberPirates.Utilities.Data
             { $"{HullType.Medium}{Stats.FullSailSpeed}", 1},
             { $"{HullType.Medium}{Stats.SailSpeedEasing}" , 1},
             { $"{HullType.Medium}{Stats.InitialCrew}" , 10},
+            { $"{HullType.Medium}{Stats.MaxCrew}" , 20},
             { $"{HullType.Medium}{Stats.HullHealth}" , 100},
             { $"{HullType.Medium}{Stats.SailHealth}" , 100},
 
@@ -92,7 +93,6 @@ namespace NovemberPirates.Utilities.Data
             { $"{HullType.Large}{ShipAbilities.FullSail}", 10 },
             { $"{HullType.Large}{ShipAbilities.OneCannon}", 5 },
             { $"{HullType.Large}{ShipAbilities.TwoCannon}", 7 },
-            { $"{HullType.Large}{ShipAbilities.MaxCrew}", 25 },
 
             { $"{HullType.Large}{Stats.RowingSpeed}", 100},
             { $"{HullType.Large}{Stats.TurningSpeed}", 100},
@@ -101,6 +101,7 @@ namespace NovemberPirates.Utilities.Data
             { $"{HullType.Large}{Stats.FullSailSpeed}", 1},
             { $"{HullType.Large}{Stats.SailSpeedEasing}" , 1},
             { $"{HullType.Large}{Stats.InitialCrew}" , 10},
+            { $"{HullType.Large}{Stats.MaxCrew}" , 25},
             { $"{HullType.Large}{Stats.HullHealth}" , 100},
             { $"{HullType.Large}{Stats.SailHealth}" , 100},
 
@@ -159,7 +160,6 @@ namespace NovemberPirates.Utilities.Data
         FourCannon,
         FiveCannon,
         SixCannon,
-        MaxCrew,
     }
 
     internal enum CannonType
@@ -193,6 +193,7 @@ namespace NovemberPirates.Utilities.Data
 
         // Ship
         InitialCrew,
+        MaxCrew,
         HullHealth,
         SailHealth,
     }

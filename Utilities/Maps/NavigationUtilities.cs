@@ -49,7 +49,7 @@ namespace NovemberPirates.Utilities.Maps
             });
 
 
-            for (var i = 0; i < allPorts.Count; i++)
+            for (var i = 0; i < 1; i++)
             {
                 var routePorts = allPorts.OrderBy(x => Random.Shared.Next()).Take(3).ToList();
                 var routes = new List<Route>();

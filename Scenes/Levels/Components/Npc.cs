@@ -2,23 +2,18 @@
 {
     internal class Npc
     {
-        internal Purpose Purpose;
-        internal NpcAction CurrentAction;
+        internal NpcGoals Goal;
+        internal float TimeSinceLastGoalChange;
     }
 
-    public enum Purpose
+    public enum NpcGoals
     {
-        None,
-        Idle,
-        Patrol,
-        Attack,
-        Trade,
+        Sailing,
+        Trading,
+        Repairing,
+        Escaping,
+        GetReinforcements,
+        Fighting
     }
 
-    public enum NpcAction
-    {
-        MoveTo,
-        Attack,
-        Trade,
-    }
 }

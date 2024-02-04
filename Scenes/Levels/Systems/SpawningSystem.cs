@@ -26,7 +26,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (spawner.Elapsed > spawner.SpawnTime)
                 {
                     spawner.Elapsed = 0;
-                    EnemyBuilder.CreateEnemyShip(world, spawner.Position, spawner.Team, Purpose.Trade);
+                    EnemyBuilder.CreateEnemyShip(world, spawner.Position, spawner.Team);
                 }
             });
         }
