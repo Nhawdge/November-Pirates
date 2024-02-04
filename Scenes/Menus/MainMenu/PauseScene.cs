@@ -3,7 +3,6 @@ using NovemberPirates.Components;
 using NovemberPirates.Extensions;
 using NovemberPirates.Scenes.Menus.Components;
 using NovemberPirates.Scenes.Menus.Systems;
-using System.ComponentModel.Design;
 
 namespace NovemberPirates.Scenes.Menus.MainMenu
 {

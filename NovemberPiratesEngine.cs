@@ -39,8 +39,6 @@ namespace NovemberPirates
 
             ActiveScene = new MainMenuScene();
 
-            var data = ShipData.Instance;
-
             while (!Raylib.WindowShouldClose())
             {
                 GameLoop();

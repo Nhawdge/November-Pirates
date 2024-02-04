@@ -52,6 +52,17 @@ namespace NovemberPirates.Scenes.Menus.MainMenu
 
             World.Create(new UiButton
             {
+                Text = "Full Screen",
+                Action = () =>
+                {
+                    Raylib.ToggleFullscreen();
+                    SettingsManager.Instance.Settings[SettingsManager.SettingKeys.Fullscreen] = Raylib.IsWindowFullscreen() ? 1 : 0;
+                },
+                Order = index++
+            });
+
+            World.Create(new UiButton
+            {
                 Text = "Save",
                 Action = () =>
                 {

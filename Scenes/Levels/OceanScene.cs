@@ -50,6 +50,7 @@ namespace NovemberPirates.Scenes.Levels
                 Systems.Add(new CannonBallSystem());
                 Systems.Add(new EnemyControlSystem());
                 Systems.Add(new EffectsSystem());
+                Systems.Add(new InventorySystem());
                 Systems.Add(new SpawningSystem());
                 Systems.Add(new PickupSystem());
                 Systems.Add(new AudioSystem());

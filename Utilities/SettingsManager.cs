@@ -30,7 +30,7 @@ namespace NovemberPirates.Utilities
                 Settings.Add(SettingKeys.MainVolume, 50f);
                 Settings.Add(SettingKeys.MusicVolume, 50f);
                 Settings.Add(SettingKeys.SfxVolume, 50f);
-
+                Settings.Add(SettingKeys.Fullscreen, 0);
             }
         }
 
@@ -51,7 +51,8 @@ namespace NovemberPirates.Utilities
             MainVolume,
             MusicVolume,
             SfxVolume,
-            Language
+            Language,
+            Fullscreen
         }
     }
 }

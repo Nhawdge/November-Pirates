@@ -11,6 +11,7 @@ namespace NovemberPirates.Components
         internal Map Map;
 
         public AudioKey Music;
+        internal bool InventoryOpen;
     }
 
     public enum DebugLevel
