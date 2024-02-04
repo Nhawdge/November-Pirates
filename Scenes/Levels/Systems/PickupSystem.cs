@@ -3,6 +3,7 @@ using Arch.Core.Extensions;
 using NovemberPirates.Components;
 using NovemberPirates.Extensions;
 using NovemberPirates.Scenes.Levels.Components;
+using NovemberPirates.Scenes.Levels.DataManagers;
 using NovemberPirates.Systems;
 using Raylib_CsLo;
 using System.Numerics;
@@ -54,11 +55,9 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 if (playerSprite.Position.DistanceTo(sprite.Position) < 50)
                 {
                     world.Destroy(entity);
-                    var playerShip = player.Get<Ship>();
-                    playerShip.Wood += 1;
+                    InventoryManager.Instance.Lumber += 1;
                     world.Create<AudioEvent>().Set(new AudioEvent() { Key = Utilities.AudioKey.CollectWood, Position = sprite.Position });
                 }
-
             });
         }
     }

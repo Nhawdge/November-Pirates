@@ -1,5 +1,6 @@
 ﻿using NovemberPirates.Scenes;
 using NovemberPirates.Scenes.Menus.MainMenu;
+using NovemberPirates.Utilities;
 using NovemberPirates.Utilities.Data;
 using Raylib_CsLo;
 
@@ -19,8 +20,8 @@ namespace NovemberPirates
             //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_TOPMOST);
             //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_MAXIMIZED);
             //Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_UNDECORATED);
-            
-            Raylib.InitWindow(0,0, "November Pirates");
+
+            Raylib.InitWindow(0, 0, "November Pirates");
 
             var monitor = Raylib.GetCurrentMonitor();
             var width = Raylib.GetMonitorWidth(monitor);
@@ -31,6 +32,12 @@ namespace NovemberPirates
             Raylib.SetTargetFPS(60);
             Raylib.InitAudioDevice();
             Raylib.SetExitKey(0);
+
+            if (SettingsManager.Instance.Settings[SettingsManager.SettingKeys.Fullscreen] == 1)
+            {
+                Raylib.ToggleFullscreen();
+            }
+
             Camera = new Camera2D
             {
                 zoom = 1.0f,
