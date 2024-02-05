@@ -6,6 +6,7 @@ using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Scenes.Levels.DataManagers;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities;
+using NovemberPirates.Utilities.ContentData;
 using NovemberPirates.Utilities.Data;
 using Raylib_CsLo;
 using System.Numerics;
@@ -27,9 +28,11 @@ namespace NovemberPirates.Scenes.Levels.Systems
             if (singleton.InventoryOpen)
             {
                 var playerShip = playerEntity.Get<Ship>();
+                var realShipSprite = playerEntity.Get<Sprite>();
                 var inventoryFrame = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
 
                 Raylib.DrawText("Inventory", 0, 0, 24, Raylib.BLUE);
+
                 Raylib.DrawRectangle(
                     (int)(Raylib.GetScreenWidth() / 2 - inventoryFrame.X / 2),
                     (int)(Raylib.GetScreenHeight() / 2 - inventoryFrame.Y / 2),
@@ -42,13 +45,52 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 var heightOffset = 180;
                 var lineOffset = 30;
 
+                // Left Side
+
+                var shipSprite = ShipSpriteBuilder.GenerateBoat(new BoatOptions(playerShip));
+                shipSprite.RotationOffset = 180;
+
+                var leftCenter = new Vector2(leftAlignment - inventoryFrame.X / 4, inventoryFrame.Y);
+                shipSprite.Position = leftCenter;
+                shipSprite.Scale = 4f;
+                shipSprite.Draw();
+
+                var shipChanged = false;
+
+                for (int i = 0; i < playerShip.Cannons.Count; i++)
+                {
+                    var cannon = playerShip.Cannons[i];
+
+                    var rect = new Rectangle(
+                        (int)(leftCenter.X + (cannon.Placement == BoatSide.Port ? 40 : -120)),
+                        (int)(leftCenter.Y + (cannon.Position.Y * 4) - 130),
+                        70, 60);
+
+                    Raylib.DrawRectangleLines((int)rect.X, (int)rect.Y, (int)rect.width, (int)rect.height, Raylib.BLACK);
+
+                    if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_BUTTON_LEFT) && Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), rect))
+                    {
+                        playerShip.Cannons.Remove(cannon);
+                        InventoryManager.Instance.Inventory.Add(TradeableGoodsData.GetGood((TradeableGoodsNames)cannon.CannonType));
+                        shipChanged = true || shipChanged;
+                    }
+                }
+                if (shipChanged)
+                {
+                    Console.WriteLine("Ship Changed");
+                    var newboat = ShipSpriteBuilder.GenerateBoat(new BoatOptions(playerShip));
+                    newboat.Position = realShipSprite.Position;
+                    newboat.Rotation = realShipSprite.Rotation;
+                    playerEntity.Set(newboat);
+                }
+
                 Raylib.DrawText($"Crew: {playerShip.Crew} / {ShipData.Instance.Data[$"{playerShip.BoatType}{Stats.InitialCrew}"]}", rightAlignment, Raylib.GetScreenHeight() / 2 - heightOffset, 24, Raylib.WHITE);
                 heightOffset -= lineOffset;
 
                 Raylib.DrawText($"Hull: {playerShip.HullHealth} / {ShipData.Instance.Data[$"{playerShip.BoatType}{Stats.HullHealth}"]} ", rightAlignment, Raylib.GetScreenHeight() / 2 - heightOffset, 24, Raylib.WHITE);
                 heightOffset -= lineOffset;
 
-                Raylib.DrawText($"Hull: {playerShip.SailHealth} / {ShipData.Instance.Data[$"{playerShip.BoatType}{Stats.SailHealth}"]} ", rightAlignment, Raylib.GetScreenHeight() / 2 - heightOffset, 24, Raylib.WHITE);
+                Raylib.DrawText($"Sails: {playerShip.SailHealth} / {ShipData.Instance.Data[$"{playerShip.BoatType}{Stats.SailHealth}"]} ", rightAlignment, Raylib.GetScreenHeight() / 2 - heightOffset, 24, Raylib.WHITE);
                 heightOffset -= lineOffset;
 
                 Raylib.DrawText($"Gold: {InventoryManager.Instance.Gold} ", rightAlignment, Raylib.GetScreenHeight() / 2 - heightOffset, 24, Raylib.WHITE);
@@ -60,15 +102,6 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     Raylib.DrawText($"{invGroup.Key}: {invGroup.Count()}", rightAlignment, Raylib.GetScreenHeight() / 2 - heightOffset, 24, Raylib.WHITE);
                     heightOffset -= lineOffset;
                 }
-
-
-                var texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(playerShip));
-
-                Raylib.DrawTexturePro(texture.Texture,
-                    new Rectangle(0, 0, texture.Texture.width, texture.Texture.height),
-                    new Rectangle(inventoryFrame.X / 2 + 50, inventoryFrame.Y / 2 + 50, (inventoryFrame.X / 2) - 100, inventoryFrame.Y - 100),
-                    new Vector2(0, 0), 0, Raylib.WHITE);
-
             }
         }
     }

@@ -146,7 +146,14 @@ namespace NovemberPirates.Utilities
 
         internal string ToKey()
         {
-            return $"{Hull}-{Color}-{Sails}-{Condition}";
+            Cannons.Sort(delegate (Cannon x, Cannon y)
+            {
+                return (int)x.Placement * x.Row - (int)y.Placement * y.Row;
+            });
+            var cannonKey = string.Join("", Cannons.Select(x => $"{(int)x.Placement}{x.Row}"));
+
+            var key = $"{Hull}-{Color}-{Sails}-{Condition}-{cannonKey}";
+            return key;
         }
     }
 

@@ -73,7 +73,7 @@ namespace NovemberPirates.Utilities.Data
             { $"{HullType.Medium}{ShipAbilities.FullSail}", 10 },
             { $"{HullType.Medium}{ShipAbilities.OneCannon}", 5 },
             { $"{HullType.Medium}{ShipAbilities.TwoCannon}", 7 },
-            
+
 
             { $"{HullType.Medium}{Stats.RowingSpeed}", 100},
             { $"{HullType.Medium}{Stats.TurningSpeed}", 100},
