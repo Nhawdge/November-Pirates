@@ -8,7 +8,7 @@ namespace NovemberPirates.Scenes.Levels.Components
     {
         public Ship(HullType hull, BoatColor color, Team team)
         {
-            BoatType = hull;
+            HullType = hull;
             BoatColor = color;
             Team = team;
 
@@ -25,7 +25,7 @@ namespace NovemberPirates.Scenes.Levels.Components
         public BoatCondition BoatCondition = BoatCondition.Good;
 
         public BoatColor BoatColor;
-        public HullType BoatType;
+        public HullType HullType;
         public Team Team;
         internal SailStatus Sail = SailStatus.Closed;
 

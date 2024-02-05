@@ -18,12 +18,12 @@ namespace NovemberPirates.Entities.Archetypes
             var ship = new Ship(HullType.Large, BoatColor.Dead, Team.November);
             ship.Sail = SailStatus.Closed;
 
-            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.TrustyRusty, BoatSide.Starboard, 1));
-            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.TrustyRusty, BoatSide.Port, 1));
-            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.TrustyRusty, BoatSide.Starboard, 2));
-            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.TrustyRusty, BoatSide.Port, 2));
-            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.TrustyRusty, BoatSide.Starboard, 3));
-            ship.Cannons.Add(CannonBuilder.Create(Utilities.Data.CannonType.TrustyRusty, BoatSide.Port, 3));
+            ship.Cannons.Add(CannonBuilder.Create(ship.HullType, Utilities.Data.CannonType.TrustyRusty, BoatSide.Starboard, 1));
+            ship.Cannons.Add(CannonBuilder.Create(ship.HullType, Utilities.Data.CannonType.TrustyRusty, BoatSide.Port, 1));
+            ship.Cannons.Add(CannonBuilder.Create(ship.HullType, Utilities.Data.CannonType.TrustyRusty, BoatSide.Starboard, 2));
+            ship.Cannons.Add(CannonBuilder.Create(ship.HullType, Utilities.Data.CannonType.TrustyRusty, BoatSide.Port, 2));
+            ship.Cannons.Add(CannonBuilder.Create(ship.HullType, Utilities.Data.CannonType.TrustyRusty, BoatSide.Starboard, 3));
+            ship.Cannons.Add(CannonBuilder.Create(ship.HullType, Utilities.Data.CannonType.TrustyRusty, BoatSide.Port, 3));
 
             player.Set(ship);
 

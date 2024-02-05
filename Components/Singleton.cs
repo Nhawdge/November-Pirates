@@ -12,6 +12,8 @@ namespace NovemberPirates.Components
 
         public AudioKey Music;
         internal bool InventoryOpen;
+
+        public bool EquipModeActive;
     }
 
     public enum DebugLevel

@@ -27,7 +27,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
             if (singleton.Debug > DebugLevel.None)
             {
-                RayGui.GuiLabel(topleft, Enum.GetName<SailStatus>(ship.Sail) + " " + ship.BoatType);
+                RayGui.GuiLabel(topleft, Enum.GetName<SailStatus>(ship.Sail) + " " + ship.HullType);
                 Raylib.DrawText(Raylib.GetFrameTime().ToString(), 10, 70, 20, Raylib.RED);
                 Raylib.DrawFPS(10, 90);
             }

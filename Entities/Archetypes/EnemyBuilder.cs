@@ -18,7 +18,7 @@ namespace NovemberPirates.Entities.Archetypes
 
             ship.Team = team;
             ship.BoatColor = BoatColor.Yellow;
-            ship.BoatType = HullType.Large;
+            ship.HullType = HullType.Large;
             ship.Sail = SailStatus.Closed;
             ship.Crew = 10;
 

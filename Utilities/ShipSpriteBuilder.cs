@@ -142,7 +142,7 @@ namespace NovemberPirates.Utilities
     }
     internal record BoatOptions(HullType Hull, BoatColor Color, SailStatus Sails, List<Cannon> Cannons, BoatCondition Condition = BoatCondition.Good)
     {
-        internal BoatOptions(Ship ship) : this(ship.BoatType, ship.BoatColor, ship.Sail, ship.Cannons, ship.BoatCondition) { }
+        internal BoatOptions(Ship ship) : this(ship.HullType, ship.BoatColor, ship.Sail, ship.Cannons, ship.BoatCondition) { }
 
         internal string ToKey()
         {

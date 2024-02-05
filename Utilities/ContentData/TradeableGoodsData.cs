@@ -23,9 +23,9 @@ namespace NovemberPirates.Utilities.ContentData
             Goods.Add(TradeableGoodsNames.Gems, new TradeableGood { Name = "Gems", Price = 80 });
 
             //Cannon Prices
-            Goods.Add(TradeableGoodsNames.TrustyRusty, new TradeableGood { Name = "Trusty Rusty", Price = 100 });
-            Goods.Add(TradeableGoodsNames.PvtPepper, new TradeableGood { Name = "Pvt Pepper", Price = 200 });
-            Goods.Add(TradeableGoodsNames.BFC1700, new TradeableGood { Name = "BFC 1700", Price = 400 });
+            Goods.Add(TradeableGoodsNames.TrustyRusty, new TradeableGood { Name = "Trusty Rusty", Price = 100, IsEquipable = true });
+            Goods.Add(TradeableGoodsNames.PvtPepper, new TradeableGood { Name = "Pvt Pepper", Price = 200, IsEquipable = true });
+            Goods.Add(TradeableGoodsNames.BFC1700, new TradeableGood { Name = "BFC 1700", Price = 400, IsEquipable = true });
         }
 
         static internal TradeableGood GetGood(TradeableGoodsNames name)
@@ -38,6 +38,8 @@ namespace NovemberPirates.Utilities.ContentData
     {
         internal string Name;
         internal int Price;
+        internal bool IsEquipable = false;
+        internal bool EquipModeActive;
     }
 
     internal enum TradeableGoodsNames

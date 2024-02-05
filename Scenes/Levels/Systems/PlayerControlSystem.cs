@@ -54,13 +54,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
             {
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_PAGE_UP))
                 {
-                    playerShip.BoatType = (HullType)Math.Min(Enum.GetValues<HullType>().Length - 1, (int)playerShip.BoatType + 1);
+                    playerShip.HullType = (HullType)Math.Min(Enum.GetValues<HullType>().Length - 1, (int)playerShip.HullType + 1);
                     boatChanged = true;
 
                 }
                 if (Raylib.IsKeyPressed(KeyboardKey.KEY_PAGE_DOWN))
                 {
-                    playerShip.BoatType = (HullType)Math.Max(0, (int)playerShip.BoatType - 1);
+                    playerShip.HullType = (HullType)Math.Max(0, (int)playerShip.HullType - 1);
                     boatChanged = true;
                 }
             }

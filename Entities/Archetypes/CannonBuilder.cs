@@ -1,11 +1,13 @@
 ﻿using NovemberPirates.Scenes.Levels.Components;
+using NovemberPirates.Utilities;
 using NovemberPirates.Utilities.Data;
+using System.Numerics;
 
 namespace NovemberPirates.Entities.Archetypes
 {
     internal static class CannonBuilder
     {
-        internal static Cannon Create(CannonType cannonType, BoatSide boatSide, int row)
+        internal static Cannon Create(HullType hull, CannonType cannonType, BoatSide boatSide, int row)
         {
             var cannon = new Cannon();
             cannon.Placement = boatSide;
@@ -23,6 +25,27 @@ namespace NovemberPirates.Entities.Archetypes
             cannon.BallSpeed = ShipData.Instance.Data[$"{cannonType}{Stats.CannonballSpeed}"];
             cannon.BallDuration = ShipData.Instance.Data[$"{cannonType}{Stats.CannonballDuration}"];
             cannon.ShotPer = ShipData.Instance.Data[$"{cannonType}{Stats.CannonsShotPer}"];
+
+
+            var cannonPosition = new Vector2(
+                  ShipCannonCoords.Data[Enum.GetName(cannon.Placement)],
+                  ShipCannonCoords.Data[$"{hull}{cannon.Row}"]
+                  );
+
+            var cannonSprite = new Sprite(TextureKey.CannonLoose, "Assets/Art/cannonLoose")
+            {
+                Position = cannonPosition,
+                Rotation = cannon.Placement == BoatSide.Port ? 180 : 0,
+            };
+            //cannons.Add(cannonSprite);
+
+            //if (cannon.Position == Vector2.Zero)
+            // I have no idea why I needed these magic numbers, but they work.
+            cannon.Position = cannonPosition with
+            {
+                X = cannonPosition.X - cannonSprite.SpriteWidth - 10,
+                Y = cannonPosition.Y - cannonSprite.SpriteHeight - 25
+            };
 
             return cannon;
         }
