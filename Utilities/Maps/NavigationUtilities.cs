@@ -88,12 +88,12 @@ namespace NovemberPirates.Utilities.Maps
             }
         }
 
-        internal static IEnumerable<Vector2> CalculateRouteFromShip(World world, Arch.Core.Entity shipEntity)
-        {
-            var sprite = shipEntity.Get<Sprite>();
-            var ship = shipEntity.Get<Ship>();
-            return CalculateRoute(world, sprite.Position, ship.Goal);
-        }
+        //internal static IEnumerable<Vector2> CalculateRouteFromShip(World world, Arch.Core.Entity shipEntity)
+        //{
+        //    var sprite = shipEntity.Get<Sprite>();
+        //    var ship = shipEntity.Get<Ship>();
+        //    return CalculateRoute(world, sprite.Position, ship.Goal);
+        //}
 
         internal static IEnumerable<Vector2> CalculateRoute(World world, Vector2 from, Vector2 to)
         {
