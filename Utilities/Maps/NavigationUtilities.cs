@@ -27,16 +27,14 @@ namespace NovemberPirates.Utilities.Maps
 
                     if (tile is null)
                     {
-                        tile = new MapTile
-                        {
-                            Coordinates = maptile.Coordinates
-                        };
+                        tile = new MapTile(maptile.Coordinates, 64, maptile.MovementCost);
+
                         map.Tiles.Add(tile);
                     }
                     tile.MovementCost = Math.Max(tile.MovementCost, maptile.MovementCost);
                 });
                 singleton.Map = map;
-            }  
+            }
         }
 
         internal static void AddTradeRoutes(World world)

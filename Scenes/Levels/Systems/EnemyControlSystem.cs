@@ -7,7 +7,6 @@ using NovemberPirates.Scenes.Levels.Components;
 using NovemberPirates.Systems;
 using NovemberPirates.Utilities;
 using NovemberPirates.Utilities.Data;
-using NovemberPirates.Utilities.Maps;
 using Raylib_CsLo;
 using System.Numerics;
 
@@ -24,10 +23,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
             var enemyQuery = new QueryDescription().WithAll<Sprite, Ship, Npc>();
             var patrolQuery = new QueryDescription().WithAll<PatrolPoint>();
 
+
             world.Query(in enemyQuery, (entity) =>
             {
                 var sprite = entity.Get<Sprite>();
                 var ship = entity.Get<Ship>();
+                var npc = entity.Get<Npc>();
+
                 var shouldMakeNewFire = Random.Shared.Next(0, 100) < 5;
 
                 if (ship.BoatCondition == BoatCondition.Broken && shouldMakeNewFire)
@@ -62,123 +64,107 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     return;
                 }
 
-                //var maxPatrolPoint = 0;
+                if (singleton.Debug >= DebugLevel.Low)
+                    Raylib.DrawLine((int)npc.TargetPosition.X, (int)npc.TargetPosition.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
 
-                //var npc = entity.Get<Npc>();
-                //if (npc.Purpose == Purpose.Patrol)
-                //{
-                //    if (ship.Goal == Vector2.Zero)
-                //    {
-                //        world.Query(in patrolQuery, (patrolEntity) =>
-                //        {
-                //            var point = patrolEntity.Get<PatrolPoint>();
-                //            maxPatrolPoint = Math.Max(maxPatrolPoint, point.Order);
-                //            if (point.Order == ship.NextPatrolPoint)
-                //            {
-                //                ship.Goal = point.Position;
-                //            }
-                //        });
-                //    }
-                //}
-                //if (npc.Purpose == Purpose.Trade)
-                //{ 
-                //    if (ship.Route.Count == 0) 
-                //    {
-                //        ship.Route = ship.SailingRoute.First().RoutePoints;
-                //        ship.SailingRoute.Add(ship.SailingRoute.First());
-                //        ship.SailingRoute.RemoveAt(0);
-                //    }
-                //}
-                //else if (npc.Purpose == Purpose.Patrol)
-                //{
-                //    if ((ship.Route.Count < 10))
+                if (ship.CanDo(ShipAbilities.Steering))
+                {
+                    var targetDirection = Vector2.Normalize(sprite.Position - npc.TargetPosition);
+                    var targetDirectionInDegrees = (float)(Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI));
 
-                //    {
-                //        if (ship.NavTask == null)
-                //            ship.NavTask = new Task<List<Vector2>>(() => NavigationUtilities.CalculateRouteFromShip(world, entity).ToList());
+                    var rotationInDegreesToTarget = (float)(Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI)) + npc.TargetOffsetInDegrees;
 
-                //        if (ship.NavTask.IsCompleted)
-                //        {
-                //            ship.Route = ship.NavTask.Result;
-                //            ship.NavTask = null;
-                //        }
-                //        else if (ship.NavTask.Status == TaskStatus.Created)
-                //        {
-                //            ship.NavTask.Start();
-                //        }
-                //    }
-                //}
-                //var sailTargetVec = ship.Route?.FirstOrDefault();
-                //if (sailTargetVec is not null)
-                //{
-                //    ship.Target = sailTargetVec.Value;
-                //    if (sprite.Position.DistanceTo(ship.Target) < 300)
-                //    {
-                //        if (ship.Route?.Count > 0)
-                //            ship.Route?.RemoveAt(0);
+                    // whats in front of me, should I turn
 
-                //        if (ship.Route?.Count == 0 && npc.Purpose == Purpose.Patrol)
-                //        {
-                //            ship.NextPatrolPoint += 1;
-                //            if (ship.NextPatrolPoint > maxPatrolPoint)
-                //                ship.NextPatrolPoint = 1;
-                //        }
-                //        if (ship.Route?.Count == 0 && npc.Purpose == Purpose.Trade)
-                //        {
-                //            ship.Goal = Vector2.Zero;
-                //            var availableMoney = 10;
-                //            //ship.TargetPort.Currency -= availableMoney;
-                //            ship.Currency += availableMoney;
-                //        }
-                //    }
-                //    if (singleton.Debug >= DebugLevel.Low)
-                //        Raylib.DrawLine((int)ship.Target.X, (int)ship.Target.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
+                    var distanceToScan = ship.Sail switch
+                    {
+                        SailStatus.Half => 200,
+                        SailStatus.Full => 300,
+                        _ => 100,
+                    };
 
-                //    if (ship.Target != Vector2.Zero)
-                //    {
-                //        if (ship.CanDo(ShipAbilities.Steering))
-                //        {
-                //            var targetDirection = Vector2.Normalize(sprite.Position - ship.Target);
+                    var frontLeft = sprite.Position + RayMath.Vector2Rotate(new Vector2(0, distanceToScan), (sprite.Rotation + 45).ToRadians());
+                    var posInFront = sprite.Position + RayMath.Vector2Rotate(new Vector2(0, distanceToScan), (sprite.Rotation + 90).ToRadians());
+                    var frontRight = sprite.Position + RayMath.Vector2Rotate(new Vector2(0, distanceToScan), (sprite.Rotation + 135).ToRadians());
 
-                //            var rotationInDegrees = Math.Atan2(targetDirection.Y, targetDirection.X) * (180 / Math.PI);
-                //            if (sprite.Rotation != rotationInDegrees)
-                //            {
-                //                var rotationNeeded = (float)Math.Min(sprite.Rotation - rotationInDegrees, ship.RotationSpeed * Raylib.GetFrameTime());
-                //                if (Math.Abs(rotationInDegrees) > 1)
-                //                {
-                //                    sprite.Rotation -= rotationNeeded;
-                //                }
-                //            }
-                //            else
-                //            {
-                //                var rotationNeeded = (float)Math.Min(rotationInDegrees - sprite.Rotation, ship.RotationSpeed * Raylib.GetFrameTime());
-                //                if (Math.Abs(rotationInDegrees) > 1)
-                //                {
-                //                    sprite.Rotation += rotationNeeded;
-                //                }
-                //                sprite.Rotation += ship.RotationSpeed * Raylib.GetFrameTime();
-                //            }
-                //        }
-                //    }
-                //}
+                    if (singleton.Debug > 0)
+                    {
+                        Raylib.DrawCircle((int)frontLeft.X, (int)frontLeft.Y, 10, Raylib.RED);
+                        Raylib.DrawCircle((int)posInFront.X, (int)posInFront.Y, 10, Raylib.GREEN);
+                        Raylib.DrawCircle((int)frontRight.X, (int)frontRight.Y, 10, Raylib.DARKBLUE);
+                    }
 
-                //Console.WriteLine($"Target {ship.Target}");
+                    var leftGood = false;
+                    var centerGood = false;
+                    var rightGood = false;
+
+                    var tileInFront = singleton.Map.GetTileFromPosition(posInFront);
+                    if (tileInFront?.MovementCost == 1)
+                    {
+                        centerGood = true;
+                    }
+                    var tileFrontRight = singleton.Map.GetTileFromPosition(frontRight);
+                    if (tileFrontRight?.MovementCost == 1)
+                    {
+                        rightGood = true;
+                    }
+                    var tileFrontLeft = singleton.Map.GetTileFromPosition(frontLeft);
+
+                    if (tileFrontLeft?.MovementCost == 1)
+                    {
+                        leftGood = true;
+                    }
+
+                    if (!centerGood && !leftGood)
+                        npc.TargetOffsetInDegrees += 3;
+                    else if (!centerGood && !rightGood)
+                        npc.TargetOffsetInDegrees -= 3;
+                    else if (!leftGood)
+                        npc.TargetOffsetInDegrees += 2;
+                    else if (!rightGood)
+                        npc.TargetOffsetInDegrees -= 2;
+                    else
+                    {
+                        if (rotationInDegreesToTarget > targetDirectionInDegrees)
+                            npc.TargetOffsetInDegrees -= 1;
+                        else if (rotationInDegreesToTarget < targetDirectionInDegrees)
+                            npc.TargetOffsetInDegrees += 1;
+                    }
+
+                    if (sprite.Rotation != rotationInDegreesToTarget)
+                    {
+                        var rotationNeeded = (float)Math.Min(sprite.Rotation - rotationInDegreesToTarget, ship.RotationSpeed * Raylib.GetFrameTime());
+                        if (Math.Abs(rotationInDegreesToTarget) > 1)
+                        {
+                            sprite.Rotation -= rotationNeeded;
+                        }
+                    }
+                    else
+                    {
+                        var rotationNeeded = (float)Math.Min(rotationInDegreesToTarget - sprite.Rotation, ship.RotationSpeed * Raylib.GetFrameTime());
+                        if (Math.Abs(rotationInDegreesToTarget) > 1)
+                        {
+                            sprite.Rotation += rotationNeeded;
+                        }
+                        sprite.Rotation += ship.RotationSpeed * Raylib.GetFrameTime();
+                    }
+                }
+
 
                 if (singleton.Debug > DebugLevel.None)
                 {
                     Raylib.DrawText($"Route Size:{ship.Route?.Count} \nTarget:{ship.Route?.LastOrDefault()}", sprite.Position.X, sprite.Position.Y, 12, Raylib.RED);
                 }
-                if (ship.Target == Vector2.Zero)
-                {
-                    ship.Sail = SailStatus.Closed;
-                    sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
-                }
-                else if (ship.CanDo(ShipAbilities.FullSail))
+
+                ship.Sail = SailStatus.Closed;
+                sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
+
+                if (ship.CanDo(ShipAbilities.FullSail) && sprite.Position.DistanceTo(npc.TargetPosition) > 1000)
                 {
                     ship.Sail = SailStatus.Full;
                     sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;
                 }
-                else if (ship.CanDo(ShipAbilities.HalfSail))
+                else if (ship.CanDo(ShipAbilities.HalfSail) && sprite.Position.DistanceTo(npc.TargetPosition) > 400)
                 {
                     ship.Sail = SailStatus.Half;
                     sprite.Texture = ShipSpriteBuilder.GenerateBoat(new BoatOptions(ship)).Texture;

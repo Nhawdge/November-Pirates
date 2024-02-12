@@ -28,10 +28,10 @@ namespace NovemberPirates.Scenes.Levels
             {
                 NavigationUtilities.BuildMap(World);
             });
-            LoadingTasks.Add("Trade Routes", () =>
-            {
-                NavigationUtilities.AddTradeRoutes(World);
-            });
+            //LoadingTasks.Add("Trade Routes", () =>
+            //{
+            //    NavigationUtilities.AddTradeRoutes(World);
+            //});
 
             LoadingTasks.Add("Audio", () =>
             {

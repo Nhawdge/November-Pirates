@@ -32,7 +32,6 @@ namespace NovemberPirates.Scenes.Levels.Components
         internal List<Cannon> Cannons = new List<Cannon>();
 
         internal int NextPatrolPoint = 1;
-        internal Vector2 Target;
         internal List<Vector2> Route = new();
         internal float WindInSail;
 

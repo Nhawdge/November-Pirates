@@ -9,16 +9,22 @@ namespace NovemberPirates.Entities.Archetypes
 {
     internal static class EnemyBuilder
     {
-        public static void CreateEnemyShip(World world, Vector2 position, Team team)
+        public static void CreateEnemyShip(World world, Vector2 position, Team team, NpcPurpose purpose)
         {
             var enemyArchetype = new ComponentType[] { typeof(Ship), typeof(Sprite), typeof(Npc) };
 
             var entity = world.Create(enemyArchetype);
-            var ship = new Ship(HullType.Small, BoatColor.Yellow, Team.Yellow);
+            var color = team switch
+            {
+                Team.Red => BoatColor.Red,
+                Team.Blue => BoatColor.Blue,
+                Team.Yellow => BoatColor.Yellow,
+                _ => BoatColor.Yellow,
+            };
+            var ship = new Ship(HullType.Small, color, Team.Yellow);
 
             ship.Team = team;
-            ship.BoatColor = BoatColor.Yellow;
-            ship.HullType = HullType.Large;
+
             ship.Sail = SailStatus.Closed;
             ship.Crew = 10;
 
@@ -29,7 +35,8 @@ namespace NovemberPirates.Entities.Archetypes
             entity.Set(ship);
             entity.Set(sprite);
 
-            entity.Set(new Npc() );
+            entity.Set(new Npc(purpose));
+
             //if (purpose == Purpose.Trade)
             //{
             //    ship.SailingRoute = RouteDataStore.Instance.GetRandomRoute();
@@ -44,11 +51,11 @@ namespace NovemberPirates.Entities.Archetypes
             patrolEntity.Set(new PatrolPoint() { Position = vector2, Team = team, Order = order });
         }
 
-        internal static void CreateSpawnPoint(World world, Vector2 pos, Team team)
-        {
-            var spawnerEntity = world.Create<Spawner>();
+        //internal static void CreateSpawnPoint(World world, Vector2 pos, Team team)
+        //{
+        //    var spawnerEntity = world.Create<Spawner>();
 
-            spawnerEntity.Set(new Spawner() { Team = team, Position = pos, SpawnTime = 100, Elapsed = 90 });
-        }
+        //    spawnerEntity.Set(new Spawner() { Team = team,  SpawnTime = 100, Elapsed = 90 });
+        //}
     }
 }

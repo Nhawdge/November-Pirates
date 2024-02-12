@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace NovemberPirates.Scenes.Levels.Components
+﻿namespace NovemberPirates.Scenes.Levels.Components
 {
     internal class Spawner
     {
@@ -8,6 +6,5 @@ namespace NovemberPirates.Scenes.Levels.Components
 
         public float Elapsed;
         public float SpawnTime;
-        internal Vector2 Position;
     }
 }

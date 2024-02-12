@@ -5,7 +5,6 @@ using NovemberPirates.Entities.Archetypes;
 using NovemberPirates.Extensions;
 using NovemberPirates.Scenes.Levels.Components;
 using QuickType.Map;
-using Raylib_CsLo;
 using System.Numerics;
 
 namespace NovemberPirates.Utilities
@@ -65,10 +64,7 @@ namespace NovemberPirates.Utilities
 
                     mapTileEntity.Set(tileSprite);
 
-                    var mapTile = new MapTile();
-
-                    mapTile.Coordinates = tile.Px.ToVector2() / layer.GridSize;
-                    mapTile.MovementCost = tileSprite.Collision switch
+                    var movementCost = tileSprite.Collision switch
                     {
                         CollisionType.Solid => 9999,
                         CollisionType.Padding => 2,
@@ -76,16 +72,18 @@ namespace NovemberPirates.Utilities
                         _ => 1,
                     };
 
+                    var mapTile = new MapTile(tile.Px.ToVector2() / layer.GridSize, layer.GridSize, movementCost);
+
                     mapTileEntity.Set(mapTile);
                 }
 
                 foreach (var entity in layer.EntityInstances)
                 {
                     //Console.WriteLine($"entity: {entity.Identifier}");
-                    if (entity.Identifier == "Spawn_Point")
-                    {
-                        EnemyBuilder.CreateSpawnPoint(world, entity.Px.ToVector2(), Team.Red);
-                    }
+                    //if (entity.Identifier == "Spawn_Point")
+                    //{
+                    //    EnemyBuilder.CreateSpawnPoint(world, entity.Px.ToVector2(), Team.Red);
+                    //}
                     if (entity.Identifier == "Patrol_Point")
                     {
                         var order = (int)(entity.FieldInstances.FirstOrDefault(x => x.Identifier == Identifier.Order).Value.Integer);
@@ -103,6 +101,11 @@ namespace NovemberPirates.Utilities
                             Position = entity.Px.ToVector2(),
                             Team = System.Enum.Parse<Team>(team.String),
                             Currency = 1
+                        }, new Spawner()
+                        {
+                            SpawnTime = 100,
+                            Elapsed = 90,
+                            Team = System.Enum.Parse<Team>(team.String),
                         });
                     }
                 }

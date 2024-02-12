@@ -1,4 +1,5 @@
-﻿using NovemberPirates.Scenes.Levels.Components;
+﻿using Arch.Core;
+using NovemberPirates.Scenes.Levels.Components;
 using System.Numerics;
 
 namespace NovemberPirates.Utilities.Maps
@@ -36,6 +37,27 @@ namespace NovemberPirates.Utilities.Maps
             if (down != null) neighbors.Add(down);
 
             return neighbors;
+        }
+
+        internal List<MapTile> GetTilesInSquareRange(Vector2 startPos, int range)
+        {
+            var startPosCoords = new Vector2((int)(startPos.X / TileSize), (int)(startPos.Y / TileSize));
+            var tiles = new List<MapTile>();
+
+            for (var x = -range; x <= range; x++)
+            {
+                for (var y = -range; y <= range; y++)
+                {
+                    var coords = new Vector2(startPosCoords.X + x, startPosCoords.Y + y);
+                    var tile = Tiles.FirstOrDefault(t => t.Coordinates == coords);
+                    if (tile != null)
+                    {
+                        tiles.Add(tile);
+                    }
+                }
+            }
+
+            return tiles;
         }
     }
 }
