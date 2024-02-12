@@ -31,8 +31,6 @@ namespace NovemberPirates.Scenes.Levels.Components
 
         internal List<Cannon> Cannons = new List<Cannon>();
 
-        internal int NextPatrolPoint = 1;
-        internal List<Vector2> Route = new();
         internal float WindInSail;
 
         internal int Crew;
@@ -45,10 +43,7 @@ namespace NovemberPirates.Scenes.Levels.Components
         internal float HalfSailSpeedModifier;
         internal float FullSailSpeedModifier;
         internal float SailSpeedEasing;
-        internal Vector2 Goal;
         internal float Currency;
-        internal Port? TargetPort;
-        internal List<Route> SailingRoute;
 
         public Task<List<Vector2>> NavTask { get; set; }
     }

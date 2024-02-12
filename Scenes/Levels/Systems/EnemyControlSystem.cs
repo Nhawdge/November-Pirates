@@ -64,6 +64,11 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     return;
                 }
 
+                if (npc.TargetPosition.DistanceTo(sprite.Position) < 200)
+                {
+                    npc.TimeSinceLastGoalChange += 100;
+                }
+
                 if (singleton.Debug >= DebugLevel.Low)
                     Raylib.DrawLine((int)npc.TargetPosition.X, (int)npc.TargetPosition.Y, (int)sprite.Position.X, (int)sprite.Position.Y, Raylib.RED);
 
@@ -116,9 +121,29 @@ namespace NovemberPirates.Scenes.Levels.Systems
                     }
 
                     if (!centerGood && !leftGood)
-                        npc.TargetOffsetInDegrees += 3;
+                    {
+                        var moveBy = tileFrontLeft?.MovementCost > 2 ? 3f : 1f;
+
+                        if (ship.Sail == SailStatus.Rowing)
+                            moveBy = 1f;
+
+                        if (Math.Abs(npc.TargetOffsetInDegrees) > 90 && Vector2.Dot(sprite.RotationAsVector2, targetDirection) < 0)
+                            npc.TargetOffsetInDegrees += 200;
+                        else
+                            npc.TargetOffsetInDegrees += moveBy;
+                    }
                     else if (!centerGood && !rightGood)
-                        npc.TargetOffsetInDegrees -= 3;
+                    {
+                        var moveBy = tileFrontRight?.MovementCost > 2 ? 3f : 1f;
+
+                        if (ship.Sail == SailStatus.Rowing)
+                            moveBy = 1f;
+
+                        if (Math.Abs(npc.TargetOffsetInDegrees) > 90 && Vector2.Dot(sprite.RotationAsVector2, targetDirection) < 0)
+                            npc.TargetOffsetInDegrees -= 200;
+                        else
+                            npc.TargetOffsetInDegrees -= moveBy;
+                    }
                     else if (!leftGood)
                         npc.TargetOffsetInDegrees += 2;
                     else if (!rightGood)
@@ -153,7 +178,7 @@ namespace NovemberPirates.Scenes.Levels.Systems
 
                 if (singleton.Debug > DebugLevel.None)
                 {
-                    Raylib.DrawText($"Route Size:{ship.Route?.Count} \nTarget:{ship.Route?.LastOrDefault()}", sprite.Position.X, sprite.Position.Y, 12, Raylib.RED);
+                    //Raylib.DrawText($"Route Size:{ship.Route?.Count} \nTarget:{ship.Route?.LastOrDefault()}", sprite.Position.X, sprite.Position.Y, 12, Raylib.RED);
                 }
 
                 ship.Sail = SailStatus.Closed;

@@ -20,6 +20,7 @@ namespace NovemberPirates.Scenes.Levels.Components
         public bool CanRotate = true;
         public float ZIndex = 0f;
         public float RotationAsRadians => RenderRotation * (float)(Math.PI / 180);
+        public Vector2 RotationAsVector2 => Vector2.Normalize(new Vector2((float)Math.Cos(RenderRotation), (float)Math.Sin(RenderRotation)));
         public Vector2 Position;
         public Color Color;
 

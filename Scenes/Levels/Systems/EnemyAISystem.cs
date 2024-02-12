@@ -50,15 +50,13 @@ namespace NovemberPirates.Scenes.Levels.Systems
                 {
                     if (npc.TargetPosition == Vector2.Zero)
                     {
-                        Console.WriteLine("fresh ship");
                         npc.TargetPosition = GetNearestPort(world, sprite.Position);
                     }
-
                     if (npc.TargetPosition.DistanceTo(sprite.Position) < 200)
                     {
-                        Console.WriteLine("Port Hit!");
                         npc.TargetPosition = GetSecondNearestPort(world, sprite.Position);
                     }
+
                 }
             });
         }
